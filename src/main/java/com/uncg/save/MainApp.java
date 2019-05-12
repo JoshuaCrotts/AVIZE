@@ -14,6 +14,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Initial push to ensure all dependencies remain @Joshua
  */
 package com.uncg.save;
 
@@ -91,16 +93,16 @@ public class MainApp extends Application {
         try {
             SchemaFactory sf
                     = SchemaFactory
-                    .newInstance("http://www.w3.org/2001/XMLSchema");
+                            .newInstance("http://www.w3.org/2001/XMLSchema");
             Schema schema
                     = sf.newSchema(getClass().getResource("/xml/scheme.xsd"));
             InputStream xmlStream = getClass().getResourceAsStream(("/xml/schemeList.xml"));
-            
+
             JAXBContext jaxbContext = JAXBContext.newInstance(SchemeList.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             jaxbUnmarshaller.setSchema(schema);
             sl = (SchemeList) jaxbUnmarshaller.unmarshal(xmlStream);
-            
+
             schemeList = sl.getModels();
             return schemeList;
         } catch (SAXException ex) {
@@ -117,7 +119,7 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
 }
