@@ -73,7 +73,7 @@ public class SchemePaneController implements Initializable {
     private Label criticalQuestionLabel;
 
     private SchemeListController slc;
-    private SchemeModel scheme = new SchemeModel();
+    public static SchemeModel scheme = new SchemeModel();
     private int exampleHeight;
     private int cqHeight;
     private boolean heightsCalc = false;
@@ -153,6 +153,7 @@ public class SchemePaneController implements Initializable {
     @FXML
     private void dragDone(DragEvent event) {
         event.consume();
+        System.out.println("DONE");
     }
 
     @FXML

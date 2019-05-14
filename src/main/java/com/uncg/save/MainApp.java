@@ -14,8 +14,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Initial push to ensure all dependencies remain @Joshua
  */
 package com.uncg.save;
 
@@ -24,6 +22,7 @@ import com.uncg.save.models.SchemeModel;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -58,8 +57,8 @@ public class MainApp extends Application {
             = new DataFormat("evidenceChunkFormat");
     public static DataFormat commentDataFormat
             = new DataFormat("commentFormat");
-    private static SchemeList sl;
-
+    public SchemeList sl;
+    //public static Stack<Integer> pastActionCount;
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader
@@ -78,11 +77,14 @@ public class MainApp extends Application {
          */
         rootControl.setSchemeModelList(schemeModelList);
 
+        //pastActionCount = new Stack<>();
+        
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("AVizE");
-        stage.setFullScreen(true);
+        stage.setTitle("AIED");
+        //stage.setFullScreen(true);
+        stage.setResizable(true);
         stage.setFullScreenExitHint("");
         stage.setScene(scene);
         stage.show();

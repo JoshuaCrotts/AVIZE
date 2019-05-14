@@ -62,4 +62,15 @@ public class CounterArgumentModel extends ArgumentModel {
     public List<PremiseModel> getParentModelList() {
         return parentModelList;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        
+        for(int i = 0; i < parentModelList.size(); i++){
+            s.append(parentModelList.get(i));
+        }
+        
+        return s.toString();
+    }
 }

@@ -123,5 +123,10 @@ public class EvidenceModel implements Serializable {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
+    
+    public String toString(){
+        return this.getId() + "\t" + this.getDate() + "\t" + this.genre + "\t" 
+                + this.getSource() + "\t" + this.getText() + "\t" + this.getReliability() 
+                + "\t" + this.likelihood + "\t" + this.getComment();
+    }
 }

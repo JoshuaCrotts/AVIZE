@@ -62,7 +62,7 @@ public class RootPaneController implements Initializable {
 
     private boolean dataButtonHidden = true;
     private boolean dataUp = false;
-    private boolean schemesUp = true;
+    private static boolean schemesUp = true;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private double screenWidth;
 
@@ -173,5 +173,9 @@ public class RootPaneController implements Initializable {
         hideSchemesButton.setText("←←←←←←←←←←");
         constructionAreaController.getMainPane().setMinWidth(mainScrollPane.getMinWidth());
         constructionAreaController.getMainPane().setPrefWidth(constructionAreaController.getMainPane().getWidth() + width);
+    }
+    
+    public ConstructionAreaController getConstructionAreaController(){
+        return this.constructionAreaController;
     }
 }

@@ -70,4 +70,32 @@ public class SchemeModel implements Serializable{
     public void addPremise(String s){
         premises.add(s);
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder output = new StringBuilder();
+        
+        output.append("Title: ").append(this.title).append("\n");
+        output.append("Conclusion: ").append(this.conclusion).append("\n");
+        
+        //Print premises
+        this.premises.forEach((premise) -> {
+            output.append(premise).append(" ");
+        });
+        output.append("\n");
+        
+        //Print critical questions
+        this.premises.forEach((criticalQuestion) -> {
+            output.append(criticalQuestion).append(" ");
+        });
+        output.append("\n");
+        
+        //Print examples
+        this.examples.forEach((example) -> {
+            output.append(example).append(" ");
+        });
+        output.append("\n");
+        
+        return output.toString();
+    }
 }

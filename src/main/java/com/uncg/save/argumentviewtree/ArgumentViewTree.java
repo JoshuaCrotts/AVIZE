@@ -5573,4 +5573,16 @@ public class ArgumentViewTree {
         }
         return resultNode;
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        
+        List<ArgumentNode> children = this.root.getChildren();
+        
+        for(ArgumentNode am : children){
+            s.append(am).append("\n");
+        }
+        return s.toString();
+    }
 }

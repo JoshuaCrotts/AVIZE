@@ -111,4 +111,8 @@ public class PremiseModel implements Serializable{
     public void removeAsConclusionForArgument(ArgumentModel arg){
         conclusionForArgumentList.remove(arg);
     }
+    
+    public String toString(){
+        return this.proposition.toString() + "\t" + this.counterArguments.toString();
+    }
 }

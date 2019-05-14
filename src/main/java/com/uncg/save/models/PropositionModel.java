@@ -60,4 +60,8 @@ public class PropositionModel implements Serializable{
     public void setComment(String comment){
         this.comment = comment;
     }    
+    
+    public String toString(){
+        return "Support: " + this.support +"\tProposition: "+this.proposition+"\tComment: "+this.comment;
+    }
 }

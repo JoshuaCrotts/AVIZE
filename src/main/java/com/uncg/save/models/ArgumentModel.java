@@ -167,4 +167,20 @@ public class ArgumentModel implements Serializable {
     public void removeCQArgument(ArgumentModel arg){
         cqArguments.remove(arg);
     }
+    
+    @Override
+    public String toString(){
+        StringBuilder s = new StringBuilder();
+        
+        s.append(scheme.toString());
+        s.append(conclusion.toString());
+        
+        for(int i = 0; i < this.premises.length; i++)
+        {
+            s.append(premises[i].toString());
+        }
+        
+        return s.toString();
+    }
+    
 }

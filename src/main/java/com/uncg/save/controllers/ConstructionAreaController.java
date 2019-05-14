@@ -40,6 +40,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -71,6 +72,8 @@ public class ConstructionAreaController implements Initializable {
     private Point2D targetPropBoxCoords;
 
     private RootPaneController rpc;
+    
+    private Stack<Object> pastModels;
 
     /**
      * Initializes the controller class.
@@ -80,6 +83,8 @@ public class ConstructionAreaController implements Initializable {
         // initialize lists
         argumentTrees = new HashMap<>();
 
+        pastModels = new Stack<>();
+        
         mainPane.getStyleClass().add("pane");
 
         // create context menu for adding new premises
@@ -134,6 +139,8 @@ public class ConstructionAreaController implements Initializable {
 
         LayoutUtils.setChildLayout(propBox, targetPropBoxCoords);
         mainPane.getChildren().add(propBox);
+        pastModels.push(propBox);
+
     }
 
     /**
@@ -201,9 +208,11 @@ public class ConstructionAreaController implements Initializable {
      */
     @FXML
     private void dragDropped(DragEvent event) {
+       // System.out.println("dropped");
         boolean success = false;
         Dragboard db = event.getDragboard();
         if (db.hasContent(dataModelDataFormat)) {
+            System.out.println("dropped data");
             /*
             Use new Data to create evidence
              */
@@ -214,6 +223,7 @@ public class ConstructionAreaController implements Initializable {
                 Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (db.hasContent(evidenceChunkDataFormat)) {
+            System.out.println("dropped ev");
             /*
             Move evidence chunks in construction area
              */
@@ -228,6 +238,7 @@ public class ConstructionAreaController implements Initializable {
                 Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (db.hasContent(schemeModelDataFormat)) {
+            System.out.println("dropped sc");
             /*
             Use new scheme to generate Argument
              */
@@ -238,9 +249,11 @@ public class ConstructionAreaController implements Initializable {
                 Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if (db.hasContent(argumentModelDataFormat)) {
+            System.out.println("dropped arg");
             try {
                 dropArgument(db, event);
                 success = true;
+                System.out.println("success dropped arg");
             } catch (IOException ex) {
                 Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -282,7 +295,7 @@ public class ConstructionAreaController implements Initializable {
         // check if nodes need to be shifted because they're falling off the 
         // left side
         double moveBuffer = furthestNodeMinX();
-        System.out.println(moveBuffer);
+        //System.out.println(moveBuffer);
         if (moveBuffer < 0) {
             shiftAllChildren(moveBuffer);
         }
@@ -346,8 +359,8 @@ public class ConstructionAreaController implements Initializable {
      */
     private void dropData(Dragboard db, DragEvent event) throws IOException {
         DataModel data = (DataModel) db.getContent(dataModelDataFormat);
+        
         EvidenceModel evidence = new EvidenceModel(data);
-
         Pane evidenceChunk = loadNewEvidenceChunkPane(evidence);
 
         Point2D localCoords
@@ -356,8 +369,10 @@ public class ConstructionAreaController implements Initializable {
                 );
         evidenceChunk.getStyleClass().add("pane");
         LayoutUtils.setChildLayout(evidenceChunk, localCoords);
-
+        
+        System.out.println("added evidence");
         mainPane.getChildren().add(evidenceChunk);
+        pastModels.push(evidenceChunk);
         event.consume();
     }
 
@@ -369,13 +384,13 @@ public class ConstructionAreaController implements Initializable {
             getGeneric(scheme);
         }
         ArgumentModel argument = new ArgumentModel(scheme);
-
+        //System.out.println(argument);
         ArgumentViewTree argTree = new ArgumentViewTree(mainPane, this);
         String treeID = Integer.toString(argTree.hashCode());
         argTree.setTreeID(treeID);
         argumentTrees.put(treeID, argTree);
-
         argTree.addRootArgument(argument, event.getSceneX(), event.getSceneY());
+        pastModels.push(treeID);
     }
 
     //Loads the generic scheme maker and writes the specified scheme to the area
@@ -417,8 +432,9 @@ public class ConstructionAreaController implements Initializable {
                 );
         evidencePane.getStyleClass().add("pane");
         LayoutUtils.setChildLayout(evidencePane, localCoords);
-
+        
         mainPane.getChildren().add(evidencePane);
+        this.pastModels.push(evidencePane);
     }
 
     /**
@@ -463,6 +479,7 @@ public class ConstructionAreaController implements Initializable {
         LayoutUtils.setChildLayout(propBox, localCoords);
 
         mainPane.getChildren().add(propBox);
+        this.pastModels.push(propBox);
     }
 
     /**
@@ -576,4 +593,9 @@ public class ConstructionAreaController implements Initializable {
         }
         return targetTree;
     }
+    
+    public Stack<Object> getActions(){
+        return this.pastModels;
+    }
+    
 }
