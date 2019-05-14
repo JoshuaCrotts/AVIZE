@@ -123,6 +123,7 @@ public class RootPaneController implements Initializable {
     }
 
     private void showData(int width) {
+        System.out.println("Showing!");
         dataAnchorPane.setMinWidth(width);
         dataAnchorPane.setMaxWidth(width);
         mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() - width);
@@ -133,6 +134,7 @@ public class RootPaneController implements Initializable {
     }
 
     private void hideData(int width) {
+        System.out.println("Hiding!");
         dataAnchorPane.setMinWidth(0);
         dataAnchorPane.setMaxWidth(0);
         mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() + width);

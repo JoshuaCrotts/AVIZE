@@ -61,6 +61,7 @@ public class PropositionModel implements Serializable{
         this.comment = comment;
     }    
     
+    @Override
     public String toString(){
         return "Support: " + this.support +"\tProposition: "+this.proposition+"\tComment: "+this.comment;
     }

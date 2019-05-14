@@ -140,12 +140,22 @@ public class PremisePaneController implements Initializable {
         MenuItem detachProp = new MenuItem("Detach Proposition");
         MenuItem deleteProp = new MenuItem("Delete Proposition");
         MenuItem counterArg = new MenuItem("Add Counter Argument");
+        MenuItem clearText = new MenuItem("Clear Text");
 
         setHandlerForToggle(toggleCert);
         setHandlerForDetach(detachProp);
         setHandlerForDeleteProp(deleteProp);
         setHandlerForCounterArg(counterArg);
-        contextMenu.getItems().addAll(toggleCert, detachProp, deleteProp, counterArg);
+        setHandlerForClearText(clearText);
+        
+        contextMenu.getItems().addAll(toggleCert, detachProp, deleteProp, counterArg, clearText);
+    }
+    
+    private void setHandlerForClearText(MenuItem item){
+        item.setOnAction(action -> {
+           this.propBoxC.text.clear();
+           this.propBoxC.text.setText("");
+        });
     }
 
     private void setHandlerForToggle(MenuItem item) {
@@ -177,6 +187,7 @@ public class PremisePaneController implements Initializable {
     }
 
     private void setHandlerForDetach(MenuItem item) {
+        System.out.println("del");
         item.setOnAction(action -> {
             if (prop != null) {
                 extractProp();

@@ -180,19 +180,22 @@ public class ConclusionPaneController implements Initializable {
         MenuItem deleteProp = new MenuItem("Delete Proposition");
         MenuItem counterArg = new MenuItem("Add a Counter Argument");
         MenuItem deleteArg = new MenuItem("Delete Argument");
-
+        MenuItem clearText = new MenuItem("Clear Text");
+        
         setHandlerForToggle(toggleCert);
         setHandlerForDetach(detachProp);
         setHandlerForDeleteProp(deleteProp);
         setHandlerForCounterArg(counterArg);
         setHandlerForDeleteArg(deleteArg);
+        setHandlerForClearText(clearText);
 
         contextMenu.getItems().addAll(
                 toggleCert,
                 detachProp,
                 deleteProp,
                 counterArg,
-                deleteArg
+                deleteArg,
+                clearText
         );
     }
 
@@ -206,6 +209,15 @@ public class ConclusionPaneController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(ConclusionPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        });
+    }
+    
+    private void setHandlerForClearText(MenuItem item){
+        if(this.propBoxC.text == null) return;
+        
+        item.setOnAction(action -> {
+            this.propBoxC.text.clear();
+            this.propBoxC.text.setText("");
         });
     }
 

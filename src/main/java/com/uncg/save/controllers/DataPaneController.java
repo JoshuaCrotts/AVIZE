@@ -135,7 +135,7 @@ public class DataPaneController implements Initializable {
         dataCommentLabel.setText(data.getDataComment());
     }
     
-        @FXML
+    @FXML
     private void modifyMetaPane() {
         if (minimized) {
             expandMetaPane();

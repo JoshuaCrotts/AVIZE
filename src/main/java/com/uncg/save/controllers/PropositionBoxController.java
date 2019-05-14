@@ -148,11 +148,20 @@ public class PropositionBoxController implements Initializable {
     private void setContextMenuItems(ContextMenu contextMenu) throws IOException {
         MenuItem deleteProp = new MenuItem("Delete Proposition");
         MenuItem toggleComment = new MenuItem("Show/Hide Comment");
+        MenuItem clearText = new MenuItem("Clear Text");
 
         setHandlerForDeleteProp(deleteProp);
         setHandlerForComment(toggleComment);
+        setHandlerForClearText(clearText);
 
-        contextMenu.getItems().addAll(deleteProp, toggleComment);
+        contextMenu.getItems().addAll(deleteProp, toggleComment, clearText);
+    }
+
+    private void setHandlerForClearText(MenuItem item) {
+        item.setOnAction(action -> {
+            this.text.clear();
+            this.text.setText("");
+        });
     }
 
     private void setHandlerForComment(MenuItem item) throws IOException {

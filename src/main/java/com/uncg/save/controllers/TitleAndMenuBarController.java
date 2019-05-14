@@ -61,7 +61,11 @@ public class TitleAndMenuBarController implements Initializable {
     @FXML
     private Menu loadMenu;
     @FXML
-    private Menu tools;
+    private Menu toolsMenu;
+    @FXML
+    private Menu ethicsMenu;
+    @FXML
+    private Menu argumentsMenu;
 
     private RootPaneController parentControl;
     private boolean dataLoaded = false;
@@ -105,29 +109,8 @@ public class TitleAndMenuBarController implements Initializable {
             //undoButton.setDisable(false);
             mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
         } else {
-            //undoButton.setDisable(true);
+           return;
         }
-        //       Stack<Object> undos = cac.getActions();
-//        if (undos.size() > 0) {
-//
-//            Object lastAction = undos.pop();
-//            System.out.println(lastAction);
-//            //We know it's a treeID
-//            if (lastAction instanceof String) {
-//                cac.removeArgumentTree((String) lastAction);
-//                System.out.println("REmove a str?");
-//                System.out.println(cac.getMainPane().getChildren().get(cac.getMainPane().getChildren().size() - 1));
-//            }
-//            //In this case, it's a Pane
-//            else if (lastAction instanceof Pane) {
-//                System.out.println("REmove a pane?");
-//                cac.removePane((Pane) lastAction);
-//            } else {
-//                throw new ClassCastException("Cannot undo action; not a Pane or Tree Key!");
-//            }
-//        } else {
-//            throw new IndexOutOfBoundsException("Cannot undo: no actions are present!");
-//        }
     }
 
     /**
@@ -136,7 +119,7 @@ public class TitleAndMenuBarController implements Initializable {
     public void clearDiagram() {
         ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
         if (cac.mainPane.getChildren().isEmpty()) {
-            throw new IllegalStateException("Cannot clear empty pane.");
+            return;
         }
         cac.mainPane.getChildren().clear();
     }
