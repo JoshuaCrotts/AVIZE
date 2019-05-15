@@ -47,7 +47,6 @@ com\uncg\save\controllers\CounterArgumentPaneController.class
 com\uncg\save\argumentviewtree\PremiseNode.class
 com\uncg\save\argumentviewtree\MultiArgConnectionNode.class
 com\uncg\save\controllers\EvidencePaneController.class
-com\uncg\save\controllers\RootPaneController.class
 com\uncg\save\controllers\DataListController.class
 com\uncg\save\controllers\PremisePaneController.class
 com\uncg\save\SaveArgScheme.class

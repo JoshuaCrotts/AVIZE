@@ -24,7 +24,7 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" styleClass="menu-bar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.TitleAndMenuBarController">
+<HBox alignment="TOP_LEFT" styleClass="menu-bar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.TitleAndMenuBarController">
    <children>
       <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="960.0">
         <menus>
@@ -51,6 +51,9 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 			</items>
 		  </Menu>
 		  <Menu fx:id="ethicsMenu" mnemonicParsing="false" text="Ethics">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#openEthicsPDF" text="View ACM Ethics" />
+			</items>
 		  </Menu>
 		  <Menu fx:id="tutorialMenu" mnemonicParsing="false" text="Tutorial">
 		  </Menu>

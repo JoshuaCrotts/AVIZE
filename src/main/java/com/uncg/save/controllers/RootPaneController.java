@@ -50,6 +50,8 @@ public class RootPaneController implements Initializable {
     @FXML
     private AnchorPane dataAnchorPane;
     @FXML
+    private AnchorPane caseStudyAnchorPane;
+    @FXML
     private AnchorPane schemesAnchorPane;
     @FXML
     private Button hideDataButton;
@@ -62,7 +64,7 @@ public class RootPaneController implements Initializable {
 
     private boolean dataButtonHidden = true;
     private boolean dataUp = false;
-    private static boolean schemesUp = true;
+    private boolean schemesUp = true;
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private double screenWidth;
 
@@ -76,6 +78,7 @@ public class RootPaneController implements Initializable {
         
         
         dataAnchorPane.setPrefWidth(0);
+        
         schemesAnchorPane.setPrefWidth(350);
         hideDataButton.setMaxWidth(0);
         hideDataButton.setMinWidth(0);
@@ -179,5 +182,13 @@ public class RootPaneController implements Initializable {
     
     public ConstructionAreaController getConstructionAreaController(){
         return this.constructionAreaController;
+    }
+    
+    public boolean schemesShowing(){
+        return this.schemesUp;
+    }
+    
+    public boolean dataShowing(){
+        return this.dataUp;
     }
 }

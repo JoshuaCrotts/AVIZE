@@ -213,6 +213,7 @@ public class ConclusionPaneController implements Initializable {
     }
     
     private void setHandlerForClearText(MenuItem item){
+        if(this.propBoxC == null) return;
         if(this.propBoxC.text == null) return;
         
         item.setOnAction(action -> {

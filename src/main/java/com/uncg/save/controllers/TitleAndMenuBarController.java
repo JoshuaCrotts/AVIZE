@@ -24,9 +24,10 @@ package com.uncg.save.controllers;
  */
 import com.uncg.save.DataList;
 import com.uncg.save.SaveArgScheme;
-import com.uncg.save.argumentviewtree.ArgumentViewTree;
 import com.uncg.save.models.DataModel;
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +35,18 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.imageio.ImageIO;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -90,15 +94,14 @@ public class TitleAndMenuBarController implements Initializable {
     private void closeProgram() {
         Stage primaryStage = (Stage) menuBar.getScene().getWindow();
         primaryStage.close();
-
     }
 
     /**
-     * Removes the last-added object from the pane. 
-     * 
+     * Removes the last-added object from the pane.
+     *
      * @TODO Allow for multi-model objects to be removed with one click
-     * 
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     public void undoAction(ActionEvent event) {
@@ -106,21 +109,21 @@ public class TitleAndMenuBarController implements Initializable {
         Pane mainPane = cac.getMainPane();
 
         if (mainPane.getChildren().size() > 0) {
-            //undoButton.setDisable(false);
+//            //undoButton.setDisable(false);
             mainPane.getChildren().remove(mainPane.getChildren().size() - 1);
-        } else {
-           return;
         }
     }
 
     /**
-     * @TODO
+     * Clears all currently-existing evidence pieces and arguments from the
+     * construction area.
      */
     public void clearDiagram() {
         ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
         if (cac.mainPane.getChildren().isEmpty()) {
             return;
         }
+
         cac.mainPane.getChildren().clear();
     }
 
@@ -140,6 +143,10 @@ public class TitleAndMenuBarController implements Initializable {
 
     }
 
+    /**
+     * This is simply a tester method to test arbitrary functions during runtime
+     * development.
+     */
     @FXML
     public void test() {
         ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
@@ -147,6 +154,28 @@ public class TitleAndMenuBarController implements Initializable {
         System.out.println("Stack size: " + undos.size());
     }
 
+    /**
+     * Thus far, this only opens the ACM code of ethics pdf for the user.
+     *
+     * @TODO Add actual codes from an XML file or something.
+     */
+    @FXML
+    public void openEthicsPDF() {
+        try {
+            Desktop.getDesktop().open(new File("./target/classes/res/acm-code-of-ethics-booklet.pdf/").getAbsoluteFile());
+        } catch (IOException e) {
+            System.err.println("Error opening ACM ethics booklet: " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Saves the current argument scheme to a .sch file. Should use serialized
+     * objects so if we load in a new scheme, we know where to place them upon
+     * load-in.
+     *
+     * @TODO
+     */
     @FXML
     public void saveArgumentScheme(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -168,14 +197,61 @@ public class TitleAndMenuBarController implements Initializable {
     }
 
     /**
-     * @TODO
+     * Very primitive way of printing the active diagram, but it will take an
+     * screen-shot of the current construction area, while minimizing the side
+     * bars if they are present.
      */
     @FXML
-    public void printArgumentScheme() {
-        System.out.println("Print");
+    public void printArgumentScheme(ActionEvent event) {
+
+        //If either of the two panes are currently active, we need to 
+        //temporary disable them so we can get a clean screenshot
+        boolean data = false;
+        boolean schemes = false;
+        if (parentControl.dataShowing()) {
+            parentControl.toggleData();
+            data = true;
+        }
+        if (parentControl.schemesShowing()) {
+            parentControl.toggleSchemes();
+            schemes = true;
+        }
+
+        Stage currentScene = (Stage) menuBar.getScene().getWindow();
+        WritableImage snapshot = currentScene.getScene().snapshot(null);
+
+        //Flips them back to their original state
+        if (data) {
+            parentControl.toggleData();
+        }
+        if (schemes) {
+            parentControl.toggleSchemes();
+        }
+
+        //Attempts to write the image to a PNG
+        try {
+            FileChooser chooser = new FileChooser();
+            chooser.setTitle("Save Image");
+            chooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PNG", "*.png")
+            );
+            
+            chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+
+            //User-selected path
+            File filePath = chooser.showSaveDialog(menuBar.getScene().getWindow());
+            if (filePath != null) {
+                ImageIO.write(SwingFXUtils.fromFXImage(snapshot, null), "png", filePath.getAbsoluteFile());
+            }
+
+        } catch (Exception e) {
+            System.err.println("Did you really not expect an error? " + e.getMessage());
+        }
     }
 
     /**
+     * Opens an already-existing argument scheme from a .sch file.
+     *
      * @TODO
      */
     @FXML
