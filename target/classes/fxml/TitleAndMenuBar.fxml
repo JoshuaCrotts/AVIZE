@@ -56,6 +56,9 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 			</items>
 		  </Menu>
 		  <Menu fx:id="tutorialMenu" mnemonicParsing="false" text="Tutorial">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#showTutorial" text="View Tutorial" />
+			</items>
 		  </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
