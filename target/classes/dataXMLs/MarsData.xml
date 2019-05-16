@@ -65,26 +65,26 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
     </data>
     <data>
         <id>data6</id>
-	<text>Martian leaders told their fleet that they want to take Earth&apos;s coal and iron and use Earthlings to mine it.</text>
-	<source>Martian general command</source>
-	<genre>Martian fleet communication</genre>
-	<reliability>RELIABLE</reliability>
-	<likelihoodString>0.99</likelihoodString>
+        <text>Martian leaders told their fleet that they want to take Earth&apos;s coal and iron and use Earthlings to mine it.</text>
+        <source>Martian general command</source>
+        <genre>Martian fleet communication</genre>
+        <reliability>RELIABLE</reliability>
+        <likelihoodString>0.99</likelihoodString>
     </data>
     <data>
         <id>data7</id>
-	<text>Martian weapons are superior to any on Earth.</text>
-	<source>Martian Daily News</source>
-	<genre>opinion/propaganda</genre>
-	<reliability>UNRELIABLE</reliability>
-	<likelihoodString>0.1</likelihoodString>
+        <text>Martian weapons are superior to any on Earth.</text>
+        <source>Martian Daily News</source>
+        <genre>opinion/propaganda</genre>
+        <reliability>UNRELIABLE</reliability>
+        <likelihoodString>0.1</likelihoodString>
     </data>
     <data>
         <id>data8</id>
-	<text>Martians took over Earthlike planet Thear in another galaxy in order to enslave its population and exploit its resources.</text>
-	<source>Vulcan Daily Gazette</source>
-	<genre>news report </genre>
-	<reliability>RELIABLE</reliability>
-	<likelihoodString>1.0</likelihoodString>
+        <text>Martians took over Earthlike planet Thear in another galaxy in order to enslave its population and exploit its resources.</text>
+        <source>Vulcan Daily Gazette</source>
+        <genre>news report </genre>
+        <reliability>RELIABLE</reliability>
+        <likelihoodString>1.0</likelihoodString>
     </data>
 </dataList>

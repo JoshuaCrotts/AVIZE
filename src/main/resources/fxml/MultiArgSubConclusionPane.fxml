@@ -25,7 +25,7 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 <?import javafx.scene.layout.*?>
 
 <Pane fx:id="mainPane" prefHeight="40.0" prefWidth="40.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.MultiArgSubConclusionPaneController">
-   <children>
-      <Circle fx:id="anchorCircle" layoutX="20.0" layoutY="20.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
-   </children>
+    <children>
+        <Circle fx:id="anchorCircle" layoutX="20.0" layoutY="20.0" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+    </children>
 </Pane>

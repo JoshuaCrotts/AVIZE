@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -30,39 +30,47 @@ public class CQArgumentNode extends ConclusionNode {
     private Pane cqArgumentPane;
     private CQArgumentPaneController control;
 
-    public CQArgumentNode(Pane cqArgumentPane, CQArgumentPaneController control) {
-        super(cqArgumentPane, control);
+    public CQArgumentNode( Pane cqArgumentPane, CQArgumentPaneController control )
+    {
+        super( cqArgumentPane, control );
         this.cqArgumentPane = cqArgumentPane;
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return cqArgumentPane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
 
     @Override
-    public void moveComment(double x, double y) {
-        if (control.getProposition() != null) {
-            control.moveComment(x, y);
+    public void moveComment( double x, double y )
+    {
+        if ( control.getProposition() != null )
+        {
+            control.moveComment( x, y );
         }
     }
 
     @Override
-    public void deleteCommentPane() {
-        if(control.getProposition()!=null){
+    public void deleteCommentPane()
+    {
+        if ( control.getProposition() != null )
+        {
             control.deleteCommentPane();
         }
     }
 
     @Override
-    public CQArgumentPaneController getControl() {
-        return (CQArgumentPaneController) control;
+    public CQArgumentPaneController getControl()
+    {
+        return ( CQArgumentPaneController ) control;
     }
 }

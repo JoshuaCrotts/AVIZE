@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -44,10 +44,10 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 
 /**
- * FXML controller for conclusion of 
- * multiple-arguments-sharing-the-same-conclusion structure when it is the root 
+ * FXML controller for conclusion of
+ * multiple-arguments-sharing-the-same-conclusion structure when it is the root
  * of an argument
- * 
+ *
  */
 public class MultiArgConclusionPaneController extends ConclusionPaneController
         implements Initializable {
@@ -55,38 +55,45 @@ public class MultiArgConclusionPaneController extends ConclusionPaneController
     private ArgumentNode argNode;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize( URL url, ResourceBundle rb )
+    {
         conclusionArgList = new ArrayList<>();
-        mainPane.getStyleClass().add("conclusion-pane");
-        propositionRectangle.getStyleClass().add("conclusion-rectangle");
-        mainPane.addEventFilter(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
+        mainPane.getStyleClass().add( "conclusion-pane" );
+        propositionRectangle.getStyleClass().add( "conclusion-rectangle" );
+        mainPane.addEventFilter( DragEvent.DRAG_DROPPED, ( DragEvent event ) ->
+        {
             Dragboard db = event.getDragboard();
-            if (db.hasContent(propositionModelDataFormat) || db.hasString()) {
-                try {
-                    onDragDropped(event);
+            if ( db.hasContent( propositionModelDataFormat ) || db.hasString() )
+            {
+                try
+                {
+                    onDragDropped( event );
                     event.consume();
-                } catch (IOException ex) {
-                    Logger.getLogger(PremisePaneController.class.getName())
-                            .log(Level.SEVERE, null, ex);
+                } catch ( IOException ex )
+                {
+                    Logger.getLogger( PremisePaneController.class.getName() )
+                            .log( Level.SEVERE, null, ex );
                 }
             }
-        });
+        } );
 
-        mainPane.addEventFilter(MouseEvent.DRAG_DETECTED,
+        mainPane.addEventFilter( MouseEvent.DRAG_DETECTED,
                 new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                event.setDragDetect(true);
+            public void handle( MouseEvent event )
+            {
+                event.setDragDetect( true );
                 dragDetected();
                 event.consume();
             }
-        });
+        } );
 
-        mainPane.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED,
-                (ContextMenuEvent event) -> {
-                    showContextMenu(event);
-                    event.consume();
-                }
+        mainPane.addEventFilter( ContextMenuEvent.CONTEXT_MENU_REQUESTED,
+                ( ContextMenuEvent event ) ->
+        {
+            showContextMenu( event );
+            event.consume();
+        }
         );
 
         // create context menu for adding new premises
@@ -95,22 +102,24 @@ public class MultiArgConclusionPaneController extends ConclusionPaneController
     }
 
     @Override
-    public void setArgNode(ArgumentNode argNode) {
+    public void setArgNode( ArgumentNode argNode )
+    {
         this.argNode = argNode;
     }
 
     /**
      * set menu items for context menu
      */
-    private void setContextMenuItems() {
-        MenuItem detachProp = new MenuItem("Detach Proposition");
-        MenuItem deleteProp = new MenuItem("Delete Proposition");
-        MenuItem counterArg = new MenuItem("Add a Counter Argument");
-        MenuItem deleteArg = new MenuItem("Delete Argument");
-        setHandlerForDetach(detachProp);
-        setHandlerForDeleteProp(deleteProp);
-        setHandlerForCounterArg(counterArg);
-        setHandlerForDeleteArg(deleteArg);
+    private void setContextMenuItems()
+    {
+        MenuItem detachProp = new MenuItem( "Detach Proposition" );
+        MenuItem deleteProp = new MenuItem( "Delete Proposition" );
+        MenuItem counterArg = new MenuItem( "Add a Counter Argument" );
+        MenuItem deleteArg = new MenuItem( "Delete Argument" );
+        setHandlerForDetach( detachProp );
+        setHandlerForDeleteProp( deleteProp );
+        setHandlerForCounterArg( counterArg );
+        setHandlerForDeleteArg( deleteArg );
 
         contextMenu.getItems().addAll(
                 detachProp,
@@ -121,52 +130,66 @@ public class MultiArgConclusionPaneController extends ConclusionPaneController
 
     }
 
-    private void setHandlerForCounterArg(MenuItem item) {
-        item.setOnAction(action -> {
-            try {
+    private void setHandlerForCounterArg( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            try
+            {
                 List<PremiseModel> conclusionModels = new ArrayList<>();
-                for(ArgumentModel arg : conclusionArgList){
-                    conclusionModels.add(arg.getConclusion());
+                for ( ArgumentModel arg : conclusionArgList )
+                {
+                    conclusionModels.add( arg.getConclusion() );
                 }
                 argTree.addCounterArgument(
                         conclusionModels,
                         argNode
                 );
-            } catch (IOException ex) {
-                Logger.getLogger(ConclusionPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConclusionPaneController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        });
+        } );
     }
 
-    private void setHandlerForDetach(MenuItem item) {
-        item.setOnAction(action -> {
-            if (prop != null) {
+    private void setHandlerForDetach( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            if ( prop != null )
+            {
                 extractProp();
                 removeProp();
             }
             action.consume();
-        });
+        } );
     }
 
-    private void extractProp() {
-        parentControl.createProp(prop, contextCoords);
+    private void extractProp()
+    {
+        parentControl.createProp( prop, contextCoords );
     }
 
-    private void setHandlerForDeleteProp(MenuItem delete) {
-        delete.setOnAction(action -> {
-            if (prop != null) {
+    private void setHandlerForDeleteProp( MenuItem delete )
+    {
+        delete.setOnAction( action ->
+        {
+            if ( prop != null )
+            {
                 removeProp();
             }
             action.consume();
-        });
+        } );
     }
 
-    private void removeProp() {
-        for (ArgumentModel arg : conclusionArgList) {
+    private void removeProp()
+    {
+        for ( ArgumentModel arg : conclusionArgList )
+        {
             arg.removeConclusion();
         }
         prop = null;
-        mainPane.getChildren().remove(propBox);
+        mainPane.getChildren().remove( propBox );
     }
 
     /**
@@ -174,41 +197,49 @@ public class MultiArgConclusionPaneController extends ConclusionPaneController
      *
      * @param item MenuItem
      */
-    private void setHandlerForDeleteArg(MenuItem item) {
-        item.setOnAction(action -> {
+    private void setHandlerForDeleteArg( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
             argTree.deleteArgument();
             action.consume();
-        });
+        } );
     }
 
-    private void onDragDropped(DragEvent event) throws IOException {
+    private void onDragDropped( DragEvent event ) throws IOException
+    {
         Dragboard db = event.getDragboard();
         boolean dropped = false;
-        if (db.hasContent(propositionModelDataFormat)) {
+        if ( db.hasContent( propositionModelDataFormat ) )
+        {
             PropositionModel tProp
-                    = (PropositionModel) db
-                            .getContent(propositionModelDataFormat);
+                    = ( PropositionModel ) db
+                            .getContent( propositionModelDataFormat );
 
-            if (!tProp.getSupport().isEmpty()) {
+            if ( !tProp.getSupport().isEmpty() )
+            {
                 extractEvidence(
                         tProp,
-                        new Point2D(event.getSceneX(), event.getSceneY())
+                        new Point2D( event.getSceneX(), event.getSceneY() )
                 );
             }
-            addProposition(tProp);
+            addProposition( tProp );
             dropped = true;
-        } else if (db.hasString()) {
+        } else if ( db.hasString() )
+        {
             String treeID = db.getString();
-            if (!treeID.equals(argTree.getTreeID())) {
-                argTree.addSupportToArgument(treeID, this);
+            if ( !treeID.equals( argTree.getTreeID() ) )
+            {
+                argTree.addSupportToArgument( treeID, this );
                 dropped = true;
             }
         }
-        event.setDropCompleted(dropped);
+        event.setDropCompleted( dropped );
         event.consume();
     }
 
-    private void extractEvidence(PropositionModel prop, Point2D targetCoords) {
+    private void extractEvidence( PropositionModel prop, Point2D targetCoords )
+    {
         parentControl.createEvidenceChunk(
                 prop.getSupport(),
                 targetCoords
@@ -216,41 +247,46 @@ public class MultiArgConclusionPaneController extends ConclusionPaneController
     }
 
     @Override
-    public void addProposition(PropositionModel prop) throws IOException {
+    public void addProposition( PropositionModel prop ) throws IOException
+    {
         mainPane.getChildren().clear();
-        mainPane.getChildren().add(propositionRectangle);
-        addPropositionAsConclusion(prop);
-        Pane tPropBox = loadNewPropPane(prop);
-        mainPane.getChildren().add(tPropBox);
+        mainPane.getChildren().add( propositionRectangle );
+        addPropositionAsConclusion( prop );
+        Pane tPropBox = loadNewPropPane( prop );
+        mainPane.getChildren().add( tPropBox );
     }
 
-    private void addPropositionAsConclusion(PropositionModel prop) {
-        for (ArgumentModel arg : conclusionArgList) {
-            arg.setConclusion(prop);
+    private void addPropositionAsConclusion( PropositionModel prop )
+    {
+        for ( ArgumentModel arg : conclusionArgList )
+        {
+            arg.setConclusion( prop );
         }
     }
 
-    private Pane loadNewPropPane(PropositionModel prop) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/PropositionBox.fxml"));
+    private Pane loadNewPropPane( PropositionModel prop ) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/PropositionBox.fxml" ) );
         Pane tPropBox = loader.load();
         PropositionBoxController propControl
                 = loader.<PropositionBoxController>getController();
         this.propBox = tPropBox;
         this.prop = prop;
-        propControl.setCanHaveEvidence(false);
-        propControl.setConstructionAreaControl(parentControl);
-        propControl.setPropModel(prop);
-        propControl.setParentContainer(mainPane);
+        propControl.setCanHaveEvidence( false );
+        propControl.setConstructionAreaControl( parentControl );
+        propControl.setPropModel( prop );
+        propControl.setParentContainer( mainPane );
         propBoxC = propControl;
         return tPropBox;
     }
 
-    private void dragDetected() {
-        Dragboard db = mainPane.startDragAndDrop(TransferMode.MOVE);
+    private void dragDetected()
+    {
+        Dragboard db = mainPane.startDragAndDrop( TransferMode.MOVE );
         ClipboardContent content = new ClipboardContent();
-        content.putString(argTree.getTreeID());
-        db.setContent(content);
+        content.putString( argTree.getTreeID() );
+        db.setContent( content );
     }
 
     /**
@@ -259,39 +295,45 @@ public class MultiArgConclusionPaneController extends ConclusionPaneController
      *
      * @param event MouseEvent
      */
-    private void showContextMenu(ContextMenuEvent event) {
+    private void showContextMenu( ContextMenuEvent event )
+    {
         /*
-        call to hide() ensures that bugs arent encountered if
-        multiple context menus are opened back to back
+         * call to hide() ensures that bugs arent encountered if multiple
+         * context menus are opened back to back
          */
         contextMenu.hide();
         contextMenu.show(
                 mainPane, event.getScreenX(), event.getScreenY()
         );
-        contextCoords = new Point2D(event.getScreenX(), event.getScreenY());
+        contextCoords = new Point2D( event.getScreenX(), event.getScreenY() );
         event.consume();
     }
 
     /**
      * hides the context menu
      */
-    private void closeContextMenu() {
+    private void closeContextMenu()
+    {
         contextMenu.hide();
     }
 
     @Override
-    public void addConclusionArgumentModel(ArgumentModel arg) {
-        conclusionArgList.add(arg);
+    public void addConclusionArgumentModel( ArgumentModel arg )
+    {
+        conclusionArgList.add( arg );
     }
 
-    public void setPropositionModel(PropositionModel pm) {
-        try {
+    public void setPropositionModel( PropositionModel pm )
+    {
+        try
+        {
             //Pane tPropBox = loadNewPropPane(pm);
             //mainPane.getChildren().add(tPropBox);
-            addProposition(pm);
-        } catch (IOException ex) {
-            Logger.getLogger(PremisePaneController.class.getName()).log(
-                    Level.SEVERE, null, ex);
+            addProposition( pm );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( PremisePaneController.class.getName() ).log(
+                    Level.SEVERE, null, ex );
         }
     }
 }

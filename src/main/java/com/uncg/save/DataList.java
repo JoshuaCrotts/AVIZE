@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -25,20 +25,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement( name = "dataList" )
 public class DataList {
+
     List<DataModelMaker> data;
-    
+
     @XmlElement( name = "data" )
-    public List<DataModelMaker> getData(){
+    public List<DataModelMaker> getData()
+    {
         return this.data;
     }
-    public void setData(List<DataModelMaker> data){
+
+    public void setData( List<DataModelMaker> data )
+    {
         this.data = data;
     }
-    
-    public List<DataModel> getModels(){
+
+    public List<DataModel> getModels()
+    {
         List<DataModel> dataModelList = new ArrayList();
-        for(int i = 0; i < data.size(); i++){
-            dataModelList.add(data.get(i).getDataModel());
+        for ( int i = 0; i < data.size(); i++ )
+        {
+            dataModelList.add( data.get( i ).getDataModel() );
         }
         return dataModelList;
     }

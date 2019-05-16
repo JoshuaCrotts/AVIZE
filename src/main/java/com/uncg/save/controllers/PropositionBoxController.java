@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -71,7 +71,7 @@ public class PropositionBoxController implements Initializable {
     private PropositionEvidenceChunkController evidenceChunkController;
     @FXML
     Button maximizeButton;
-    @FXML 
+    @FXML
     CheckBox proOrCon;
 
     private Pane parentContainer;
@@ -96,173 +96,206 @@ public class PropositionBoxController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        text.getStyleClass().add("text-area1");
-        mainGridPane.getStyleClass().add("grid-pane-prop");
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        text.getStyleClass().add( "text-area1" );
+        mainGridPane.getStyleClass().add( "grid-pane-prop" );
         ContextMenu contextMenu = new ContextMenu();
-        try {
-            setContextMenuItems(contextMenu);
-        } catch (IOException ex) {
-            Logger.getLogger(PropositionBoxController.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            setContextMenuItems( contextMenu );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( PropositionBoxController.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        text.setContextMenu(contextMenu);
-        text.setEditable(true);
-        mainGridPane.setPrefHeight(125);
-        mainGridPane.addEventFilter(MouseEvent.DRAG_DETECTED,
+        text.setContextMenu( contextMenu );
+        text.setEditable( true );
+        mainGridPane.setPrefHeight( 125 );
+        mainGridPane.addEventFilter( MouseEvent.DRAG_DETECTED,
                 new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                dragDetected(event);
+            public void handle( MouseEvent event )
+            {
+                dragDetected( event );
                 event.consume();
             }
-        });
+        } );
 
         mainGridPane.addEventFilter(
-                DragEvent.DRAG_DROPPED, (DragEvent event) -> {
-                    dragDrop(event);
-                }
+                DragEvent.DRAG_DROPPED, ( DragEvent event ) ->
+        {
+            dragDrop( event );
+        }
         );
 
-        maximizeButton.setVisible(false);
-        evidenceChunkController.setPropControl(this);
+        maximizeButton.setVisible( false );
+        evidenceChunkController.setPropControl( this );
     }
 
-    public void setParentContainer(Pane container) {
+    public void setParentContainer( Pane container )
+    {
         parentContainer = container;
     }
 
-    public String getPropText() {
+    public String getPropText()
+    {
         return prop.getProposition();
     }
 
-    public String getCommentText() {
+    public String getCommentText()
+    {
         return prop.getComment();
     }
 
-    public void setCanHaveEvidence(boolean bool) {
+    public void setCanHaveEvidence( boolean bool )
+    {
         this.canHaveEvidence = bool;
     }
 
-    public void setRedText() {
+    public void setRedText()
+    {
         redText = true;
     }
 
     /**
      * set menu items for context menu
      */
-    private void setContextMenuItems(ContextMenu contextMenu) throws IOException {
-        MenuItem deleteProp = new MenuItem("Delete Proposition");
-        MenuItem toggleComment = new MenuItem("Show/Hide Comment");
-        MenuItem clearText = new MenuItem("Clear Text");
+    private void setContextMenuItems( ContextMenu contextMenu ) throws IOException
+    {
+        MenuItem deleteProp = new MenuItem( "Delete Proposition" );
+        MenuItem toggleComment = new MenuItem( "Show/Hide Comment" );
+        MenuItem clearText = new MenuItem( "Clear Text" );
 
-        setHandlerForDeleteProp(deleteProp);
-        setHandlerForComment(toggleComment);
-        setHandlerForClearText(clearText);
+        setHandlerForDeleteProp( deleteProp );
+        setHandlerForComment( toggleComment );
+        setHandlerForClearText( clearText );
 
-        contextMenu.getItems().addAll(deleteProp, toggleComment, clearText);
+        contextMenu.getItems().addAll( deleteProp, toggleComment, clearText );
     }
 
-    private void setHandlerForClearText(MenuItem item) {
-        item.setOnAction(action -> {
+    private void setHandlerForClearText( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
             this.text.clear();
-            this.text.setText("");
-        });
+            this.text.setText( "" );
+        } );
     }
 
-    private void setHandlerForComment(MenuItem item) throws IOException {
-        item.setOnAction(action -> {
-            if (!hasComment) {
-                try {
+    private void setHandlerForComment( MenuItem item ) throws IOException
+    {
+        item.setOnAction( action ->
+        {
+            if ( !hasComment )
+            {
+                try
+                {
                     double x = 0;
                     double y = 0;
                     this.commentPane = loadComment();
-                    System.out.println(constControl.toString());
-                    System.out.println(this.mainGridPane.toString());
-                    if (constControl.getMainPane().getChildren().contains(this.mainGridPane)) {
+                    System.out.println( constControl.toString() );
+                    System.out.println( this.mainGridPane.toString() );
+                    if ( constControl.getMainPane().getChildren().contains( this.mainGridPane ) )
+                    {
                         x = mainGridPane.getLayoutX();
                         y = mainGridPane.getLayoutY();
-                    } else {
-                        for (int i = 0; i < constControl.getMainPane().getChildren().size(); i++) {
-                            if (constControl.getMainPane().getChildren().get(i) instanceof Pane) {
-                                Pane testPane = (Pane) constControl.getMainPane().getChildren().get(i);
-                                if (testPane.getChildren().contains(this.mainGridPane)) {
+                    } else
+                    {
+                        for ( int i = 0; i < constControl.getMainPane().getChildren().size(); i++ )
+                        {
+                            if ( constControl.getMainPane().getChildren().get( i ) instanceof Pane )
+                            {
+                                Pane testPane = ( Pane ) constControl.getMainPane().getChildren().get( i );
+                                if ( testPane.getChildren().contains( this.mainGridPane ) )
+                                {
                                     x = testPane.getLayoutX();
                                     y = testPane.getLayoutY();
                                 }
                             }
                         }
                     }
-                    commentPane.setTranslateX(x + 325);
-                    commentPane.setTranslateY(y + 100);
-                    line = new Line(x + 318, y + 100, x + 325, y + 100);
-                } catch (IOException ex) {
-                    Logger.getLogger(PremisePaneController.class.getName()).log(Level.SEVERE, null, ex);
+                    commentPane.setTranslateX( x + 325 );
+                    commentPane.setTranslateY( y + 100 );
+                    line = new Line( x + 318, y + 100, x + 325, y + 100 );
+                } catch ( IOException ex )
+                {
+                    Logger.getLogger( PremisePaneController.class.getName() ).log( Level.SEVERE, null, ex );
                 }
                 visible = true;
                 hasComment = true;
-                constControl.getMainPane().getChildren().add(commentPane);
-                constControl.getMainPane().getChildren().add(line);
-            } else if (visible) {
-                commentPane.setVisible(false);
-                line.setVisible(false);
+                constControl.getMainPane().getChildren().add( commentPane );
+                constControl.getMainPane().getChildren().add( line );
+            } else if ( visible )
+            {
+                commentPane.setVisible( false );
+                line.setVisible( false );
                 visible = false;
-            } else if (!visible) {
-                commentPane.setVisible(true);
-                line.setVisible(true);
+            } else if ( !visible )
+            {
+                commentPane.setVisible( true );
+                line.setVisible( true );
                 visible = true;
             }
-        });
-    }
-    
-    @FXML
-    private void setProOrCon(){
-        this.isPro = !this.isPro;
-        
-        this.proOrConText = this.isPro ? "P" : "C";
-        
-        this.proOrCon.setText(this.proOrConText);
+        } );
     }
 
-    private Pane loadComment() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/CommentPane.fxml"));
+    @FXML
+    private void setProOrCon()
+    {
+        this.isPro = !this.isPro;
+
+        this.proOrConText = this.isPro ? "P" : "C";
+
+        this.proOrCon.setText( this.proOrConText );
+    }
+
+    private Pane loadComment() throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/CommentPane.fxml" ) );
         this.commentPane = loader.load();
         CommentPaneController commentControl = loader.<CommentPaneController>getController();
-        commentControl.setParent(this);
-        commentControl.setComment(prop.getComment());
+        commentControl.setParent( this );
+        commentControl.setComment( prop.getComment() );
         commentPane.toFront();
         return commentPane;
     }
 
-    public void setComment(String comment) {
-        prop.setComment(comment);
+    public void setComment( String comment )
+    {
+        prop.setComment( comment );
     }
 
-    public Pane getComment() {
+    public Pane getComment()
+    {
         return this.commentPane;
     }
 
-    public boolean getHasComment() {
+    public boolean getHasComment()
+    {
         return this.hasComment;
     }
 
-    public void moveComment(double x, double y) {
-        if (commentPane != null) {
-            this.commentPane.setTranslateX(commentPane.getTranslateX() + x);
-            this.commentPane.setTranslateY(commentPane.getTranslateY() + y);
-            this.line.setTranslateX(line.getTranslateX() + x);
-            this.line.setTranslateY(line.getTranslateY() + y);
+    public void moveComment( double x, double y )
+    {
+        if ( commentPane != null )
+        {
+            this.commentPane.setTranslateX( commentPane.getTranslateX() + x );
+            this.commentPane.setTranslateY( commentPane.getTranslateY() + y );
+            this.line.setTranslateX( line.getTranslateX() + x );
+            this.line.setTranslateY( line.getTranslateY() + y );
         }
     }
 
     @FXML
-    private void updateText() {
-        text.setStyle("-fx-text-fill: white;");
-        prop.setProposition(text.getText());
+    private void updateText()
+    {
+        text.setStyle( "-fx-text-fill: white;" );
+        prop.setProposition( text.getText() );
         //if (getNeededHeight() > 105) {
         //  maximizeButton.setVisible(true);
         //} else {
-        maximizeButton.setVisible(false);
+        maximizeButton.setVisible( false );
         //}
         //if (maximized) {
         //  maximizeBox();
@@ -270,45 +303,54 @@ public class PropositionBoxController implements Initializable {
     }
 
     @FXML
-    private void clearTextOnDown() {
-        if (redText) {
+    private void clearTextOnDown()
+    {
+        if ( redText )
+        {
             redText = false;
             text.clear();
         }
     }
 
-    private void setHandlerForDeleteProp(MenuItem delete) {
-        delete.setOnAction(action -> {
-            parentContainer.getChildren().remove(mainGridPane);
+    private void setHandlerForDeleteProp( MenuItem delete )
+    {
+        delete.setOnAction( action ->
+        {
+            parentContainer.getChildren().remove( mainGridPane );
             deleteComment();
             action.consume();
-        });
+        } );
     }
 
-    private void dragDrop(DragEvent event) {
+    private void dragDrop( DragEvent event )
+    {
         boolean success = false;
         Dragboard db = event.getDragboard();
-        if (this.canHaveEvidence) {
-            if (db.hasContent(evidenceChunkDataFormat)) {
+        if ( this.canHaveEvidence )
+        {
+            if ( db.hasContent( evidenceChunkDataFormat ) )
+            {
                 List<EvidenceModel> evidenceList
-                        = (List<EvidenceModel>) db.getContent(
+                        = ( List<EvidenceModel> ) db.getContent(
                                 evidenceChunkDataFormat
                         );
-                prop.addSupport(evidenceList);
-                for (EvidenceModel evidence : evidenceList) {
-                    evidenceChunkController.addEvidence(evidence);
+                prop.addSupport( evidenceList );
+                for ( EvidenceModel evidence : evidenceList )
+                {
+                    evidenceChunkController.addEvidence( evidence );
                 }
                 success = true;
-            } else if (db.hasContent(dataModelDataFormat)) {
-                DataModel data = (DataModel) db.getContent(dataModelDataFormat);
-                EvidenceModel evidence = new EvidenceModel(data);
+            } else if ( db.hasContent( dataModelDataFormat ) )
+            {
+                DataModel data = ( DataModel ) db.getContent( dataModelDataFormat );
+                EvidenceModel evidence = new EvidenceModel( data );
 
-                prop.addSupport(evidence);
+                prop.addSupport( evidence );
 
-                evidenceChunkController.addEvidence(evidence);
+                evidenceChunkController.addEvidence( evidence );
             }
             updateEvidenceCount();
-            event.setDropCompleted(success);
+            event.setDropCompleted( success );
             event.consume();
         }
     }
@@ -318,11 +360,12 @@ public class PropositionBoxController implements Initializable {
      * reference the the PropositionModel object represented by the dragged view
      */
     @FXML
-    private void dragDetected(Event event) {
-        Dragboard db = mainGridPane.startDragAndDrop(TransferMode.MOVE);
+    private void dragDetected( Event event )
+    {
+        Dragboard db = mainGridPane.startDragAndDrop( TransferMode.MOVE );
         ClipboardContent content = new ClipboardContent();
-        content.put(propositionModelDataFormat, this.prop);
-        db.setContent(content);
+        content.put( propositionModelDataFormat, this.prop );
+        db.setContent( content );
         event.consume();
     }
 
@@ -333,21 +376,26 @@ public class PropositionBoxController implements Initializable {
      * @param event
      */
     @FXML
-    private void dragDone(DragEvent event) {
-        if (event.isAccepted()) {
-            if (constControl.getMainPane().getChildren().contains(commentPane)) {
-                constControl.getMainPane().getChildren().remove(commentPane);
-                constControl.getMainPane().getChildren().remove(line);
+    private void dragDone( DragEvent event )
+    {
+        if ( event.isAccepted() )
+        {
+            if ( constControl.getMainPane().getChildren().contains( commentPane ) )
+            {
+                constControl.getMainPane().getChildren().remove( commentPane );
+                constControl.getMainPane().getChildren().remove( line );
             }
-            constControl.removePane(mainGridPane);
+            constControl.removePane( mainGridPane );
         }
         event.consume();
     }
 
-    public void deleteComment() {
-        if (constControl.getMainPane().getChildren().contains(commentPane)) {
-            constControl.getMainPane().getChildren().remove(commentPane);
-            constControl.getMainPane().getChildren().remove(line);
+    public void deleteComment()
+    {
+        if ( constControl.getMainPane().getChildren().contains( commentPane ) )
+        {
+            constControl.getMainPane().getChildren().remove( commentPane );
+            constControl.getMainPane().getChildren().remove( line );
         }
         hasComment = false;
         visible = false;
@@ -359,21 +407,25 @@ public class PropositionBoxController implements Initializable {
      *
      * @param prop PropositionModel
      */
-    public void setPropModel(PropositionModel prop) throws IOException {
+    public void setPropModel( PropositionModel prop ) throws IOException
+    {
         this.prop = prop;
-        evidenceChunkController.setProp(prop);
-        text.setText(prop.getProposition());
+        evidenceChunkController.setProp( prop );
+        text.setText( prop.getProposition() );
         //if (getNeededHeight() > 105) {
         //  maximizeButton.setVisible(true);
         //} else {
-        maximizeButton.setVisible(false);
+        maximizeButton.setVisible( false );
         //}
-        if (!canHaveEvidence) {
+        if ( !canHaveEvidence )
+        {
             prop.getSupport().clear();
-            mainGridPane.getChildren().remove(evidenceAccordion);
-        } else {
-            for (EvidenceModel evidence : prop.getSupport()) {
-                evidenceChunkController.addEvidence(evidence);
+            mainGridPane.getChildren().remove( evidenceAccordion );
+        } else
+        {
+            for ( EvidenceModel evidence : prop.getSupport() )
+            {
+                evidenceChunkController.addEvidence( evidence );
             }
             updateEvidenceCount();
         }
@@ -385,20 +437,25 @@ public class PropositionBoxController implements Initializable {
      *
      * @param control ConstructionAreaController
      */
-    public void setConstructionAreaControl(ConstructionAreaController control) {
+    public void setConstructionAreaControl( ConstructionAreaController control )
+    {
         this.constControl = control;
-        evidenceChunkController.setConstructionControl(constControl);
+        evidenceChunkController.setConstructionControl( constControl );
     }
 
     /**
      * OnClick method that expands/collapses the metadata
      */
     @FXML
-    public void modifyEvidencePane(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            if (evidenceCollapsed) {
+    public void modifyEvidencePane( MouseEvent event )
+    {
+        if ( event.getButton() == MouseButton.PRIMARY )
+        {
+            if ( evidenceCollapsed )
+            {
                 expandEvidencePane();
-            } else {
+            } else
+            {
                 collapseEvidencePane();
             }
         }
@@ -409,11 +466,12 @@ public class PropositionBoxController implements Initializable {
      * expand metadata. Grows the parent grid container to accomidate the extra
      * information
      */
-    private void expandEvidencePane() {
-        mainGridPane.setPrefHeight(125 + (140 * prop.getSupport().size()));
+    private void expandEvidencePane()
+    {
+        mainGridPane.setPrefHeight( 125 + ( 140 * prop.getSupport().size() ) );
         // expands the TitledPane if it is clicked anywhere. Necessary for
         // reliable growing/shrinking behavior
-        evidenceTitledPane.setExpanded(true);
+        evidenceTitledPane.setExpanded( true );
         evidenceCollapsed = false;
         //move parent to front of its siblings to garauntee visibility
         mainGridPane.getParent().toFront();
@@ -423,115 +481,103 @@ public class PropositionBoxController implements Initializable {
     /**
      * collapse metadata. Shrinks the parent grid container to default size
      */
-    private void collapseEvidencePane() {
-        mainGridPane.setPrefHeight(125);
+    private void collapseEvidencePane()
+    {
+        mainGridPane.setPrefHeight( 125 );
         // collapses the TitlePane if it is clicked anywhere. Necessary for
         // reliable growing/shrinking behavior
-        evidenceTitledPane.setExpanded(false);
+        evidenceTitledPane.setExpanded( false );
         evidenceCollapsed = true;
         constControl.constructionAreaSizeCheck();
     }
 
-    public void updateEvidenceCount() {
+    public void updateEvidenceCount()
+    {
         evidenceTitledPane.setText(
                 "Evidence: "
                 + evidenceChunkController.evidenceListSize()
         );
     }
 
-    public void setContextMenu(ContextMenu menu) throws IOException {
-        text.setContextMenu(menu);
-        MenuItem toggleComment = new MenuItem("Show/Hide Comment");
-        setHandlerForComment(toggleComment);
-        text.getContextMenu().getItems().add(toggleComment);
+    public void setContextMenu( ContextMenu menu ) throws IOException
+    {
+        text.setContextMenu( menu );
+        MenuItem toggleComment = new MenuItem( "Show/Hide Comment" );
+        setHandlerForComment( toggleComment );
+        text.getContextMenu().getItems().add( toggleComment );
     }
 
-    public void setViewText(String s) {
-        text.setStyle("-fx-text-fill: white;");
-        text.setText(s);
+    public void setViewText( String s )
+    {
+        text.setStyle( "-fx-text-fill: white;" );
+        text.setText( s );
         /*
-        if (getNeededHeight() > 105) {
-            maximizeButton.setVisible(true);
-        } else {*/
-        maximizeButton.setVisible(false);
+         * if (getNeededHeight() > 105) { maximizeButton.setVisible(true); }
+         * else {
+         */
+        maximizeButton.setVisible( false );
         //}
-        System.out.println("im here yetoert");
+        System.out.println( "im here yetoert" );
     }
 
-    public void setInitialText(String s) {
-        text.setStyle("-fx-text-fill: red;");
-        text.setText(s);
+    public void setInitialText( String s )
+    {
+        text.setStyle( "-fx-text-fill: red;" );
+        text.setText( s );
         //if (getNeededHeight() > 105) {
         //  maximizeButton.setVisible(true);
         //} else {
-        maximizeButton.setVisible(false);
+        maximizeButton.setVisible( false );
         //}
-        System.out.println("im here!!!!");
+        System.out.println( "im here!!!!" );
     }
 
-    public void translateComment(double x, double y) {
-        this.commentPane.setTranslateX(commentPane.getTranslateX() + x);
-        this.commentPane.setTranslateY(commentPane.getTranslateY() + y);
-        line.setEndX(line.getEndX() + x);
-        line.setEndY(line.getEndY() + y);
+    public void translateComment( double x, double y )
+    {
+        this.commentPane.setTranslateX( commentPane.getTranslateX() + x );
+        this.commentPane.setTranslateY( commentPane.getTranslateY() + y );
+        line.setEndX( line.getEndX() + x );
+        line.setEndY( line.getEndY() + y );
     }
 
-    public void setColor(double r, double b) {
+    public void setColor( double r, double b )
+    {
         //  text.setStyle
     }
 
-    private int redFunct(double d) {
-        d = (1 - d) * 255;
-        int i = (int) d;
+    private int redFunct( double d )
+    {
+        d = ( 1 - d ) * 255;
+        int i = ( int ) d;
         return i;
     }
 
-    private int blueFunct(double d) {
+    private int blueFunct( double d )
+    {
         d = d * 255;
-        int i = (int) d;
+        int i = ( int ) d;
         return i;
     }
     /*
-    @FXML
-    private void maxProp() {
-        System.out.println("IM HERE");
-        if (!maximized) {
-            maximizeBox();
-            maximized = true;
-        } else {
-            minimizeBox();
-            maximized = false;
-        }
-    }
-
-    private void maximizeBox() {
-        mainGridPane.setPrefHeight(getNeededHeight() + 35);
-        mainGridPane.getRowConstraints().get(0).setPrefHeight(getNeededHeight());
-        text.setPrefHeight(getNeededHeight());
-    }
-
-    private int getNeededHeight() {
-        int i = 105;
-        int j = text.getText().length();
-        int growth = 0;
-        if (j > 96) {
-            j = j - 96;
-            growth = j / 32;
-            growth++;
-            growth = growth * 26;
-            i = i + growth;
-            return i;
-        } else {
-            return 105;
-        }
-    }
-
-    private void minimizeBox() {
-        System.out.println("every other click");
-        mainGridPane.setPrefHeight(paneHeight);
-        mainGridPane.getRowConstraints().get(0).setPrefHeight(105);
-        text.setPrefHeight(textAreaHeight);
-
-    }
+     * @FXML private void maxProp() { System.out.println("IM HERE"); if
+     * (!maximized) { maximizeBox(); maximized = true; } else { minimizeBox();
+     * maximized = false; } }
+     *
+     * private void maximizeBox() { mainGridPane.setPrefHeight(getNeededHeight()
+     * + 35);
+     * mainGridPane.getRowConstraints().get(0).setPrefHeight(getNeededHeight());
+     * text.setPrefHeight(getNeededHeight()); }
+     *
+     * private int getNeededHeight() { int i = 105; int j =
+     * text.getText().length(); int growth = 0; if (j > 96) { j = j - 96; growth
+     * = j / 32; growth++; growth = growth * 26; i = i + growth; return i; }
+     * else { return 105; } }
+     *
+     * private void minimizeBox() { System.out.println("every other click");
+     * mainGridPane.setPrefHeight(paneHeight);
+     * mainGridPane.getRowConstraints().get(0).setPrefHeight(105);
+     * text.setPrefHeight(textAreaHeight);
+     *
+     * }
      */
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -42,66 +42,81 @@ public class ArgumentCertaintyPaneController implements Initializable {
     private PremisePaneController premControl;
 
     /**
-     * Controls the certainty panes attached to conclusion, chain,
-     * counter argument, and critical question panes.
-     * 
+     * Controls the certainty panes attached to conclusion, chain, counter
+     * argument, and critical question panes.
+     *
      * Associated view node: ArgumentCertaintyNode
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize( URL url, ResourceBundle rb )
+    {
         certainty = 0.00;
 
-        certaintyTextField.setTextFormatter(new CertaintyFormatter());
+        certaintyTextField.setTextFormatter( new CertaintyFormatter() );
         certaintyTextField
                 .focusedProperty()
-                .addListener((isFocus, oldValue, newValue) -> {
-                    if (!newValue) {
+                .addListener( ( isFocus, oldValue, newValue ) ->
+                {
+                    if ( !newValue )
+                    {
                         Double parsed
                                 = Double
-                                        .parseDouble(certaintyTextField.getText());
-                        if (parsed < 0.00 || parsed > 1.00) {
+                                        .parseDouble( certaintyTextField.getText() );
+                        if ( parsed < 0.00 || parsed > 1.00 )
+                        {
                             certaintyTextField
-                                    .setText(Double.toString(certainty));
-                        } else {
+                                    .setText( Double.toString( certainty ) );
+                        } else
+                        {
                             certainty = parsed;
-                             controllingModel.setCertainty(parsed);
+                            controllingModel.setCertainty( parsed );
                         }
-                        if (concControl != null) {
-                            concControl.setViewColor(certainty);
-                        }else{
-                            premControl.setViewColor(certainty);
+                        if ( concControl != null )
+                        {
+                            concControl.setViewColor( certainty );
+                        } else
+                        {
+                            premControl.setViewColor( certainty );
                         }
                     }
-                });
+                } );
 
-        mainContainer.setVisible(false);
+        mainContainer.setVisible( false );
     }
 
-    public void setConcControl(ConclusionPaneController pControl) {
+    public void setConcControl( ConclusionPaneController pControl )
+    {
         this.concControl = pControl;
     }
 
-    public ConclusionPaneController getConcControl() {
+    public ConclusionPaneController getConcControl()
+    {
         return this.concControl;
     }
-    
-    public void setPremControl(PremisePaneController pControl){
+
+    public void setPremControl( PremisePaneController pControl )
+    {
         this.premControl = pControl;
     }
-    
-    public PremisePaneController getPremControl(){
+
+    public PremisePaneController getPremControl()
+    {
         return this.premControl;
     }
 
-    public void setControllingModel(PremiseModel model) {
+    public void setControllingModel( PremiseModel model )
+    {
         this.controllingModel = model;
     }
 
-    public void toggleVisible() {
-        mainContainer.setVisible(!mainContainer.isVisible());
+    public void toggleVisible()
+    {
+        mainContainer.setVisible( !mainContainer.isVisible() );
     }
-    public void killVisibility(){
-        mainContainer.setVisible(false);
+
+    public void killVisibility()
+    {
+        mainContainer.setVisible( false );
     }
 
     /**
@@ -112,38 +127,47 @@ public class ArgumentCertaintyPaneController implements Initializable {
 
         private static final double DEFAULT_VALUE = 0.00;
         private static final DecimalFormat DEC_FORM
-                = new DecimalFormat("#0.00");
+                = new DecimalFormat( "#0.00" );
 
-        public CertaintyFormatter() {
+        public CertaintyFormatter()
+        {
             super(
                     new StringConverter<Double>() {
                 @Override
-                public String toString(Double value) {
-                    return DEC_FORM.format(value);
+                public String toString( Double value )
+                {
+                    return DEC_FORM.format( value );
                 }
 
                 @Override
-                public Double fromString(String string) {
-                    try {
-                        return DEC_FORM.parse(string).doubleValue();
-                    } catch (ParseException ex) {
+                public Double fromString( String string )
+                {
+                    try
+                    {
+                        return DEC_FORM.parse( string ).doubleValue();
+                    } catch ( ParseException ex )
+                    {
                         return Double.NaN;
                     }
                 }
             },
                     DEFAULT_VALUE,
-                    change -> {
-                        try {
-                            String text = change.getText();
-                            if (!change.isContentChange()) {
-                                return change;
-                            }
-                            DEC_FORM.parse(change.getControlNewText());
-                            return change;
-                        } catch (ParseException ex) {
-                            return null;
-                        }
+                    change ->
+            {
+                try
+                {
+                    String text = change.getText();
+                    if ( !change.isContentChange() )
+                    {
+                        return change;
                     }
+                    DEC_FORM.parse( change.getControlNewText() );
+                    return change;
+                } catch ( ParseException ex )
+                {
+                    return null;
+                }
+            }
             );
         }
     }

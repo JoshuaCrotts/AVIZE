@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -24,12 +24,14 @@ public class CounterArgumentModel extends ArgumentModel {
 
     private List<PremiseModel> parentModelList;
 
-    public CounterArgumentModel() {
+    public CounterArgumentModel()
+    {
         super();
         this.parentModelList = new ArrayList<>();
     }
 
-    public CounterArgumentModel(ArgumentModel argModel) {
+    public CounterArgumentModel( ArgumentModel argModel )
+    {
         this.parentModelList = new ArrayList<>();
         this.scheme = argModel.scheme;
 
@@ -40,37 +42,44 @@ public class CounterArgumentModel extends ArgumentModel {
         cq = argModel.cq;
     }
 
-    public void addToParentModelList(PremiseModel model) {
-        if (!parentModelList.contains(model)) {
-            parentModelList.add(model);
+    public void addToParentModelList( PremiseModel model )
+    {
+        if ( !parentModelList.contains( model ) )
+        {
+            parentModelList.add( model );
         }
     }
 
-    public void removeFromParentModelList(PremiseModel model) {
-        parentModelList.remove(model);
+    public void removeFromParentModelList( PremiseModel model )
+    {
+        parentModelList.remove( model );
     }
 
-    public void setParentModelList(List<PremiseModel> newList) {
-        System.out.println("setting parent models to:");
-        System.out.println(newList);
+    public void setParentModelList( List<PremiseModel> newList )
+    {
+        System.out.println( "setting parent models to:" );
+        System.out.println( newList );
         parentModelList.clear();
-        System.out.println("parent models cleared");
-        parentModelList.addAll(newList);
-        System.out.println("models added");
+        System.out.println( "parent models cleared" );
+        parentModelList.addAll( newList );
+        System.out.println( "models added" );
     }
 
-    public List<PremiseModel> getParentModelList() {
+    public List<PremiseModel> getParentModelList()
+    {
         return parentModelList;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString()
+    {
         StringBuilder s = new StringBuilder();
-        
-        for(int i = 0; i < parentModelList.size(); i++){
-            s.append(parentModelList.get(i));
+
+        for ( int i = 0; i < parentModelList.size(); i++ )
+        {
+            s.append( parentModelList.get( i ) );
         }
-        
+
         return s.toString();
     }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -31,28 +31,35 @@ public class MultipleArgLabel extends ArgumentNode {
     public MultipleArgLabel(
             Point2D target,
             ArgumentViewTree avt,
-            Pane canvas) {
+            Pane canvas )
+    {
         label = new Label();
-        label.setText("Supported by multiple arguments");
+        label.setText( "Supported by multiple arguments" );
         this.canvas = canvas;
         argTree = avt;
-        label.setLayoutX(target.getX() + 5);
-        label.setLayoutY(target.getY() + 120 / 2);
+        label.setLayoutX( target.getX() + 5 );
+        label.setLayoutY( target.getY() + 120 / 2 );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return label;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
         this.argTree = argTree;
     }
+
     @Override
-    public void moveComment(double x,double y){       
+    public void moveComment( double x, double y )
+    {
     }
+
     @Override
-    public void deleteCommentPane(){
+    public void deleteCommentPane()
+    {
     }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -21,81 +21,103 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchemeModel implements Serializable{
+public class SchemeModel implements Serializable {
+
     private List<String> premises = new ArrayList();
     private List<String> criticalQs = new ArrayList();
     private List<String> examples = new ArrayList();
     private final String conclusion;
     private final String title;
-    
-    public SchemeModel(){
+
+    public SchemeModel()
+    {
         this.conclusion = "to be set";
         this.title = "to be set";
     }
-    
+
     public SchemeModel(
-            List<String> premises, 
-            List<String> criticalQs, 
+            List<String> premises,
+            List<String> criticalQs,
             List<String> examples,
-            String conclusion, 
-            String title){
+            String conclusion,
+            String title )
+    {
         this.premises = premises;
         this.criticalQs = criticalQs;
         this.examples = examples;
         this.conclusion = conclusion;
         this.title = title;
     }
-    
-    public List<String> getPremises(){
+
+    public List<String> getPremises()
+    {
         return this.premises;
     }
-    public List<String> getCriticalQs(){
+
+    public List<String> getCriticalQs()
+    {
         return this.criticalQs;
     }
-    public void setCriticalQs(List<String> cq){
+
+    public void setCriticalQs( List<String> cq )
+    {
         this.criticalQs = cq;
     }
-    public List<String> getExamples(){
+
+    public List<String> getExamples()
+    {
         return this.examples;
     }
-    public String getConclusion(){
+
+    public String getConclusion()
+    {
         return conclusion;
     }
-    public String getTitle(){
+
+    public String getTitle()
+    {
         return title;
     }
-    public void clearPremise(){
+
+    public void clearPremise()
+    {
         premises.clear();
     }
-    public void addPremise(String s){
-        premises.add(s);
+
+    public void addPremise( String s )
+    {
+        premises.add( s );
     }
-    
+
     @Override
-    public String toString(){
+    public String toString()
+    {
         StringBuilder output = new StringBuilder();
-        
-        output.append("Title: ").append(this.title).append("\n");
-        output.append("Conclusion: ").append(this.conclusion).append("\n");
-        
+
+        output.append( "Title: " ).append( this.title ).append( "\n" );
+        output.append( "Conclusion: " ).append( this.conclusion ).append( "\n" );
+
         //Print premises
-        this.premises.forEach((premise) -> {
-            output.append(premise).append(" ");
-        });
-        output.append("\n");
-        
+        this.premises.forEach( ( premise ) ->
+        {
+            output.append( premise ).append( " " );
+        } );
+        output.append( "\n" );
+
         //Print critical questions
-        this.premises.forEach((criticalQuestion) -> {
-            output.append(criticalQuestion).append(" ");
-        });
-        output.append("\n");
-        
+        this.premises.forEach( ( criticalQuestion ) ->
+        {
+            output.append( criticalQuestion ).append( " " );
+        } );
+        output.append( "\n" );
+
         //Print examples
-        this.examples.forEach((example) -> {
-            output.append(example).append(" ");
-        });
-        output.append("\n");
-        
+        this.examples.forEach( ( example ) ->
+        {
+            output.append( example ).append( " " );
+        } );
+        output.append( "\n" );
+
         return output.toString();
     }
 }

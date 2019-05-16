@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -36,54 +36,64 @@ public class CounterArgumentConnectionNode extends ArgumentNode {
      * for a rectangle that is the actual JavaFX Node used to draw the tree
      *
      * @param target Point2D detailing the coordinates the rectangle will be
-     * drawn at. Calculations are done to offset this value and accommodate the
-     * dimensions of the rectangle to make sure everything is centered.
+     *               drawn at. Calculations are done to offset this value and
+     *               accommodate the dimensions of the rectangle to make sure
+     *               everything is centered.
      */
-    public CounterArgumentConnectionNode(Point2D target) {
+    public CounterArgumentConnectionNode( Point2D target )
+    {
         super();
         double rectWidth = defaultLength;
         double rectHeight = 5;
         this.rect = new Rectangle(
                 target.getX() + PREMISE_WIDTH,
-                target.getY() + ((PREMISE_HEIGHT / 2)),
+                target.getY() + ( ( PREMISE_HEIGHT / 2 ) ),
                 rectWidth,
                 rectHeight
         );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return rect;
     }
 
     @Override
-    public int getWidth() {
-        return (int) rect.getWidth();
+    public int getWidth()
+    {
+        return ( int ) rect.getWidth();
 
     }
 
-    public void addLength(int i) {
-        rect.setWidth(rect.getWidth() + i);
+    public void addLength( int i )
+    {
+        rect.setWidth( rect.getWidth() + i );
     }
 
-    public void resizeToDefaultWidth() {
-        rect.setWidth(defaultLength);
-    }
-
-    @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-    }
-
-    public void remove() {
-
+    public void resizeToDefaultWidth()
+    {
+        rect.setWidth( defaultLength );
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+    }
+
+    public void remove()
+    {
+
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void moveComment( double x, double y )
+    {
+    }
+
+    @Override
+    public void deleteCommentPane()
+    {
     }
 
 }

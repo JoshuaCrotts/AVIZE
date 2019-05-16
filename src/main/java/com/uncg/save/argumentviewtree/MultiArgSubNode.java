@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -29,31 +29,38 @@ public class MultiArgSubNode extends ArgumentNode {
     public MultiArgSubNode(
             Pane mainPane,
             MultiArgSubConclusionPaneController control
-    ) {
+    )
+    {
         super();
         this.mainPane = mainPane;
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return mainPane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
 
-    public MultiArgSubConclusionPaneController getControl() {
+    public MultiArgSubConclusionPaneController getControl()
+    {
         return control;
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void moveComment( double x, double y )
+    {
     }
+
     @Override
-    public void deleteCommentPane(){
+    public void deleteCommentPane()
+    {
     }
 }

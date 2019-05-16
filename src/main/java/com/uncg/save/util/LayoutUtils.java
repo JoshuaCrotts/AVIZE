@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -23,27 +23,30 @@ import javafx.scene.layout.Pane;
 public class LayoutUtils {
 
     /**
-     * 
+     *
      * @param pane
      * @param x
      * @param y
-     * @return 
+     *
+     * @return
      */
-    public static Point2D getLocalCoords(Pane pane, double x, double y) {
+    public static Point2D getLocalCoords( Pane pane, double x, double y )
+    {
         Point2D localCoords;
-        localCoords = pane.sceneToLocal(x, y, true);
+        localCoords = pane.sceneToLocal( x, y, true );
         return localCoords;
     }
 
     /**
      * Sets the layout of a pane
      *
-     * @param pane Pane
+     * @param pane   Pane
      * @param coords Point2D
      */
-    public static void setChildLayout(Pane pane, Point2D coords) {
-        pane.setLayoutX(coords.getX());
-        pane.setLayoutY(coords.getY());
+    public static void setChildLayout( Pane pane, Point2D coords )
+    {
+        pane.setLayoutX( coords.getX() );
+        pane.setLayoutY( coords.getY() );
     }
 
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2019 Nancy Green
  * This file is part of AVIZE.
  *
@@ -32,22 +32,26 @@ public class SaveArgScheme {
     private SchemeModel schemeModel;
     private String filePath;
 
-    public SaveArgScheme(String path) {
+    public SaveArgScheme( String path )
+    {
         this.filePath = path;
-        
-        this.writeArgToFile(schemeModel);
+
+        this.writeArgToFile( schemeModel );
     }
 
-    private boolean writeArgToFile(Object serObj) {
+    private boolean writeArgToFile( Object serObj )
+    {
         boolean success = false;
-        try {
-            FileOutputStream fileOut = new FileOutputStream(this.filePath);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(serObj);
+        try
+        {
+            FileOutputStream fileOut = new FileOutputStream( this.filePath );
+            ObjectOutputStream objectOut = new ObjectOutputStream( fileOut );
+            objectOut.writeObject( serObj );
             objectOut.close();
-            System.out.println("The Object was succesfully written to a file");
+            System.out.println( "The Object was succesfully written to a file" );
             success = true;
-        } catch (Exception ex) {
+        } catch ( Exception ex )
+        {
             ex.printStackTrace();
         }
         return success;

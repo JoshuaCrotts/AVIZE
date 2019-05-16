@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -21,29 +21,33 @@ import com.uncg.save.controllers.ChainPaneController;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-public class ChainNode extends ConclusionNode { 
+public class ChainNode extends ConclusionNode {
 
-    public ChainNode(Pane chainPane, ChainPaneController control) {
-        super(chainPane, control);
+    public ChainNode( Pane chainPane, ChainPaneController control )
+    {
+        super( chainPane, control );
         this.conclusionPane = chainPane;
         this.cqFlag = control.getCQFlag();
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
-    
+
     @Override
-    public ChainPaneController getControl() {
-        return (ChainPaneController)control;
+    public ChainPaneController getControl()
+    {
+        return ( ChainPaneController ) control;
     }
-    
+
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return conclusionPane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
-    
+
 }

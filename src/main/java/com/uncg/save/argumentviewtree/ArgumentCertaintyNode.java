@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -32,28 +32,33 @@ public class ArgumentCertaintyNode extends ArgumentNode {
     public ArgumentCertaintyNode(
             Pane certPane,
             ArgumentCertaintyPaneController control,
-            Point2D target) {
+            Point2D target )
+    {
         argCertaintyContainer = certPane;
         certControl = control;
 
-        argCertaintyContainer.setLayoutX(target.getX() - paneLength);
-        argCertaintyContainer.setLayoutY(target.getY());
+        argCertaintyContainer.setLayoutX( target.getX() - paneLength );
+        argCertaintyContainer.setLayoutY( target.getY() );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return argCertaintyContainer;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void moveComment( double x, double y )
+    {
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void deleteCommentPane()
+    {
     }
 }

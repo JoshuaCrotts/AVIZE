@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -54,54 +54,63 @@ public class CQPaneController extends ConclusionPaneController implements Initia
     private ArgumentSchemeLabel parentSchemeLabel;
 
     private ArgumentModel parentArgument;
-    
-    /*
-    * Controls single pane answers to critical questions
-    *
-    * Only exists as single panes, arguments in support of a CQ lead to a
-    * CQArgumentPane
-    *
-    * Associated view node: CQNode
-    */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        mainPane.getStyleClass().add("cq-pane");
-        propositionRectangle.getStyleClass().add("cq-rectangle");
 
-        mainPane.addEventFilter(DragEvent.DRAG_DROPPED, (DragEvent event) -> {
+    /*
+     * Controls single pane answers to critical questions
+     *
+     * Only exists as single panes, arguments in support of a CQ lead to a
+     * CQArgumentPane
+     *
+     * Associated view node: CQNode
+     */
+    @Override
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        mainPane.getStyleClass().add( "cq-pane" );
+        propositionRectangle.getStyleClass().add( "cq-rectangle" );
+
+        mainPane.addEventFilter( DragEvent.DRAG_DROPPED, ( DragEvent event ) ->
+        {
             Dragboard db = event.getDragboard();
-            if (db.hasContent(propositionModelDataFormat) || db.hasString()) {
-                onDragDropped(event);
+            if ( db.hasContent( propositionModelDataFormat ) || db.hasString() )
+            {
+                onDragDropped( event );
             }
-        });
+        } );
 
         // intercept drag detected so props are not draggable
-        mainPane.addEventFilter(MouseEvent.DRAG_DETECTED, (MouseEvent event) -> {
+        mainPane.addEventFilter( MouseEvent.DRAG_DETECTED, ( MouseEvent event ) ->
+        {
             event.consume();
-        });
+        } );
 
-        mainPane.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        mainPane.addEventFilter( MouseEvent.MOUSE_CLICKED,
                 new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    try {
-                        if (!hasProp) {
+            public void handle( MouseEvent event )
+            {
+                if ( event.getButton() == MouseButton.PRIMARY )
+                {
+                    try
+                    {
+                        if ( !hasProp )
+                        {
                             deleteProp();
-                            mainPane.getChildren().add(propositionRectangle);
+                            mainPane.getChildren().add( propositionRectangle );
                             prop = new PropositionModel();
-                            addPropositionAsPremise(prop);
-                            propBox = loadNewPropPane(prop);
-                            mainPane.getChildren().add(propBox);
+                            addPropositionAsPremise( prop );
+                            propBox = loadNewPropPane( prop );
+                            mainPane.getChildren().add( propBox );
                             hasProp = true;
                         }
-                    } catch (IOException ex) {
-                        Logger.getLogger(ConclusionPaneController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch ( IOException ex )
+                    {
+                        Logger.getLogger( ConclusionPaneController.class.getName() ).log( Level.SEVERE, null, ex );
                     }
                 }
                 event.consume();
             }
-        });
+        } );
         // create context menu for adding new premises
         contextMenu = new ContextMenu();
         setContextMenuItems();
@@ -109,62 +118,73 @@ public class CQPaneController extends ConclusionPaneController implements Initia
     }
 
     /*
-    * Adds the proposition in this pane to the conclusion of its associated
-    * ArgumentModel
-    */
-    private void addPropositionAsConclusion(PropositionModel prop) {
-        if (argument != null) {
-            argument.setConclusion(prop);
+     * Adds the proposition in this pane to the conclusion of its associated
+     * ArgumentModel
+     */
+    private void addPropositionAsConclusion( PropositionModel prop )
+    {
+        if ( argument != null )
+        {
+            argument.setConclusion( prop );
         }
     }
 
-    public void setParentArgument(ArgumentModel arg) {
+    public void setParentArgument( ArgumentModel arg )
+    {
         parentArgument = arg;
     }
 
-    public ArgumentModel getParentArgument() {
+    public ArgumentModel getParentArgument()
+    {
         return parentArgument;
     }
 
-    public void setConnector(ArgumentNode connection) {
+    public void setConnector( ArgumentNode connection )
+    {
         this.connector = connection;
     }
 
-    public ArgumentNode getConnector() {
+    public ArgumentNode getConnector()
+    {
         return this.connector;
     }
 
-    public void setLabel(ArgumentNode label) {
+    public void setLabel( ArgumentNode label )
+    {
         this.label = label;
     }
 
-    public ArgumentNode getLabel() {
+    public ArgumentNode getLabel()
+    {
         return this.label;
     }
 
-    public void setArgumentLabel(ArgumentNode label) {
-        this.parentSchemeLabel = (ArgumentSchemeLabel) label;
+    public void setArgumentLabel( ArgumentNode label )
+    {
+        this.parentSchemeLabel = ( ArgumentSchemeLabel ) label;
     }
 
-    public ArgumentNode getArgSchemeLabel() {
+    public ArgumentNode getArgSchemeLabel()
+    {
         return this.parentSchemeLabel;
     }
 
     /**
      * set menu items for context menu
      */
-    private void setContextMenuItems() {
-        MenuItem toggleCert = new MenuItem("Certainty On/Off");
-        MenuItem addCounterArg = new MenuItem("Add Counter Argument");
-        MenuItem detachProp = new MenuItem("Detach Proposition");
-        MenuItem deleteProp = new MenuItem("Delete Proposition");
-        MenuItem deleteCQ = new MenuItem("Delete Critical Question");
+    private void setContextMenuItems()
+    {
+        MenuItem toggleCert = new MenuItem( "Certainty On/Off" );
+        MenuItem addCounterArg = new MenuItem( "Add Counter Argument" );
+        MenuItem detachProp = new MenuItem( "Detach Proposition" );
+        MenuItem deleteProp = new MenuItem( "Delete Proposition" );
+        MenuItem deleteCQ = new MenuItem( "Delete Critical Question" );
 
-        setHandlerForToggle(toggleCert);
-        setHandlerForAddCounter(addCounterArg);
-        setHandlerForDetach(detachProp);
-        setHandlerForDeleteProp(deleteProp);
-        setHandlerForDeleteCQ(deleteCQ);
+        setHandlerForToggle( toggleCert );
+        setHandlerForAddCounter( addCounterArg );
+        setHandlerForDetach( detachProp );
+        setHandlerForDeleteProp( deleteProp );
+        setHandlerForDeleteCQ( deleteCQ );
         contextMenu.getItems().addAll(
                 toggleCert,
                 addCounterArg,
@@ -174,88 +194,107 @@ public class CQPaneController extends ConclusionPaneController implements Initia
         );
     }
 
-    private void setHandlerForToggle(MenuItem item) {
-        item.setOnAction(action -> {
+    private void setHandlerForToggle( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
             certaintyControl.toggleVisible();
             action.consume();
-        });
+        } );
     }
 
     /*
-    * Adds a counter argument to the critical question
-    */
-    private void setHandlerForAddCounter(MenuItem item) {
-        item.setOnAction(action -> {
-            try {
+     * Adds a counter argument to the critical question
+     */
+    private void setHandlerForAddCounter( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            try
+            {
                 argTree.addCounterArgument(
                         argument.getConclusion(),
                         argNode
                 );
-            } catch (IOException ex) {
-                Logger.getLogger(ConclusionPaneController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConclusionPaneController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        });
+        } );
     }
 
     /*
-    * Detaches a proposition that is attached to the pane
-    */
-    private void setHandlerForDetach(MenuItem item) {
-        item.setOnAction(action -> {
-            if (prop != null) {
+     * Detaches a proposition that is attached to the pane
+     */
+    private void setHandlerForDetach( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            if ( prop != null )
+            {
                 extractProp();
                 removeProp();
             }
             action.consume();
-        });
+        } );
     }
 
     /*
-    * Creates copy of prop in the construction area
-    */
-    private void extractProp() {
-        parentControl.createProp(prop, contextCoords);
+     * Creates copy of prop in the construction area
+     */
+    private void extractProp()
+    {
+        parentControl.createProp( prop, contextCoords );
     }
 
-    private void setHandlerForDeleteProp(MenuItem delete) {
-        delete.setOnAction(action -> {
-            if (prop != null) {
+    private void setHandlerForDeleteProp( MenuItem delete )
+    {
+        delete.setOnAction( action ->
+        {
+            if ( prop != null )
+            {
                 removeProp();
             }
             action.consume();
-        });
+        } );
     }
 
     /*
-    * Removes the proposition from the view as well as model
-    */
-    private void removeProp() {
+     * Removes the proposition from the view as well as model
+     */
+    private void removeProp()
+    {
         contextMenu.getItems().clear();
         setContextMenuItems();
-        if (argument != null) {
+        if ( argument != null )
+        {
             argument.removeConclusion();
         }
         prop = null;
-        mainPane.getChildren().remove(propBox);
+        mainPane.getChildren().remove( propBox );
         hasProp = false;
         deleteCommentPane();
     }
 
-    private void setHandlerForDeleteCQ(MenuItem delete) {
-        delete.setOnAction(action -> {
-            argTree.deleteCriticalQuestion(this);
-        });
+    private void setHandlerForDeleteCQ( MenuItem delete )
+    {
+        delete.setOnAction( action ->
+        {
+            argTree.deleteCriticalQuestion( this );
+        } );
     }
 
     /**
      * add context menu event handler for mouse clicks
      */
-    private void setContextMenuEventFilter() {
-        mainPane.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED,
-                (ContextMenuEvent event) -> {
-                    showContextMenu(event);
-                    event.consume();
-                }
+    private void setContextMenuEventFilter()
+    {
+        mainPane.addEventFilter( ContextMenuEvent.CONTEXT_MENU_REQUESTED,
+                ( ContextMenuEvent event ) ->
+        {
+            showContextMenu( event );
+            event.consume();
+        }
         );
     }
 
@@ -265,189 +304,223 @@ public class CQPaneController extends ConclusionPaneController implements Initia
      *
      * @param event MouseEvent
      */
-    private void showContextMenu(ContextMenuEvent event) {
+    private void showContextMenu( ContextMenuEvent event )
+    {
         /*
-        call to hide() ensures that bugs arent encountered if
-        multiple context menus are opened back to back
+         * call to hide() ensures that bugs arent encountered if multiple
+         * context menus are opened back to back
          */
         contextMenu.hide();
         contextMenu.show(
                 mainPane, event.getScreenX(), event.getScreenY()
         );
-        contextCoords = new Point2D(event.getScreenX(), event.getScreenY());
+        contextCoords = new Point2D( event.getScreenX(), event.getScreenY() );
         event.consume();
     }
 
     /**
      * hides the context menu
      */
-    private void closeContextMenu(Event event) {
+    private void closeContextMenu( Event event )
+    {
         contextMenu.hide();
         event.consume();
     }
 
-    public PropositionModel getProposition() {
+    public PropositionModel getProposition()
+    {
         return prop;
     }
 
-    public void setParentControl(ConstructionAreaController control) {
+    public void setParentControl( ConstructionAreaController control )
+    {
         parentControl = control;
     }
 
-    public Pane getMainPane() {
+    public Pane getMainPane()
+    {
         return mainPane;
     }
 
-    public ArgumentModel getArgument() {
+    public ArgumentModel getArgument()
+    {
         return argument;
     }
 
-    public void setArgumentModel(ArgumentModel arg) {
+    public void setArgumentModel( ArgumentModel arg )
+    {
         argument = arg;
     }
 
-    public void setPropositionModel(PropositionModel pm) {
+    public void setPropositionModel( PropositionModel pm )
+    {
         Pane tPropBox;
-        try {
-            tPropBox = loadNewPropPane(pm);
-            mainPane.getChildren().add(tPropBox);
-        } catch (IOException ex) {
-            Logger.getLogger(PremisePaneController.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            tPropBox = loadNewPropPane( pm );
+            mainPane.getChildren().add( tPropBox );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( PremisePaneController.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
 
     /*
-    public PropositionModel getPropositionModel() {
-        return propositionModel;
-    }
+     * public PropositionModel getPropositionModel() { return propositionModel;
+     * }
      */
-    public int getPosition() {
+    public int getPosition()
+    {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition( int position )
+    {
         this.position = position;
     }
 
-    public void setArgumentViewTree(ArgumentViewTree argTree) {
+    public void setArgumentViewTree( ArgumentViewTree argTree )
+    {
         this.argTree = argTree;
     }
 
     /*
-    * Listens for dragdropped events on this pane and determines how to handle
-    */
-    private void onDragDropped(DragEvent event) {
+     * Listens for dragdropped events on this pane and determines how to handle
+     */
+    private void onDragDropped( DragEvent event )
+    {
         Dragboard db = event.getDragboard();
         boolean dropped = false;
-        if (db.hasContent(propositionModelDataFormat)) {
-            try {
-                dropProp(event);
+        if ( db.hasContent( propositionModelDataFormat ) )
+        {
+            try
+            {
+                dropProp( event );
                 dropped = true;
-            } catch (IOException ex) {
-                Logger.getLogger(PremisePaneController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( PremisePaneController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        } else if (db.hasString()
-                && !db.getString().equals(argTree.getTreeID())) {
-            try {
-                dropTree(event);
+        } else if ( db.hasString()
+                && !db.getString().equals( argTree.getTreeID() ) )
+        {
+            try
+            {
+                dropTree( event );
                 dropped = true;
-            } catch (IOException ex) {
-                Logger.getLogger(PremisePaneController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( PremisePaneController.class.getName() ).log( Level.SEVERE, null, ex );
             }
         }
-        event.setDropCompleted(dropped);
+        event.setDropCompleted( dropped );
         event.consume();
     }
 
-    private void dropProp(DragEvent event) throws IOException {
+    private void dropProp( DragEvent event ) throws IOException
+    {
         Dragboard db = event.getDragboard();
         PropositionModel prop
-                = (PropositionModel) db.getContent(propositionModelDataFormat);
+                = ( PropositionModel ) db.getContent( propositionModelDataFormat );
         mainPane.getChildren().clear();
-        mainPane.getChildren().add(propositionRectangle);
-        addProposition(prop);
+        mainPane.getChildren().add( propositionRectangle );
+        addProposition( prop );
     }
 
-    private void dropTree(DragEvent event) throws IOException {
+    private void dropTree( DragEvent event ) throws IOException
+    {
         Dragboard db = event.getDragboard();
         String treeID = db.getString();
-        argTree.mergeTree(treeID, this);
+        argTree.mergeTree( treeID, this );
     }
 
     @Override
-    public void addProposition(PropositionModel prop) throws IOException {
+    public void addProposition( PropositionModel prop ) throws IOException
+    {
         this.prop = prop;
 
-        addPropositionAsPremise(prop);
-        Pane tPropBox = loadNewPropPane(prop);
-        mainPane.getChildren().add(tPropBox);
+        addPropositionAsPremise( prop );
+        Pane tPropBox = loadNewPropPane( prop );
+        mainPane.getChildren().add( tPropBox );
         hasProp = true;
     }
 
     /*
-    * Adds the prop as a premise for the argumentmodel
-    */
-    private void addPropositionAsPremise(PropositionModel prop) {
-        if (argument != null) {
-            argument.addPremise(prop, position);
+     * Adds the prop as a premise for the argumentmodel
+     */
+    private void addPropositionAsPremise( PropositionModel prop )
+    {
+        if ( argument != null )
+        {
+            argument.addPremise( prop, position );
         }
     }
 
     /*
-    * Loads a new proposition within the pane
-    */
-    private Pane loadNewPropPane(PropositionModel prop) throws IOException {
+     * Loads a new proposition within the pane
+     */
+    private Pane loadNewPropPane( PropositionModel prop ) throws IOException
+    {
         contextMenu.getItems().clear();
         setContextMenuItems();
-        if (propBoxC != null) {
+        if ( propBoxC != null )
+        {
             propBoxC.deleteComment();
         }
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/PropositionBox.fxml"));
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/PropositionBox.fxml" ) );
         Pane tPropBox = loader.load();
         this.propBox = tPropBox;
         PropositionBoxController propControl
                 = loader.<PropositionBoxController>getController();
-        propControl.setCanHaveEvidence(true);
-        propControl.setConstructionAreaControl(parentControl);
-        propControl.setPropModel(prop);
-        propControl.setParentContainer(mainPane);
-        propControl.setContextMenu(contextMenu);
+        propControl.setCanHaveEvidence( true );
+        propControl.setConstructionAreaControl( parentControl );
+        propControl.setPropModel( prop );
+        propControl.setParentContainer( mainPane );
+        propControl.setContextMenu( contextMenu );
         propBoxC = propControl;
         return tPropBox;
     }
 
     @FXML
-    private void dragOver(DragEvent event) {
+    private void dragOver( DragEvent event )
+    {
         Dragboard db = event.getDragboard();
-        if (db.hasContent(propositionModelDataFormat) || db.hasString()) {
-            event.acceptTransferModes(TransferMode.MOVE);
+        if ( db.hasContent( propositionModelDataFormat ) || db.hasString() )
+        {
+            event.acceptTransferModes( TransferMode.MOVE );
         }
         event.consume();
     }
 
-    public String getText() {
+    public String getText()
+    {
         return this.text;
     }
 
-    public void setText(String s) {
+    public void setText( String s )
+    {
         this.text = s;
     }
 
     @Override
-    public void checkHasProp() {
-        if (propBox != null) {
+    public void checkHasProp()
+    {
+        if ( propBox != null )
+        {
             hasProp = true;
         }
     }
 
     @Override
-    public void moveComment(double x, double y) {
-        propBoxC.moveComment(x, y);
+    public void moveComment( double x, double y )
+    {
+        propBoxC.moveComment( x, y );
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void deleteCommentPane()
+    {
         propBoxC.deleteComment();
     }
 }

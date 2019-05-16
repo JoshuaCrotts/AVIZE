@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -21,48 +21,65 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PropositionModel implements Serializable{
-    
+public class PropositionModel implements Serializable {
+
     private List<EvidenceModel> support;
     private String proposition;
     private String comment;
 
-    public PropositionModel(){
+    public PropositionModel()
+    {
         support = new ArrayList<>();
         proposition = "";
         comment = "";
-    }    
+    }
 
     /*
-    Getters and setters
-    */
-    public List<EvidenceModel> getSupport() {
+     * Getters and setters
+     */
+    public List<EvidenceModel> getSupport()
+    {
         return support;
     }
-    public void addSupport(List<EvidenceModel> support) {
-        this.support.addAll(support);
+
+    public void addSupport( List<EvidenceModel> support )
+    {
+        this.support.addAll( support );
     }
-    public void addSupport(EvidenceModel support) {
-        this.support.add(support);
+
+    public void addSupport( EvidenceModel support )
+    {
+        this.support.add( support );
     }
-    public void removeSupport(EvidenceModel support) {
-        this.support.remove(support);
+
+    public void removeSupport( EvidenceModel support )
+    {
+        this.support.remove( support );
     }
-    public String getProposition() {
+
+    public String getProposition()
+    {
         return proposition;
     }
-    public void setProposition(String proposition) {
+
+    public void setProposition( String proposition )
+    {
         this.proposition = proposition;
     }
-    public String getComment(){
+
+    public String getComment()
+    {
         return comment;
     }
-    public void setComment(String comment){
+
+    public void setComment( String comment )
+    {
         this.comment = comment;
-    }    
-    
+    }
+
     @Override
-    public String toString(){
-        return "Support: " + this.support +"\tProposition: "+this.proposition+"\tComment: "+this.comment;
+    public String toString()
+    {
+        return "Support: " + this.support + "\tProposition: " + this.proposition + "\tComment: " + this.comment;
     }
 }

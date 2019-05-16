@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -36,38 +36,43 @@ public class ChainTwoPropWarningPaneController implements Initializable {
      * merge two panes that both have a proposition
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize( URL url, ResourceBundle rb )
+    {
         userChoice = ChainPropositionChoice.CANCEL;
     }
 
     //Keeps the proposition of the pane being dragged onto
     @FXML
-    private void keepPremise(ActionEvent action) {
+    private void keepPremise( ActionEvent action )
+    {
         userChoice = ChainPropositionChoice.PREMISE;
-        Stage stage = (Stage) mainContainer.getScene().getWindow();
+        Stage stage = ( Stage ) mainContainer.getScene().getWindow();
         stage.close();
         action.consume();
     }
 
     //Keeps the proposition of the pane being dragged
     @FXML
-    private void keepConclusion(ActionEvent action) {
+    private void keepConclusion( ActionEvent action )
+    {
         userChoice = ChainPropositionChoice.CONCLUSION;
-        Stage stage = (Stage) mainContainer.getScene().getWindow();
+        Stage stage = ( Stage ) mainContainer.getScene().getWindow();
         stage.close();
         action.consume();
     }
 
     //Cancels the action and does not merge
     @FXML
-    private void cancel(ActionEvent action) {
+    private void cancel( ActionEvent action )
+    {
         userChoice = ChainPropositionChoice.CANCEL;
-        Stage stage = (Stage) mainContainer.getScene().getWindow();
+        Stage stage = ( Stage ) mainContainer.getScene().getWindow();
         stage.close();
         action.consume();
     }
 
-    public ChainPropositionChoice getUserPropositionChoice() {
+    public ChainPropositionChoice getUserPropositionChoice()
+    {
         return userChoice;
     }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -30,39 +30,47 @@ public class CounterPropositionNode extends ConclusionNode {
     private Pane counterArgumentPane;
     private CounterPropositionPaneController control;
 
-    public CounterPropositionNode(Pane counterArgumentPane, CounterPropositionPaneController control) {
-        super(counterArgumentPane, control);
+    public CounterPropositionNode( Pane counterArgumentPane, CounterPropositionPaneController control )
+    {
+        super( counterArgumentPane, control );
         this.counterArgumentPane = counterArgumentPane;
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return counterArgumentPane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
 
     @Override
-    public void moveComment(double x, double y) {
-        if(control.getProposition()!=null) {
-            control.moveComment(x, y);
+    public void moveComment( double x, double y )
+    {
+        if ( control.getProposition() != null )
+        {
+            control.moveComment( x, y );
         }
     }
 
     @Override
-    public void deleteCommentPane() {
-        if(control.getProposition()!=null){
+    public void deleteCommentPane()
+    {
+        if ( control.getProposition() != null )
+        {
             control.deleteCommentPane();
         }
     }
-    
+
     @Override
-    public CounterPropositionPaneController getControl(){
-        return (CounterPropositionPaneController) control;
+    public CounterPropositionPaneController getControl()
+    {
+        return ( CounterPropositionPaneController ) control;
     }
 }

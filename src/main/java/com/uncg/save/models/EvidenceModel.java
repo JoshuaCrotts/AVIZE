@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -30,7 +30,8 @@ public class EvidenceModel implements Serializable {
     private String likelihood;
     private String comment;
 
-    public EvidenceModel() {
+    public EvidenceModel()
+    {
         this.id = "not provided";
         this.text = "not provided";
         this.source = "not provided";
@@ -42,10 +43,11 @@ public class EvidenceModel implements Serializable {
     }
 
     /*
-    TODO: REFACTOR THIS TO USE CUSTOM AND SPECIFIC CLASSES SO IT'S NOT JUST A 
-    BUNCH OF STRING
+     * TODO: REFACTOR THIS TO USE CUSTOM AND SPECIFIC CLASSES SO IT'S NOT JUST A
+     * BUNCH OF STRING
      */
-    public EvidenceModel(DataModel data) {
+    public EvidenceModel( DataModel data )
+    {
 
         this.id = data.getDataID();
         this.text = data.getDataText();
@@ -58,75 +60,92 @@ public class EvidenceModel implements Serializable {
     }
 
     /*
-    Getters for evidence fields
+     * Getters for evidence fields
      */
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId( String id )
+    {
         this.id = id;
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText( String text )
+    {
         this.text = text;
     }
 
-    public String getSource() {
+    public String getSource()
+    {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource( String source )
+    {
         this.source = source;
     }
-    
-    public String getDate() {
+
+    public String getDate()
+    {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate( String date )
+    {
         this.date = date;
     }
 
-    public String getGenre() {
+    public String getGenre()
+    {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre( String genre )
+    {
         this.genre = genre;
     }
 
-    public String getReliability() {
+    public String getReliability()
+    {
         return reliability;
     }
 
-    public void setReliability(String reliability) {
+    public void setReliability( String reliability )
+    {
         this.reliability = reliability;
     }
 
-    public String getLikelihood() {
+    public String getLikelihood()
+    {
         return likelihood;
     }
 
-    public void setLikelihood(String likelihood) {
+    public void setLikelihood( String likelihood )
+    {
         this.likelihood = likelihood;
     }
 
-    public String getComment() {
+    public String getComment()
+    {
         return comment;
     }
 
-    public void setComment(String comment) {
+    public void setComment( String comment )
+    {
         this.comment = comment;
     }
-    
-    public String toString(){
-        return this.getId() + "\t" + this.getDate() + "\t" + this.genre + "\t" 
-                + this.getSource() + "\t" + this.getText() + "\t" + this.getReliability() 
+
+    public String toString()
+    {
+        return this.getId() + "\t" + this.getDate() + "\t" + this.genre + "\t"
+                + this.getSource() + "\t" + this.getText() + "\t" + this.getReliability()
                 + "\t" + this.likelihood + "\t" + this.getComment();
     }
 }

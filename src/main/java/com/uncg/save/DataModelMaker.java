@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -33,10 +33,11 @@ public class DataModelMaker implements Serializable {
     private String comment = "No Comment";
 
     /*
-    TODO: REFACTOR THIS TO USE CUSTOM AND SPECIFIC CLASSES SO IT'S NOT JUST A 
-    BUNCH OF STRING
+     * TODO: REFACTOR THIS TO USE CUSTOM AND SPECIFIC CLASSES SO IT'S NOT JUST A
+     * BUNCH OF STRING
      */
-    public DataModelMaker() {
+    public DataModelMaker()
+    {
     }
 
     public DataModelMaker(
@@ -47,7 +48,8 @@ public class DataModelMaker implements Serializable {
             String genre,
             String reliability,
             String likelihoodString,
-            String comment) {
+            String comment )
+    {
         this.id = id;
         this.text = text;
         this.source = source;
@@ -59,81 +61,98 @@ public class DataModelMaker implements Serializable {
     }
 
     /*
-    Getters for data fields
+     * Getters for data fields
      */
-    public String getID() {
+    public String getID()
+    {
         return id;
     }
 
-    @XmlElement(name = "id", defaultValue = "UNKNOWN")
-    public void setID(String id) {
+    @XmlElement( name = "id", defaultValue = "UNKNOWN" )
+    public void setID( String id )
+    {
         this.id = id;
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    @XmlElement(name = "text", defaultValue = "UNKNOWN")
-    public void setText(String text) {
+    @XmlElement( name = "text", defaultValue = "UNKNOWN" )
+    public void setText( String text )
+    {
         this.text = text;
     }
 
-    public String getSource() {
+    public String getSource()
+    {
         return source;
     }
 
-    @XmlElement(name = "source", defaultValue = "UNKNOWN")
-    public void setSource(String source) {
+    @XmlElement( name = "source", defaultValue = "UNKNOWN" )
+    public void setSource( String source )
+    {
         this.source = source;
     }
 
-    public String getDate() {
+    public String getDate()
+    {
         return date;
     }
 
-    @XmlElement(name = "date", defaultValue = "UNKNOWN")
-    public void setDate(String date) {
+    @XmlElement( name = "date", defaultValue = "UNKNOWN" )
+    public void setDate( String date )
+    {
         this.date = date;
     }
 
-    public String getGenre() {
+    public String getGenre()
+    {
         return genre;
     }
 
-    @XmlElement(name = "genre", defaultValue = "UNKNOWN")
-    public void setGenre(String genre) {
+    @XmlElement( name = "genre", defaultValue = "UNKNOWN" )
+    public void setGenre( String genre )
+    {
         this.genre = genre;
     }
 
-    public String getReliability() {
+    public String getReliability()
+    {
         return reliability;
     }
 
-    @XmlElement(name = "reliability", defaultValue = "UNKNOWN")
-    public void setReliability(String reliability) {
+    @XmlElement( name = "reliability", defaultValue = "UNKNOWN" )
+    public void setReliability( String reliability )
+    {
         this.reliability = reliability;
     }
 
-    public String getLikelihoodString() {
+    public String getLikelihoodString()
+    {
         return this.likelihoodString;
     }
 
-    @XmlElement(name = "likelihoodString", defaultValue = "UNKNOWN")
-    public void setLikelihoodString(String sl) {
+    @XmlElement( name = "likelihoodString", defaultValue = "UNKNOWN" )
+    public void setLikelihoodString( String sl )
+    {
         this.likelihoodString = sl;
     }
 
-    public String getComment() {
+    public String getComment()
+    {
         return this.comment;
     }
 
-    @XmlElement(name = "comment", defaultValue = "No Comment")
-    public void setComment(String sl) {
+    @XmlElement( name = "comment", defaultValue = "No Comment" )
+    public void setComment( String sl )
+    {
         this.comment = sl;
     }
 
-    public DataModel getDataModel() {
+    public DataModel getDataModel()
+    {
         return new DataModel(
                 id,
                 text,
@@ -142,6 +161,6 @@ public class DataModelMaker implements Serializable {
                 genre,
                 reliability,
                 comment,
-                likelihoodString);
+                likelihoodString );
     }
 }

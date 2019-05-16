@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -22,45 +22,53 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- * Class creates a node to be added to an ArgumentViewTree. Contains a 
- * reference to a Pane that should be a PremisePane
+ * Class creates a node to be added to an ArgumentViewTree. Contains a reference
+ * to a Pane that should be a PremisePane
  */
 public class PremiseNode extends ArgumentNode {
 
     private Pane premisePane;
     private PremisePaneController control;
 
-    public PremiseNode(Pane premisePane, PremisePaneController control) {
+    public PremiseNode( Pane premisePane, PremisePaneController control )
+    {
         super();
         this.premisePane = premisePane;
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
 
-    public PremisePaneController getControl() {
+    public PremisePaneController getControl()
+    {
         return control;
     }
-    
+
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return premisePane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
-    
+
     @Override
-    public void moveComment(double x, double y) {
-        if(control.getProposition()!=null) {
-            control.moveComment(x, y);
+    public void moveComment( double x, double y )
+    {
+        if ( control.getProposition() != null )
+        {
+            control.moveComment( x, y );
         }
     }
-    
+
     @Override
-    public void deleteCommentPane(){
-        if(control.getProposition()!=null){
+    public void deleteCommentPane()
+    {
+        if ( control.getProposition() != null )
+        {
             control.deleteCommentPane();
         }
     }

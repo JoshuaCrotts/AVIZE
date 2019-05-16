@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -45,19 +45,21 @@ public class ArgumentSchemeLabel extends ArgumentNode {
     private Pane canvas;
     private MenuItem addCQ;
 
-    public ArgumentSchemeLabel(ArgumentModel scheme, Point2D target, ArgumentViewTree avt, Pane canvas) {
+    public ArgumentSchemeLabel( ArgumentModel scheme, Point2D target, ArgumentViewTree avt, Pane canvas )
+    {
         argSchemeLabel = new Label();
-        argSchemeLabel.setText(scheme.getTitle());
+        argSchemeLabel.setText( scheme.getTitle() );
         this.scheme = scheme;
         this.canvas = canvas;
         argTree = avt;
-        argSchemeLabel.setLayoutX(target.getX() + 5);
-        argSchemeLabel.setLayoutY(target.getY() + 120 / 2);
-        argSchemeLabel.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED,
-                (ContextMenuEvent event) -> {
-                    showContextMenu(event);
-                    event.consume();
-                }
+        argSchemeLabel.setLayoutX( target.getX() + 5 );
+        argSchemeLabel.setLayoutY( target.getY() + 120 / 2 );
+        argSchemeLabel.addEventFilter( ContextMenuEvent.CONTEXT_MENU_REQUESTED,
+                ( ContextMenuEvent event ) ->
+        {
+            showContextMenu( event );
+            event.consume();
+        }
         );
 
         // create context menu for adding new premises
@@ -66,81 +68,94 @@ public class ArgumentSchemeLabel extends ArgumentNode {
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return argSchemeLabel;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
         this.argTree = argTree;
     }
 
-    private void showContextMenu(ContextMenuEvent event) {
+    private void showContextMenu( ContextMenuEvent event )
+    {
         /*
-        call to hide() ensures that bugs arent encountered if
-        multiple context menus are opened back to back
+         * call to hide() ensures that bugs arent encountered if multiple
+         * context menus are opened back to back
          */
         contextMenu.hide();
         contextMenu.show(
                 argSchemeLabel, event.getScreenX(), event.getScreenY()
         );
-        contextCoords = new Point2D(event.getScreenX(), event.getScreenY());
+        contextCoords = new Point2D( event.getScreenX(), event.getScreenY() );
         event.consume();
     }
 
-    private void setContextMenuItems() {
-        addCQ = new MenuItem("Add Critical Question");
-        setHandlerForAddCQ(addCQ);
+    private void setContextMenuItems()
+    {
+        addCQ = new MenuItem( "Add Critical Question" );
+        setHandlerForAddCQ( addCQ );
         contextMenu.getItems().addAll(
                 addCQ
         );
     }
 
-    private void setHandlerForAddCQ(MenuItem item) {
-        item.setOnAction(action -> {
-            try {
-                displayCQPicker(item);
+    private void setHandlerForAddCQ( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            try
+            {
+                displayCQPicker( item );
                 action.consume();
-            } catch (IOException ex) {
-                Logger.getLogger(ArgumentSchemeLabel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ArgumentSchemeLabel.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        });
+        } );
     }
 
-    public void enableAddCQ() {
-        this.addCQ.setDisable(false);
+    public void enableAddCQ()
+    {
+        this.addCQ.setDisable( false );
     }
 
-    public Point2D getCoordinates() {
+    public Point2D getCoordinates()
+    {
         Point2D layout = new Point2D(
-                (int) (argSchemeLabel.getLayoutX()),
-                (int) (argSchemeLabel.getLayoutY())
+                ( int ) ( argSchemeLabel.getLayoutX() ),
+                ( int ) ( argSchemeLabel.getLayoutY() )
         );
         return layout;
     }
 
-    public void displayCQPicker(MenuItem item) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CqPicker.fxml"));
+    public void displayCQPicker( MenuItem item ) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/fxml/CqPicker.fxml" ) );
         Parent cqPickerBox = loader.load();
         CqPickerController cqPickerController = loader.<CqPickerController>getController();
-        cqPickerController.setArgModel(scheme);
-        cqPickerController.setAVT(argTree);
-        cqPickerController.setASL(this);
-        cqPickerController.populateCQs(item);
-        Scene scene = new Scene(cqPickerBox);
+        cqPickerController.setArgModel( scheme );
+        cqPickerController.setAVT( argTree );
+        cqPickerController.setASL( this );
+        cqPickerController.populateCQs( item );
+        Scene scene = new Scene( cqPickerBox );
         Stage stage = new Stage();
-        stage.initOwner(canvas.getScene().getWindow());
-        stage.setTitle("Choose Critical Question");
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner( canvas.getScene().getWindow() );
+        stage.setTitle( "Choose Critical Question" );
+        stage.setScene( scene );
+        stage.initModality( Modality.APPLICATION_MODAL );
         stage.showAndWait();
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void moveComment( double x, double y )
+    {
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void deleteCommentPane()
+    {
     }
 }

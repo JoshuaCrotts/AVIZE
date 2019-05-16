@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -20,7 +20,7 @@ package com.uncg.save;
 import com.uncg.save.models.SchemeModel;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement( name = "argScheme", namespace="com.uncg.save")
+@XmlRootElement( name = "argScheme", namespace = "com.uncg.save" )
 public class ArgScheme {
 
     private String title;
@@ -29,10 +29,12 @@ public class ArgScheme {
     private CQs cq;
     private String conclusion;
 
-    public ArgScheme() {
+    public ArgScheme()
+    {
     }
 
-    public ArgScheme(String title, Premises dat, Examples example, String conc, CQs dat2) {
+    public ArgScheme( String title, Premises dat, Examples example, String conc, CQs dat2 )
+    {
         super();
         this.title = title;
         this.premise = dat;
@@ -41,48 +43,69 @@ public class ArgScheme {
         this.cq = dat2;
     }
 
-    public String getTitle(){
+    public String getTitle()
+    {
         return this.title;
     }
-    public void setTitle(String title){
+
+    public void setTitle( String title )
+    {
         this.title = title;
-    }     
-    public Premises getPremises(){
+    }
+
+    public Premises getPremises()
+    {
         return this.premise;
     }
-    public void setPremises(Premises premises){ 
+
+    public void setPremises( Premises premises )
+    {
         this.premise = premises;
     }
-    public Examples getExamples(){
+
+    public Examples getExamples()
+    {
         return this.example;
     }
-    public void setExamples(Examples examples){
+
+    public void setExamples( Examples examples )
+    {
         this.example = examples;
     }
-    public String getConclusion() {
+
+    public String getConclusion()
+    {
         return conclusion;
     }
-    public void setConclusion(String c) {
+
+    public void setConclusion( String c )
+    {
         this.conclusion = c;
     }
-    public CQs getCQs() {
+
+    public CQs getCQs()
+    {
         return cq;
     }
-    public void setCQs(CQs datas2) {
+
+    public void setCQs( CQs datas2 )
+    {
         this.cq = datas2;
     }
-    
-    public SchemeModel getSchemeModel(){
-        if(this.cq.getCQ().isEmpty()){
-            this.cq.getCQ().add("NO CQs");
+
+    public SchemeModel getSchemeModel()
+    {
+        if ( this.cq.getCQ().isEmpty() )
+        {
+            this.cq.getCQ().add( "NO CQs" );
         }
         return new SchemeModel(
                 this.premise.getPremise(),
                 this.cq.getCQ(),
                 this.example.getExample(),
                 this.conclusion,
-                this.title);
-      
+                this.title );
+
     }
 
 }

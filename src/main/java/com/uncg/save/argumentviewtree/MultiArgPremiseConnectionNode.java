@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -22,7 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
 /**
- * Class creates a node to be added to an ArgumentViewTree. Contains the 
+ * Class creates a node to be added to an ArgumentViewTree. Contains the
  * specifications for a rectangle which serves as a connector between premise
  * pane and a premise nexus
  */
@@ -31,40 +31,46 @@ public class MultiArgPremiseConnectionNode extends ArgumentNode {
     private Rectangle rect;
 
     /**
-     * Constructs a new PremiseConnectionNode that details the 
-     * specifications for a rectangle that is the actual JavaFX Node used to
-     * draw the tree
+     * Constructs a new PremiseConnectionNode that details the specifications
+     * for a rectangle that is the actual JavaFX Node used to draw the tree
+     *
      * @param target Point2D detailing the coordinates the rectangle will be
-     * drawn at. Calculations are done to offset this value and accommodate 
-     * the dimensions of the rectangle to make sure everything is centered.
+     *               drawn at. Calculations are done to offset this value and
+     *               accommodate the dimensions of the rectangle to make sure
+     *               everything is centered.
      */
-    public MultiArgPremiseConnectionNode(int premiseNumber, Point2D target) {
+    public MultiArgPremiseConnectionNode( int premiseNumber, Point2D target )
+    {
         super();
         double rectWidth = 5;
         double rectHeight = 0;
         this.rect = new Rectangle(
-                target.getX() + (premiseNumber * (PREMISE_WIDTH + PADDING)), 
-                target.getY(), 
-                rectWidth, 
+                target.getX() + ( premiseNumber * ( PREMISE_WIDTH + PADDING ) ),
+                target.getY(),
+                rectWidth,
                 rectHeight
         );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return rect;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void moveComment( double x, double y )
+    {
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void deleteCommentPane()
+    {
     }
 
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -49,19 +49,21 @@ public abstract class EvidenceChunkController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        evidenceVBox.getStyleClass().add("evidence-vertical-box");
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        evidenceVBox.getStyleClass().add( "evidence-vertical-box" );
         evidenceList = new ArrayList<>();
     }
 
-    public abstract void removeEvidence(Pane evPane, EvidenceModel ev);
+    public abstract void removeEvidence( Pane evPane, EvidenceModel ev );
 
     /**
      * Returns the number of elements currently stored in this evidence chunk
      *
      * @return int
      */
-    public int evidenceListSize() {
+    public int evidenceListSize()
+    {
         return evidenceList.size();
     }
 
@@ -71,7 +73,8 @@ public abstract class EvidenceChunkController implements Initializable {
      * @param parentControl
      */
     public void setConstructionControl(
-            ConstructionAreaController parentControl) {
+            ConstructionAreaController parentControl )
+    {
         this.constControl = parentControl;
     }
 
@@ -80,49 +83,54 @@ public abstract class EvidenceChunkController implements Initializable {
      *
      * @param evidence
      */
-    public void addEvidence(EvidenceModel evidence) {
-        try {
-            Pane evidencePane = loadNewEvidencePane(evidence);
-            evidenceVBox.getChildren().add(evidencePane);
-            evidenceList.add(evidence);
-        } catch (IOException ex) {
-            Logger.getLogger(EvidenceChunkController.class.getName()).log(
-                    Level.SEVERE, null, ex);
+    public void addEvidence( EvidenceModel evidence )
+    {
+        try
+        {
+            Pane evidencePane = loadNewEvidencePane( evidence );
+            evidenceVBox.getChildren().add( evidencePane );
+            evidenceList.add( evidence );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( EvidenceChunkController.class.getName() ).log(
+                    Level.SEVERE, null, ex );
         }
     }
 
-    private Pane loadNewEvidencePane(EvidenceModel evidence)
-            throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/EvidencePane.fxml"));
+    private Pane loadNewEvidencePane( EvidenceModel evidence )
+            throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/EvidencePane.fxml" ) );
         Pane evidencePane = loader.load();
         EvidencePaneController evidenceControl
                 = loader.<EvidencePaneController>getController();
-        evidenceControl.setConstructionAreaController(constControl);
-        evidenceControl.setChunkControl(this);
-        evidenceControl.setEvidence(evidence);
+        evidenceControl.setConstructionAreaController( constControl );
+        evidenceControl.setChunkControl( this );
+        evidenceControl.setEvidence( evidence );
         return evidencePane;
     }
 
-    public void popEvidencePane(EvidenceModel evidence) throws IOException {
+    public void popEvidencePane( EvidenceModel evidence ) throws IOException
+    {
 
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/FloatingEvidenceChunk.fxml"));
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/FloatingEvidenceChunk.fxml" ) );
         Pane evidencePane = loader.load();
         EvidenceChunkController chunkControl
                 = loader.<EvidenceChunkController>getController();
-        chunkControl.setConstructionControl(constControl);
-        chunkControl.addEvidence(evidence);
+        chunkControl.setConstructionControl( constControl );
+        chunkControl.addEvidence( evidence );
 
-        evidencePane.getStyleClass().add("pane");
+        evidencePane.getStyleClass().add( "pane" );
 
         Bounds bounds = evidenceVBox.getBoundsInLocal();
-        Bounds screenBounds = evidenceVBox.localToScreen(bounds);
-        int x = (int) screenBounds.getMinX();
-        int y = (int) screenBounds.getMinY();
-        evidencePane.setTranslateX(x + 50);
-        evidencePane.setTranslateY(y + 50);
+        Bounds screenBounds = evidenceVBox.localToScreen( bounds );
+        int x = ( int ) screenBounds.getMinX();
+        int y = ( int ) screenBounds.getMinY();
+        evidencePane.setTranslateX( x + 50 );
+        evidencePane.setTranslateY( y + 50 );
 
-        constControl.getMainPane().getChildren().add(evidencePane);
+        constControl.getMainPane().getChildren().add( evidencePane );
     }
 }

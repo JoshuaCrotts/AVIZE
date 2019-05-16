@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -33,7 +33,7 @@ import javafx.stage.Screen;
 
 /**
  * FXML controller for the main underlying pane of the application.
- * 
+ *
  */
 public class RootPaneController implements Initializable {
 
@@ -69,126 +69,148 @@ public class RootPaneController implements Initializable {
     private double screenWidth;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        hideDataButton.setDisable(true);
-        
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        hideDataButton.setDisable( true );
+
         javafx.stage.Screen screen = Screen.getPrimary();
-        javafx.geometry.Rectangle2D rectangle2D  = screen.getVisualBounds();
+        javafx.geometry.Rectangle2D rectangle2D = screen.getVisualBounds();
         screenWidth = rectangle2D.getWidth();
-        
-        
-        dataAnchorPane.setPrefWidth(0);
-        
-        schemesAnchorPane.setPrefWidth(350);
-        hideDataButton.setMaxWidth(0);
-        hideDataButton.setMinWidth(0);
-        hideSchemesButton.setMaxWidth(25);
-        hideSchemesButton.setMinWidth(25);
-        mainScrollPane.setMaxWidth(screenWidth - dataAnchorPane.getPrefWidth() - schemesAnchorPane.getPrefWidth() - 25);
-        mainScrollPane.setMinWidth(screenWidth - dataAnchorPane.getPrefWidth() - schemesAnchorPane.getPrefWidth() - 25);
-        constructionAreaController.getMainPane().setMinWidth(mainScrollPane.getMaxWidth());
-        titleAndMenuBarController.setParentController(this);
+
+        dataAnchorPane.setPrefWidth( 0 );
+
+        schemesAnchorPane.setPrefWidth( 350 );
+        hideDataButton.setMaxWidth( 0 );
+        hideDataButton.setMinWidth( 0 );
+        hideSchemesButton.setMaxWidth( 25 );
+        hideSchemesButton.setMinWidth( 25 );
+        mainScrollPane.setMaxWidth( screenWidth - dataAnchorPane.getPrefWidth() - schemesAnchorPane.getPrefWidth() - 25 );
+        mainScrollPane.setMinWidth( screenWidth - dataAnchorPane.getPrefWidth() - schemesAnchorPane.getPrefWidth() - 25 );
+        constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMaxWidth() );
+        titleAndMenuBarController.setParentController( this );
     }
 
-    public void setDataModelList(List<DataModel> modelList) {
+    public void setDataModelList( List<DataModel> modelList )
+    {
         this.dataModelList = modelList;
-        dataListController.setDataModelElements(dataModelList);
-    }
-    public void replaceDataModelList(List<DataModel> modelList) {
-        this.dataModelList = modelList;
-        dataListController.replaceDataModelElements(dataModelList);
+        dataListController.setDataModelElements( dataModelList );
     }
 
-    public void setSchemeModelList(List<SchemeModel> modelList) {
+    public void replaceDataModelList( List<DataModel> modelList )
+    {
+        this.dataModelList = modelList;
+        dataListController.replaceDataModelElements( dataModelList );
+    }
+
+    public void setSchemeModelList( List<SchemeModel> modelList )
+    {
         this.schemeModelList = modelList;
-        schemeListController.setSchemeModelElements(schemeModelList);
+        schemeListController.setSchemeModelElements( schemeModelList );
     }
 
-    private void enableDataButton(){
-        hideDataButton.setMaxWidth(25);
-        hideDataButton.setMinWidth(25);
-        mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() - 25);
-        mainScrollPane.setMinWidth(mainScrollPane.getMinWidth() - 25);
-        hideDataButton.setDisable(false);     
+    private void enableDataButton()
+    {
+        hideDataButton.setMaxWidth( 25 );
+        hideDataButton.setMinWidth( 25 );
+        mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() - 25 );
+        mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() - 25 );
+        hideDataButton.setDisable( false );
         dataButtonHidden = false;
     }
+
     @FXML
-    public void toggleData() {
-        if(dataButtonHidden){enableDataButton();}
+    public void toggleData()
+    {
+        if ( dataButtonHidden )
+        {
+            enableDataButton();
+        }
         int width = 350;
-        if (!dataUp) {
-            showData(width);
+        if ( !dataUp )
+        {
+            showData( width );
             dataUp = !dataUp;
-        } else {
-            hideData(width);
+        } else
+        {
+            hideData( width );
             dataUp = !dataUp;
         }
     }
 
-    private void showData(int width) {
-        System.out.println("Showing!");
-        dataAnchorPane.setMinWidth(width);
-        dataAnchorPane.setMaxWidth(width);
-        mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() - width);
-        mainScrollPane.setMinWidth(mainScrollPane.getMinWidth() - width);
-        hideDataButton.setText("←←←←←←←←←←");
-        constructionAreaController.getMainPane().setMinWidth(mainScrollPane.getMinWidth());
-        constructionAreaController.getMainPane().setPrefWidth(constructionAreaController.getMainPane().getWidth() - width);
+    private void showData( int width )
+    {
+        System.out.println( "Showing!" );
+        dataAnchorPane.setMinWidth( width );
+        dataAnchorPane.setMaxWidth( width );
+        mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() - width );
+        mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() - width );
+        hideDataButton.setText( "←←←←←←←←←←" );
+        constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMinWidth() );
+        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() - width );
     }
 
-    private void hideData(int width) {
-        System.out.println("Hiding!");
-        dataAnchorPane.setMinWidth(0);
-        dataAnchorPane.setMaxWidth(0);
-        mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() + width);
-        mainScrollPane.setMinWidth(mainScrollPane.getMinWidth() + width);
-        hideDataButton.setText("→→→→→→→→→→");
-        constructionAreaController.getMainPane().setMinWidth(mainScrollPane.getMinWidth());
-        constructionAreaController.getMainPane().setPrefWidth(constructionAreaController.getMainPane().getWidth() + width);
+    private void hideData( int width )
+    {
+        System.out.println( "Hiding!" );
+        dataAnchorPane.setMinWidth( 0 );
+        dataAnchorPane.setMaxWidth( 0 );
+        mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() + width );
+        mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() + width );
+        hideDataButton.setText( "→→→→→→→→→→" );
+        constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMinWidth() );
+        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() + width );
     }
 
     @FXML
-    public void toggleSchemes() {
+    public void toggleSchemes()
+    {
         int width = 350;
-        if (!schemesUp) {
-            showSchemes(width);
+        if ( !schemesUp )
+        {
+            showSchemes( width );
             schemesUp = !schemesUp;
-        } else {
-            hideSchemes(width);
+        } else
+        {
+            hideSchemes( width );
             schemesUp = !schemesUp;
         }
     }
 
-    private void showSchemes(int width) {
-        schemesAnchorPane.setMinWidth(width);
-        schemesAnchorPane.setMaxWidth(width);
-        mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() - width);
-        mainScrollPane.setMinWidth(mainScrollPane.getMinWidth() - width);
-        hideSchemesButton.setText("→→→→→→→→→→");
-        constructionAreaController.getMainPane().setMinWidth(mainScrollPane.getMinWidth());
-        constructionAreaController.getMainPane().setPrefWidth(constructionAreaController.getMainPane().getWidth() - width);
+    private void showSchemes( int width )
+    {
+        schemesAnchorPane.setMinWidth( width );
+        schemesAnchorPane.setMaxWidth( width );
+        mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() - width );
+        mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() - width );
+        hideSchemesButton.setText( "→→→→→→→→→→" );
+        constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMinWidth() );
+        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() - width );
 
     }
-    
-    private void hideSchemes(int width) {
-        schemesAnchorPane.setMinWidth(0);
-        schemesAnchorPane.setMaxWidth(0);
-        mainScrollPane.setMaxWidth(mainScrollPane.getMaxWidth() + width);
-        mainScrollPane.setMinWidth(mainScrollPane.getMinWidth() + width);
-        hideSchemesButton.setText("←←←←←←←←←←");
-        constructionAreaController.getMainPane().setMinWidth(mainScrollPane.getMinWidth());
-        constructionAreaController.getMainPane().setPrefWidth(constructionAreaController.getMainPane().getWidth() + width);
+
+    private void hideSchemes( int width )
+    {
+        schemesAnchorPane.setMinWidth( 0 );
+        schemesAnchorPane.setMaxWidth( 0 );
+        mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() + width );
+        mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() + width );
+        hideSchemesButton.setText( "←←←←←←←←←←" );
+        constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMinWidth() );
+        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() + width );
     }
-    
-    public ConstructionAreaController getConstructionAreaController(){
+
+    public ConstructionAreaController getConstructionAreaController()
+    {
         return this.constructionAreaController;
     }
-    
-    public boolean schemesShowing(){
+
+    public boolean schemesShowing()
+    {
         return this.schemesUp;
     }
-    
-    public boolean dataShowing(){
+
+    public boolean dataShowing()
+    {
         return this.dataUp;
     }
 }

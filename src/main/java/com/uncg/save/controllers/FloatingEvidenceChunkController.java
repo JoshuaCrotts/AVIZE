@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -32,64 +32,73 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
 
 /**
- * FXML controller class for evidence chunks not attached to a proposition
- * pane, that are "floating" in the construction area
- * 
+ * FXML controller class for evidence chunks not attached to a proposition pane,
+ * that are "floating" in the construction area
+ *
  */
-public class FloatingEvidenceChunkController extends EvidenceChunkController 
+public class FloatingEvidenceChunkController extends EvidenceChunkController
         implements Initializable {
-    
+
     @FXML
-    private void dragDrop(DragEvent event) {
+    private void dragDrop( DragEvent event )
+    {
         Dragboard db = event.getDragboard();
         boolean success = false;
-        if (db.hasContent(dataModelDataFormat)) {
-            addEvidence(new EvidenceModel(
-                    (DataModel) db.getContent(dataModelDataFormat))
+        if ( db.hasContent( dataModelDataFormat ) )
+        {
+            addEvidence( new EvidenceModel(
+                    ( DataModel ) db.getContent( dataModelDataFormat ) )
             );
             constControl.constructionAreaSizeCheck();
             success = true;
-        } else if (db.hasContent(evidenceChunkDataFormat)
-                && !event.getGestureSource().equals(evidenceVBox)) {
+        } else if ( db.hasContent( evidenceChunkDataFormat )
+                && !event.getGestureSource().equals( evidenceVBox ) )
+        {
             List<EvidenceModel> payload
-                    = (List<EvidenceModel>) db.getContent(
-                            evidenceChunkDataFormat);
-            for (EvidenceModel evidence : payload) {
-                addEvidence(evidence);
+                    = ( List<EvidenceModel> ) db.getContent(
+                            evidenceChunkDataFormat );
+            for ( EvidenceModel evidence : payload )
+            {
+                addEvidence( evidence );
             }
             success = true;
         }
-        event.setDropCompleted(success);
+        event.setDropCompleted( success );
         event.consume();
     }
 
     @FXML
-    private void dragDetected(Event event) {
-        Dragboard db = evidenceVBox.startDragAndDrop(TransferMode.MOVE);
+    private void dragDetected( Event event )
+    {
+        Dragboard db = evidenceVBox.startDragAndDrop( TransferMode.MOVE );
         ClipboardContent content = new ClipboardContent();
-        content.put(evidenceChunkDataFormat, this.evidenceList);
-        db.setContent(content);
+        content.put( evidenceChunkDataFormat, this.evidenceList );
+        db.setContent( content );
         event.consume();
     }
 
     @FXML
-    private void dragDone(DragEvent event) {
+    private void dragDone( DragEvent event )
+    {
         /**
          * if drag event was a MOVE event, delete the source of the event
          */
-        if (event.getTransferMode() == TransferMode.MOVE) {
-            constControl.removePane(evidenceVBox);
+        if ( event.getTransferMode() == TransferMode.MOVE )
+        {
+            constControl.removePane( evidenceVBox );
         }
         event.consume();
     }
 
     @Override
-    public void removeEvidence(Pane evPane, EvidenceModel ev) {
-        evidenceList.remove(ev);
-        evidenceVBox.getChildren().remove(evPane);
+    public void removeEvidence( Pane evPane, EvidenceModel ev )
+    {
+        evidenceList.remove( ev );
+        evidenceVBox.getChildren().remove( evPane );
 
-        if (evidenceList.isEmpty()) {
-            constControl.removePane(evidenceVBox);
+        if ( evidenceList.isEmpty() )
+        {
+            constControl.removePane( evidenceVBox );
         }
         constControl.constructionAreaSizeCheck();
 

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -20,32 +20,35 @@ package com.uncg.save.argumentviewtree;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-
 public class CounterIcon extends ArgumentNode {
 
     private Pane icon;
-    
 
-    public CounterIcon(Pane iconPane) {
+    public CounterIcon( Pane iconPane )
+    {
         super();
         this.icon = iconPane;
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return icon;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void moveComment( double x, double y )
+    {
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void deleteCommentPane()
+    {
     }
 
 }

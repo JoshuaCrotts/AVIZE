@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -34,11 +34,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 /**
- * FXML controller for the individual conclusion components of 
+ * FXML controller for the individual conclusion components of
  * multiple-arguments-sharing-the-same-conclusion structures. Appear as little
  * black circles in the GUI. Allow arguments sharing the same conclusion to
  * still act as independent arguments.
- * 
+ *
  */
 public class MultiArgSubConclusionPaneController implements Initializable {
 
@@ -61,60 +61,69 @@ public class MultiArgSubConclusionPaneController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       // create context menu for adding new premises
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        // create context menu for adding new premises
         contextMenu = new ContextMenu();
         setContextMenuItems();
         setContextMenuEventFilter();
     }
-    
-    public void setArgNode(ArgumentNode argNode){
+
+    public void setArgNode( ArgumentNode argNode )
+    {
         this.argNode = argNode;
     }
-    
-   /**
+
+    /**
      * set menu items for context menu
      */
-    private void setContextMenuItems() {
-        MenuItem toggleCert = new MenuItem("Certainty On/Off");
-        MenuItem detatchChain = new MenuItem("Detach Argument");
+    private void setContextMenuItems()
+    {
+        MenuItem toggleCert = new MenuItem( "Certainty On/Off" );
+        MenuItem detatchChain = new MenuItem( "Detach Argument" );
 
-        setHandlerForToggle(toggleCert);
-        setHandlerForDetatchChain(detatchChain);
+        setHandlerForToggle( toggleCert );
+        setHandlerForDetatchChain( detatchChain );
         contextMenu.getItems().addAll(
                 toggleCert,
                 detatchChain
         );
     }
 
-    private void setHandlerForToggle(MenuItem item) {
-        item.setOnAction(action -> {
+    private void setHandlerForToggle( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
             certaintyControl.toggleVisible();
             action.consume();
-        });
+        } );
     }
 
-    private void setHandlerForDetatchChain(MenuItem item) {
-        item.setOnAction(action -> {
+    private void setHandlerForDetatchChain( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
             Point2D localCoords = LayoutUtils.getLocalCoords(
                     constructionControl.getMainPane(),
                     contextCoords.getX(),
                     contextCoords.getY()
             );
-            argTree.detatchMultiArgument(this, localCoords);
+            argTree.detatchMultiArgument( this, localCoords );
             action.consume();
-        });
+        } );
     }
 
     /**
      * add context menu event handler for mouse clicks
      */
-    private void setContextMenuEventFilter() {
-        anchorCircle.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED,
-                (ContextMenuEvent event) -> {
-                    showContextMenu(event);
-                    event.consume();
-                }
+    private void setContextMenuEventFilter()
+    {
+        anchorCircle.addEventFilter( ContextMenuEvent.CONTEXT_MENU_REQUESTED,
+                ( ContextMenuEvent event ) ->
+        {
+            showContextMenu( event );
+            event.consume();
+        }
         );
     }
 
@@ -124,52 +133,61 @@ public class MultiArgSubConclusionPaneController implements Initializable {
      *
      * @param event MouseEvent
      */
-    private void showContextMenu(ContextMenuEvent event) {
+    private void showContextMenu( ContextMenuEvent event )
+    {
         /*
-        call to hide() ensures that bugs arent encountered if
-        multiple context menus are opened back to back
+         * call to hide() ensures that bugs arent encountered if multiple
+         * context menus are opened back to back
          */
         contextMenu.hide();
         contextMenu.show(
                 mainPane, event.getScreenX(), event.getScreenY()
         );
-        contextCoords = new Point2D(event.getScreenX(), event.getScreenY());
+        contextCoords = new Point2D( event.getScreenX(), event.getScreenY() );
         event.consume();
     }
 
     /**
      * hides the context menu
      */
-    private void closeContextMenu(Event event) {
+    private void closeContextMenu( Event event )
+    {
         contextMenu.hide();
         event.consume();
     }
 
-    public void setArgument(ArgumentModel arg) {
+    public void setArgument( ArgumentModel arg )
+    {
         argument = arg;
     }
 
-    public void setArgumentViewTree(ArgumentViewTree avt) {
+    public void setArgumentViewTree( ArgumentViewTree avt )
+    {
         this.argTree = avt;
     }
 
-    public void setParentControl(ConstructionAreaController control) {
+    public void setParentControl( ConstructionAreaController control )
+    {
         constructionControl = control;
     }
-    
-    public void setCertaintyControl(ArgumentCertaintyPaneController control) {
+
+    public void setCertaintyControl( ArgumentCertaintyPaneController control )
+    {
         this.certaintyControl = control;
     }
-    
-    public ArgumentCertaintyPaneController getCertaintyControl() {
+
+    public ArgumentCertaintyPaneController getCertaintyControl()
+    {
         return certaintyControl;
     }
 
-    public Pane getMainPane(){
+    public Pane getMainPane()
+    {
         return mainPane;
     }
-    
-    public ArgumentModel getArgument() {
+
+    public ArgumentModel getArgument()
+    {
         return argument;
     }
 }

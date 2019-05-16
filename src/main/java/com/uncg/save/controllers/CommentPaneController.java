@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -19,8 +19,8 @@ package com.uncg.save.controllers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template file, choose Tools | Templates and open the template
+ * in the editor.
  */
 import java.io.IOException;
 import java.net.URL;
@@ -53,111 +53,128 @@ public class CommentPaneController implements Initializable {
 
     /**
      * Controls the comment panes that can be added to a proposition
-     * 
+     *
      * @param url
-     * @param rb 
+     * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize( URL url, ResourceBundle rb )
+    {
         mainPane.toFront();
-        commentArea.setWrapText(true);
-        commentArea.setMaxWidth(380);
-        commentArea.setFont(new Font("System Regular", 18));
+        commentArea.setWrapText( true );
+        commentArea.setMaxWidth( 380 );
+        commentArea.setFont( new Font( "System Regular", 18 ) );
 
         ContextMenu contextMenu = new ContextMenu();
-        try {
-            setContextMenuItems(contextMenu);
-        } catch (IOException ex) {
-            Logger.getLogger(PropositionBoxController.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            setContextMenuItems( contextMenu );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( PropositionBoxController.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        commentArea.setContextMenu(contextMenu);
+        commentArea.setContextMenu( contextMenu );
 
-        mainPane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+        mainPane.addEventFilter( MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle( MouseEvent mouseEvent )
+            {
                 x = mouseEvent.getSceneX();
                 y = mouseEvent.getSceneY();
 //                mouseEvent.consume();
             }
-        });
-        mainPane.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
+        } );
+        mainPane.addEventFilter( MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
-                onDragRelease(mouseEvent);
+            public void handle( MouseEvent mouseEvent )
+            {
+                onDragRelease( mouseEvent );
                 x = mouseEvent.getSceneX();
                 y = mouseEvent.getSceneY();
             }
-        });
+        } );
     }
 
     //Sets the context menu items
-    private void setContextMenuItems(ContextMenu contextMenu) throws IOException {
-        MenuItem clear = new MenuItem("Clear comment");
+    private void setContextMenuItems( ContextMenu contextMenu ) throws IOException
+    {
+        MenuItem clear = new MenuItem( "Clear comment" );
 
-        setHandlerForClear(clear);
+        setHandlerForClear( clear );
 
-        contextMenu.getItems().addAll(clear);
+        contextMenu.getItems().addAll( clear );
     }
 
-    private void setHandlerForClear(MenuItem item) {
-        item.setOnAction(action -> {
+    private void setHandlerForClear( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
             commentArea.clear();
             updateComment();
-        });
+        } );
     }
 
     //Initializes width of comment pane
-    private void initializeCommentPaneWidth() {
+    private void initializeCommentPaneWidth()
+    {
         int i = parent.getCommentText().length() - 24;
-        if (i > 0) {
+        if ( i > 0 )
+        {
             int toAdd = i * 10;
-            System.out.println(i);
-            System.out.println(commentArea.getPrefWidth());
-            commentArea.setPrefWidth(commentArea.getPrefWidth() + toAdd);
-            commentArea.setMinWidth(commentArea.getPrefWidth() + toAdd);
-            commentArea.setMaxWidth(commentArea.getPrefWidth() + toAdd);
-            mainPane.setPrefWidth(commentArea.getPrefWidth());
-            System.out.println(commentArea.getPrefWidth());
+            System.out.println( i );
+            System.out.println( commentArea.getPrefWidth() );
+            commentArea.setPrefWidth( commentArea.getPrefWidth() + toAdd );
+            commentArea.setMinWidth( commentArea.getPrefWidth() + toAdd );
+            commentArea.setMaxWidth( commentArea.getPrefWidth() + toAdd );
+            mainPane.setPrefWidth( commentArea.getPrefWidth() );
+            System.out.println( commentArea.getPrefWidth() );
         }
     }
 
     //Fits the comment pane to fully display the comment
-    private void updateCommentPaneSize() {
+    private void updateCommentPaneSize()
+    {
         int i = commentArea.getText().length();
         int j = i / 25;
         int change = 50 + j * 20;
-        commentArea.setPrefHeight(change);
-        commentArea.setMaxHeight(change);
+        commentArea.setPrefHeight( change );
+        commentArea.setMaxHeight( change );
     }
 
     @FXML
-    private void updateComment() {
+    private void updateComment()
+    {
         updateCommentPaneSize();
-        this.parent.setComment(commentArea.getText());
+        this.parent.setComment( commentArea.getText() );
     }
 
     @FXML
-    private void onClick() {
+    private void onClick()
+    {
 
     }
 
-    public void setComment(String s) {
-        commentArea.setText(s);
+    public void setComment( String s )
+    {
+        commentArea.setText( s );
     }
 
-    public String getComment() {
+    public String getComment()
+    {
         return this.comment;
     }
 
-    public void setParent(PropositionBoxController pbc) {
+    public void setParent( PropositionBoxController pbc )
+    {
         this.parent = pbc;
         initializeCommentPaneWidth();
     }
 
     @FXML
-    private void onDragRelease(MouseEvent mouseEvent) {
+    private void onDragRelease( MouseEvent mouseEvent )
+    {
         double a = mouseEvent.getScreenX() - x;
         double b = mouseEvent.getScreenY() - y;
-        this.parent.translateComment(a, b);
+        this.parent.translateComment( a, b );
     }
 }

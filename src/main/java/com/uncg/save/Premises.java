@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -19,14 +19,17 @@ package com.uncg.save;
 
 import java.util.List;
 
-public class Premises{
-    
+public class Premises {
+
     List<String> premise;
 
-    public List<String> getPremise(){
+    public List<String> getPremise()
+    {
         return premise;
     }
-    public void setPremise(List<String> premise){
+
+    public void setPremise( List<String> premise )
+    {
         this.premise = premise;
     }
 }

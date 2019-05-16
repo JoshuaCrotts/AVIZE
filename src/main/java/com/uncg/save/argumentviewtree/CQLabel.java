@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -17,56 +17,61 @@
  */
 package com.uncg.save.argumentviewtree;
 
-
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class CQLabel extends ArgumentNode{
+public class CQLabel extends ArgumentNode {
 
     private Label CQLabel;
     private ArgumentViewTree argTree;
     private ContextMenu contextMenu;
     private Point2D contextCoords;
     private Pane canvas;
-    
-   public CQLabel(String cq, Point2D target, ArgumentViewTree avt, Pane canvas, ArgumentNode connector) {
+
+    public CQLabel( String cq, Point2D target, ArgumentViewTree avt, Pane canvas, ArgumentNode connector )
+    {
         CQLabel = new Label();
-        CQLabel.setMaxWidth(PREMISE_WIDTH);
-        CQLabel.setWrapText(true);
-        CQLabel.setText(cq);
+        CQLabel.setMaxWidth( PREMISE_WIDTH );
+        CQLabel.setWrapText( true );
+        CQLabel.setText( cq );
         this.canvas = canvas;
         argTree = avt;
-        CQLabel.setLayoutX(target.getX() + 5);
-        CQLabel.setLayoutY(target.getY() - 80);
+        CQLabel.setLayoutX( target.getX() + 5 );
+        CQLabel.setLayoutY( target.getY() - 80 );
 
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return CQLabel;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
+    public void setArgTree( ArgumentViewTree argTree )
+    {
         this.argTree = argTree;
     }
 
-    public Point2D getCoordinates() {
+    public Point2D getCoordinates()
+    {
         Point2D layout = new Point2D(
-                (int) (CQLabel.getLayoutX()),
-                (int) (CQLabel.getLayoutY())
+                ( int ) ( CQLabel.getLayoutX() ),
+                ( int ) ( CQLabel.getLayoutY() )
         );
         return layout;
     }
 
     @Override
-    public void moveComment(double x, double y) {
+    public void moveComment( double x, double y )
+    {
     }
 
     @Override
-    public void deleteCommentPane() {
+    public void deleteCommentPane()
+    {
     }
 }

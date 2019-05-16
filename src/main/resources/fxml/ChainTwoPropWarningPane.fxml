@@ -26,30 +26,33 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 <?import javafx.scene.layout.*?>
 
 <VBox fx:id="mainContainer" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="155.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.ChainTwoPropWarningPaneController">
-   <children>
-      <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="92.0" prefWidth="600.0" text="You are attempting to chain 2 arguments that both contain propositions. Please choose which proposition you would like to keep" textAlignment="CENTER" wrapText="true">
-         <padding>
-            <Insets top="15.0" />
-         </padding>
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <HBox alignment="CENTER" prefHeight="79.0" prefWidth="656.0" spacing="20.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#keepPremise" text="Keep proposition of premise">
-               <font>
-                  <Font size="18.0" />
-               </font></Button>
-            <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
-               <font>
-                  <Font size="18.0" />
-               </font></Button>
-            <Button mnemonicParsing="false" onAction="#keepConclusion" text="Keep proposition of conclusion">
-               <font>
-                  <Font size="18.0" />
-               </font></Button>
-         </children>
-      </HBox>
-   </children>
+    <children>
+        <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="92.0" prefWidth="600.0" text="You are attempting to chain 2 arguments that both contain propositions. Please choose which proposition you would like to keep" textAlignment="CENTER" wrapText="true">
+            <padding>
+                <Insets top="15.0" />
+            </padding>
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER" prefHeight="79.0" prefWidth="656.0" spacing="20.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#keepPremise" text="Keep proposition of premise">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#cancel" text="Cancel">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#keepConclusion" text="Keep proposition of conclusion">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+    </children>
 </VBox>

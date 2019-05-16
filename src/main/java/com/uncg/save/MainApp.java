@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -43,71 +43,75 @@ public class MainApp extends Application {
     static final ClassLoader LOADER = MainApp.class.getClassLoader();
 
     public static DataFormat dataModelDataFormat
-            = new DataFormat("dataModelFormat");
+            = new DataFormat( "dataModelFormat" );
     public static DataFormat evidenceModelDataFormat
-            = new DataFormat("evidenceModelFormat");
+            = new DataFormat( "evidenceModelFormat" );
     public static DataFormat schemeModelDataFormat
-            = new DataFormat("schemeModelFormat");
+            = new DataFormat( "schemeModelFormat" );
     public static DataFormat argumentModelDataFormat
-            = new DataFormat("argumentModelFormat");
+            = new DataFormat( "argumentModelFormat" );
     public static DataFormat propositionModelDataFormat
-            = new DataFormat("propositionModelFormat");
+            = new DataFormat( "propositionModelFormat" );
     public static DataFormat evidenceChunkDataFormat
-            = new DataFormat("evidenceChunkFormat");
+            = new DataFormat( "evidenceChunkFormat" );
     public static DataFormat commentDataFormat
-            = new DataFormat("commentFormat");
+            = new DataFormat( "commentFormat" );
     public SchemeList sl;
+
     //public static Stack<Integer> pastActionCount;
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start( Stage stage ) throws Exception
+    {
         FXMLLoader loader
-                = new FXMLLoader(getClass().getResource("/fxml/RootPane.fxml"));
+                = new FXMLLoader( getClass().getResource( "/fxml/RootPane.fxml" ) );
         Parent root = loader.load();
         RootPaneController rootControl
                 = loader.<RootPaneController>getController();
 
         /*
-        Generate scheme structure
+         * Generate scheme structure
          */
         List<SchemeModel> schemeModelList = generateSchemeList();
 
         /*
-        Pass scheme list to root controller
+         * Pass scheme list to root controller
          */
-        rootControl.setSchemeModelList(schemeModelList);
+        rootControl.setSchemeModelList( schemeModelList );
 
         //pastActionCount = new Stack<>();
-        
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        Scene scene = new Scene( root );
+        scene.getStylesheets().add( "/styles/Styles.css" );
 
-        stage.setTitle("AIED");
+        stage.setTitle( "AIED" );
         //stage.setFullScreen(true);
-        stage.setResizable(true);
-        stage.setFullScreenExitHint("");
-        stage.setScene(scene);
+        stage.setResizable( true );
+        stage.setFullScreenExitHint( "" );
+        stage.setScene( scene );
         stage.show();
     }
 
-    private List<SchemeModel> generateSchemeList() throws JAXBException {
+    private List<SchemeModel> generateSchemeList() throws JAXBException
+    {
         List<SchemeModel> schemeList = new ArrayList<>();
-        try {
+        try
+        {
             SchemaFactory sf
                     = SchemaFactory
-                            .newInstance("http://www.w3.org/2001/XMLSchema");
+                            .newInstance( "http://www.w3.org/2001/XMLSchema" );
             Schema schema
-                    = sf.newSchema(getClass().getResource("/xml/scheme.xsd"));
-            InputStream xmlStream = getClass().getResourceAsStream(("/xml/schemeList.xml"));
+                    = sf.newSchema( getClass().getResource( "/xml/scheme.xsd" ) );
+            InputStream xmlStream = getClass().getResourceAsStream( ( "/xml/schemeList.xml" ) );
 
-            JAXBContext jaxbContext = JAXBContext.newInstance(SchemeList.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance( SchemeList.class );
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            jaxbUnmarshaller.setSchema(schema);
-            sl = (SchemeList) jaxbUnmarshaller.unmarshal(xmlStream);
+            jaxbUnmarshaller.setSchema( schema );
+            sl = ( SchemeList ) jaxbUnmarshaller.unmarshal( xmlStream );
 
             schemeList = sl.getModels();
             return schemeList;
-        } catch (SAXException ex) {
-            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( SAXException ex )
+        {
+            Logger.getLogger( MainApp.class.getName() ).log( Level.SEVERE, null, ex );
         }
         return schemeList;
     }
@@ -120,7 +124,8 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        launch(args);
+    public static void main( String[] args )
+    {
+        launch( args );
     }
 }

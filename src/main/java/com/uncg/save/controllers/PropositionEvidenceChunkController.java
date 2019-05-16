@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -23,9 +23,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 
 /**
- * FXML controller for evidence chunks once they have been attached to a 
+ * FXML controller for evidence chunks once they have been attached to a
  * proposition
- * 
+ *
  */
 public class PropositionEvidenceChunkController extends EvidenceChunkController
         implements Initializable {
@@ -33,19 +33,22 @@ public class PropositionEvidenceChunkController extends EvidenceChunkController
     private PropositionModel prop;
     private PropositionBoxController propControl;
 
-    public void setPropControl(PropositionBoxController control) {
+    public void setPropControl( PropositionBoxController control )
+    {
         propControl = control;
     }
 
-    public void setProp(PropositionModel prop) {
+    public void setProp( PropositionModel prop )
+    {
         this.prop = prop;
     }
 
     @Override
-    public void removeEvidence(Pane evPane, EvidenceModel ev) {
-        prop.removeSupport(ev);
-        evidenceList.remove(ev);
-        evidenceVBox.getChildren().remove(evPane);
+    public void removeEvidence( Pane evPane, EvidenceModel ev )
+    {
+        prop.removeSupport( ev );
+        evidenceList.remove( ev );
+        evidenceVBox.getChildren().remove( evPane );
 
         constControl.constructionAreaSizeCheck();
 

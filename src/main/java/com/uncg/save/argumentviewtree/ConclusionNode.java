@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -22,49 +22,59 @@ import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 /**
- * Class creates a node to be added to an ArgumentViewTree. Contains a 
- * reference to a Pane that should be a ConclusionPane
+ * Class creates a node to be added to an ArgumentViewTree. Contains a reference
+ * to a Pane that should be a ConclusionPane
  */
 public class ConclusionNode extends ArgumentNode {
 
     protected Pane conclusionPane;
     protected ConclusionPaneController control;
 
-    public ConclusionNode(Pane conclusionPane, ConclusionPaneController control) {
+    public ConclusionNode( Pane conclusionPane, ConclusionPaneController control )
+    {
         super();
         this.conclusionPane = conclusionPane;
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
 
-    public ConclusionPaneController getControl() {
+    public ConclusionPaneController getControl()
+    {
         return control;
     }
-    
+
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return conclusionPane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
-    
+
     @Override
-    public void addAsChild(ArgumentNode node) {
-        children.add(node);
+    public void addAsChild( ArgumentNode node )
+    {
+        children.add( node );
     }
-    
+
     @Override
-    public void moveComment(double x, double y) {
-        if(control.getProposition()!=null) {
-            control.moveComment(x, y);
+    public void moveComment( double x, double y )
+    {
+        if ( control.getProposition() != null )
+        {
+            control.moveComment( x, y );
         }
     }
+
     @Override
-    public void deleteCommentPane(){
-        if(control.getProposition()!=null){
+    public void deleteCommentPane()
+    {
+        if ( control.getProposition() != null )
+        {
             control.deleteCommentPane();
         }
     }

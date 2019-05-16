@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -26,33 +26,40 @@ public class CQNode extends ConclusionNode {
     private Pane cqPane;
     private CQPaneController control;
 
-    public CQNode(Pane cqPane, CQPaneController control) {
-        super(cqPane, control);
+    public CQNode( Pane cqPane, CQPaneController control )
+    {
+        super( cqPane, control );
         this.cqPane = cqPane;
         this.control = control;
-        control.setArgNode(this);
+        control.setArgNode( this );
     }
 
     @Override
-    public Node getView() {
+    public Node getView()
+    {
         return cqPane;
     }
 
     @Override
-    public void setArgTree(ArgumentViewTree argTree) {
-        control.setArgumentViewTree(argTree);
+    public void setArgTree( ArgumentViewTree argTree )
+    {
+        control.setArgumentViewTree( argTree );
     }
 
     @Override
-    public void moveComment(double x, double y) {
-        if (control.getProposition() != null) {
-            control.moveComment(x, y);
+    public void moveComment( double x, double y )
+    {
+        if ( control.getProposition() != null )
+        {
+            control.moveComment( x, y );
         }
     }
 
     @Override
-    public void deleteCommentPane() {
-        if(control.getProposition()!=null){
+    public void deleteCommentPane()
+    {
+        if ( control.getProposition() != null )
+        {
             control.deleteCommentPane();
         }
     }

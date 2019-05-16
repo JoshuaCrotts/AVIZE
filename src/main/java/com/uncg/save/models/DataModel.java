@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -31,8 +31,8 @@ public class DataModel implements Serializable {
     private final String dataComment;
 
     /*
-    TODO: REFACTOR THIS TO USE CUSTOM AND SPECIFIC CLASSES SO IT'S NOT JUST A 
-    BUNCH OF STRING
+     * TODO: REFACTOR THIS TO USE CUSTOM AND SPECIFIC CLASSES SO IT'S NOT JUST A
+     * BUNCH OF STRING
      */
     public DataModel(
             String id,
@@ -42,7 +42,8 @@ public class DataModel implements Serializable {
             String genre,
             String reliability,
             String comment,
-            String likelihoodString) {
+            String likelihoodString )
+    {
         this.dataID = id;
         this.dataText = text;
         this.dataSource = source;
@@ -54,37 +55,45 @@ public class DataModel implements Serializable {
     }
 
     /*
-    Getters for data fields
+     * Getters for data fields
      */
-    public String getDataID() {
+    public String getDataID()
+    {
         return dataID;
     }
 
-    public String getDataText() {
+    public String getDataText()
+    {
         return dataText;
     }
 
-    public String getDataSource() {
+    public String getDataSource()
+    {
         return dataSource;
     }
 
-    public String getDataDate() {
+    public String getDataDate()
+    {
         return dataDate;
     }
 
-    public String getDataGenre() {
+    public String getDataGenre()
+    {
         return dataGenre;
     }
 
-    public String getDataReliability() {
+    public String getDataReliability()
+    {
         return dataReliability;
     }
 
-    public String getDataComment() {
+    public String getDataComment()
+    {
         return dataComment;
     }
 
-    public String getDataLikelihood() {
+    public String getDataLikelihood()
+    {
         return dataLikelihood;
     }
 

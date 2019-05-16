@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -24,22 +24,27 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement( name = "schemeList" )
-public class SchemeList{
+public class SchemeList {
+
     List<ArgScheme> argSchemes;
-    
+
     @XmlElement( name = "argScheme" )
-    public List<ArgScheme> getArgScheme(){
+    public List<ArgScheme> getArgScheme()
+    {
         return this.argSchemes;
     }
-    
-    public void setArgScheme(List<ArgScheme> as){
+
+    public void setArgScheme( List<ArgScheme> as )
+    {
         this.argSchemes = as;
     }
-    
-    public List<SchemeModel> getModels(){
+
+    public List<SchemeModel> getModels()
+    {
         List<SchemeModel> schemeModelList = new ArrayList();
-        for(int i = 0; i < argSchemes.size(); i++){
-            schemeModelList.add(argSchemes.get(i).getSchemeModel());
+        for ( int i = 0; i < argSchemes.size(); i++ )
+        {
+            schemeModelList.add( argSchemes.get( i ).getSchemeModel() );
         }
         return schemeModelList;
     }

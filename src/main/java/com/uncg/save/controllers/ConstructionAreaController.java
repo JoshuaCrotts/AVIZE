@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -19,8 +19,8 @@ package com.uncg.save.controllers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template file, choose Tools | Templates and open the template
+ * in the editor.
  */
 import static com.uncg.save.MainApp.argumentModelDataFormat;
 import static com.uncg.save.MainApp.commentDataFormat;
@@ -72,20 +72,21 @@ public class ConstructionAreaController implements Initializable {
     private Point2D targetPropBoxCoords;
 
     private RootPaneController rpc;
-    
+
     private Stack<Object> pastModels;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize( URL url, ResourceBundle rb )
+    {
         // initialize lists
         argumentTrees = new HashMap<>();
 
         pastModels = new Stack<>();
-        
-        mainPane.getStyleClass().add("pane");
+
+        mainPane.getStyleClass().add( "pane" );
 
         // create context menu for adding new premises
         contextMenu = new ContextMenu();
@@ -93,21 +94,24 @@ public class ConstructionAreaController implements Initializable {
         setContextMenuEventHandler();
     }
 
-    public Pane getMainPane() {
+    public Pane getMainPane()
+    {
         return this.mainPane;
     }
 
-    public void setRootPaneController(RootPaneController rpc) {
+    public void setRootPaneController( RootPaneController rpc )
+    {
         this.rpc = rpc;
     }
 
     /**
      * set menu items for context menu
      */
-    private void setContextMenuItems() {
-        MenuItem createNewPremise = new MenuItem("New Proposition");
-        setHandlerForCreatePremise(createNewPremise);
-        contextMenu.getItems().add(createNewPremise);
+    private void setContextMenuItems()
+    {
+        MenuItem createNewPremise = new MenuItem( "New Proposition" );
+        setHandlerForCreatePremise( createNewPremise );
+        contextMenu.getItems().add( createNewPremise );
     }
 
     /**
@@ -116,42 +120,50 @@ public class ConstructionAreaController implements Initializable {
      *
      * @param item MenuItem
      */
-    private void setHandlerForCreatePremise(MenuItem item) {
-        item.setOnAction(action -> {
-            try {
+    private void setHandlerForCreatePremise( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            try
+            {
                 createNewPropBox();
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
             action.consume();
-        });
+        } );
     }
 
     /**
      * creates a new proposition box and empty PropositionModel
      *
      * @param prop PropositionModel
+     *
      * @throws IOException
      */
-    private void createNewPropBox() throws IOException {
+    private void createNewPropBox() throws IOException
+    {
         PropositionModel newProp = new PropositionModel();
-        Pane propBox = loadNewPropPane(newProp);
+        Pane propBox = loadNewPropPane( newProp );
 
-        LayoutUtils.setChildLayout(propBox, targetPropBoxCoords);
-        mainPane.getChildren().add(propBox);
-        pastModels.push(propBox);
+        LayoutUtils.setChildLayout( propBox, targetPropBoxCoords );
+        mainPane.getChildren().add( propBox );
+        pastModels.push( propBox );
 
     }
 
     /**
      * add context menu event handler for mouse clicks
      */
-    private void setContextMenuEventHandler() {
-        mainPane.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED,
-                (ContextMenuEvent event) -> {
-                    showContextMenu(event);
-                    event.consume();
-                }
+    private void setContextMenuEventHandler()
+    {
+        mainPane.addEventHandler( ContextMenuEvent.CONTEXT_MENU_REQUESTED,
+                ( ContextMenuEvent event ) ->
+        {
+            showContextMenu( event );
+            event.consume();
+        }
         );
     }
 
@@ -161,16 +173,17 @@ public class ConstructionAreaController implements Initializable {
      *
      * @param event MouseEvent
      */
-    private void showContextMenu(ContextMenuEvent event) {
+    private void showContextMenu( ContextMenuEvent event )
+    {
         /*
-        call to hide() ensures that bugs arent encountered if
-        multiple context menus are opened back to back
+         * call to hide() ensures that bugs arent encountered if multiple
+         * context menus are opened back to back
          */
         contextMenu.hide();
         contextMenu.show(
                 mainPane, event.getScreenX(), event.getScreenY()
         );
-        setPropCoords(event.getScreenX(), event.getScreenY());
+        setPropCoords( event.getScreenX(), event.getScreenY() );
     }
 
     /**
@@ -180,14 +193,16 @@ public class ConstructionAreaController implements Initializable {
      * @param x double
      * @param y double
      */
-    private void setPropCoords(double x, double y) {
-        targetPropBoxCoords = LayoutUtils.getLocalCoords(mainPane, x, y);
+    private void setPropCoords( double x, double y )
+    {
+        targetPropBoxCoords = LayoutUtils.getLocalCoords( mainPane, x, y );
     }
 
     /**
      * hides the context menu
      */
-    private void closeContextMenu() {
+    private void closeContextMenu()
+    {
         contextMenu.hide();
     }
 
@@ -197,8 +212,9 @@ public class ConstructionAreaController implements Initializable {
      * @param event
      */
     @FXML
-    private void dragOver(DragEvent event) {
-        event.acceptTransferModes(TransferMode.ANY);
+    private void dragOver( DragEvent event )
+    {
+        event.acceptTransferModes( TransferMode.ANY );
     }
 
     /**
@@ -207,97 +223,119 @@ public class ConstructionAreaController implements Initializable {
      * @param event
      */
     @FXML
-    private void dragDropped(DragEvent event) {
-       // System.out.println("dropped");
+    private void dragDropped( DragEvent event )
+    {
+        // System.out.println("dropped");
         boolean success = false;
         Dragboard db = event.getDragboard();
-        if (db.hasContent(dataModelDataFormat)) {
-            System.out.println("dropped data");
+        if ( db.hasContent( dataModelDataFormat ) )
+        {
+            System.out.println( "dropped data" );
             /*
-            Use new Data to create evidence
+             * Use new Data to create evidence
              */
-            try {
-                dropData(db, event);
+            try
+            {
+                dropData( db, event );
                 success = true;
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        } else if (db.hasContent(evidenceChunkDataFormat)) {
-            System.out.println("dropped ev");
+        } else if ( db.hasContent( evidenceChunkDataFormat ) )
+        {
+            System.out.println( "dropped ev" );
             /*
-            Move evidence chunks in construction area
+             * Move evidence chunks in construction area
              */
-            try {
+            try
+            {
                 dropEvidence(
-                        (List<EvidenceModel>) db
-                                .getContent(evidenceChunkDataFormat),
-                        new Point2D(event.getSceneX(), event.getSceneY())
+                        ( List<EvidenceModel> ) db
+                                .getContent( evidenceChunkDataFormat ),
+                        new Point2D( event.getSceneX(), event.getSceneY() )
                 );
                 success = true;
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        } else if (db.hasContent(schemeModelDataFormat)) {
-            System.out.println("dropped sc");
+        } else if ( db.hasContent( schemeModelDataFormat ) )
+        {
+            System.out.println( "dropped sc" );
             /*
-            Use new scheme to generate Argument
+             * Use new scheme to generate Argument
              */
-            try {
-                dropScheme(db, event);
+            try
+            {
+                dropScheme( db, event );
                 success = true;
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        } else if (db.hasContent(argumentModelDataFormat)) {
-            System.out.println("dropped arg");
-            try {
-                dropArgument(db, event);
+        } else if ( db.hasContent( argumentModelDataFormat ) )
+        {
+            System.out.println( "dropped arg" );
+            try
+            {
+                dropArgument( db, event );
                 success = true;
-                System.out.println("success dropped arg");
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println( "success dropped arg" );
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        } else if (db.hasContent(propositionModelDataFormat)) {
-            try {
+        } else if ( db.hasContent( propositionModelDataFormat ) )
+        {
+            try
+            {
                 /*
-                Move proposition in construction area
+                 * Move proposition in construction area
                  */
                 dropProp(
-                        (PropositionModel) db
-                                .getContent(propositionModelDataFormat),
-                        new Point2D(event.getSceneX(), event.getSceneY())
+                        ( PropositionModel ) db
+                                .getContent( propositionModelDataFormat ),
+                        new Point2D( event.getSceneX(), event.getSceneY() )
                 );
                 success = true;
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
-        } else if (db.hasContent(commentDataFormat)) {
+        } else if ( db.hasContent( commentDataFormat ) )
+        {
 
-        } else if (db.hasString()) {
-            try {
+        } else if ( db.hasString() )
+        {
+            try
+            {
                 /*
-                Drag argument tree
+                 * Drag argument tree
                  */
-                dropArgument(db, event);
+                dropArgument( db, event );
                 success = true;
-            } catch (IOException ex) {
-                Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
             }
         }
         constructionAreaSizeCheck();
-        event.setDropCompleted(success);
+        event.setDropCompleted( success );
         event.consume();
     }
 
-    public void constructionAreaSizeCheck() {
+    public void constructionAreaSizeCheck()
+    {
         int edgeBuffer = 75;
 
         // check if nodes need to be shifted because they're falling off the 
         // left side
         double moveBuffer = furthestNodeMinX();
         //System.out.println(moveBuffer);
-        if (moveBuffer < 0) {
-            shiftAllChildren(moveBuffer);
+        if ( moveBuffer < 0 )
+        {
+            shiftAllChildren( moveBuffer );
         }
 
         // grow construction area if nodes do not fit
@@ -308,20 +346,25 @@ public class ConstructionAreaController implements Initializable {
         );
     }
 
-    private void shiftAllChildren(double move) {
+    private void shiftAllChildren( double move )
+    {
         move = move * -1;
-        for (Node node : mainPane.getChildren()) {
-            node.setLayoutX(node.getLayoutX() + move);
+        for ( Node node : mainPane.getChildren() )
+        {
+            node.setLayoutX( node.getLayoutX() + move );
         }
-        mainPane.setPrefWidth(mainPane.getWidth() + move);
+        mainPane.setPrefWidth( mainPane.getWidth() + move );
 
     }
 
     //Finds the leftmost node on the area
-    private double furthestNodeMinX() {
+    private double furthestNodeMinX()
+    {
         double minX = Double.MAX_VALUE;
-        for (Node node : mainPane.getChildren()) {
-            if (node.getBoundsInParent().getMinX() < minX) {
+        for ( Node node : mainPane.getChildren() )
+        {
+            if ( node.getBoundsInParent().getMinX() < minX )
+            {
                 minX = node.getBoundsInParent().getMinX();
             }
         }
@@ -329,10 +372,13 @@ public class ConstructionAreaController implements Initializable {
     }
 
     //Finds the rightmost node on the area
-    private double furthestNodeMaxX() {
+    private double furthestNodeMaxX()
+    {
         double maxX = Double.MIN_VALUE;
-        for (Node node : mainPane.getChildren()) {
-            if (node.getBoundsInParent().getMaxX() > maxX) {
+        for ( Node node : mainPane.getChildren() )
+        {
+            if ( node.getBoundsInParent().getMaxX() > maxX )
+            {
                 maxX = node.getBoundsInParent().getMaxX();
             }
         }
@@ -340,10 +386,13 @@ public class ConstructionAreaController implements Initializable {
     }
 
     //Finds the topmost node on the area
-    private double furthestNodeMaxY() {
+    private double furthestNodeMaxY()
+    {
         double maxY = Double.MIN_VALUE;
-        for (Node node : mainPane.getChildren()) {
-            if (node.getBoundsInParent().getMaxY() > maxY) {
+        for ( Node node : mainPane.getChildren() )
+        {
+            if ( node.getBoundsInParent().getMaxY() > maxY )
+            {
                 maxY = node.getBoundsInParent().getMaxY();
             }
         }
@@ -353,133 +402,147 @@ public class ConstructionAreaController implements Initializable {
     /**
      * Creates a new evidence model and view using data from dragboard
      *
-     * @param db Dragboard
+     * @param db    Dragboard
      * @param event DragEvent
+     *
      * @throws IOException
      */
-    private void dropData(Dragboard db, DragEvent event) throws IOException {
-        DataModel data = (DataModel) db.getContent(dataModelDataFormat);
-        
-        EvidenceModel evidence = new EvidenceModel(data);
-        Pane evidenceChunk = loadNewEvidenceChunkPane(evidence);
+    private void dropData( Dragboard db, DragEvent event ) throws IOException
+    {
+        DataModel data = ( DataModel ) db.getContent( dataModelDataFormat );
+
+        EvidenceModel evidence = new EvidenceModel( data );
+        Pane evidenceChunk = loadNewEvidenceChunkPane( evidence );
 
         Point2D localCoords
                 = LayoutUtils.getLocalCoords(
                         mainPane, event.getSceneX(), event.getSceneY()
                 );
-        evidenceChunk.getStyleClass().add("pane");
-        LayoutUtils.setChildLayout(evidenceChunk, localCoords);
-        
-        System.out.println("added evidence");
-        mainPane.getChildren().add(evidenceChunk);
-        pastModels.push(evidenceChunk);
+        evidenceChunk.getStyleClass().add( "pane" );
+        LayoutUtils.setChildLayout( evidenceChunk, localCoords );
+
+        System.out.println( "added evidence" );
+        mainPane.getChildren().add( evidenceChunk );
+        pastModels.push( evidenceChunk );
         event.consume();
     }
 
-    private void dropScheme(Dragboard db, DragEvent event) throws IOException {
-        SchemeModel scheme = (SchemeModel) db.getContent(schemeModelDataFormat);
-        if (scheme.getTitle().equals("Generic")) {
+    private void dropScheme( Dragboard db, DragEvent event ) throws IOException
+    {
+        SchemeModel scheme = ( SchemeModel ) db.getContent( schemeModelDataFormat );
+        if ( scheme.getTitle().equals( "Generic" ) )
+        {
             //ASK FOR NUMBER OF PREMISES FROM USER
             scheme.clearPremise();
-            getGeneric(scheme);
+            getGeneric( scheme );
         }
-        ArgumentModel argument = new ArgumentModel(scheme);
+        ArgumentModel argument = new ArgumentModel( scheme );
         //System.out.println(argument);
-        ArgumentViewTree argTree = new ArgumentViewTree(mainPane, this);
-        String treeID = Integer.toString(argTree.hashCode());
-        argTree.setTreeID(treeID);
-        argumentTrees.put(treeID, argTree);
-        argTree.addRootArgument(argument, event.getSceneX(), event.getSceneY());
-        pastModels.push(treeID);
+        ArgumentViewTree argTree = new ArgumentViewTree( mainPane, this );
+        String treeID = Integer.toString( argTree.hashCode() );
+        argTree.setTreeID( treeID );
+        argumentTrees.put( treeID, argTree );
+        argTree.addRootArgument( argument, event.getSceneX(), event.getSceneY() );
+        pastModels.push( treeID );
     }
 
     //Loads the generic scheme maker and writes the specified scheme to the area
-    private void getGeneric(SchemeModel scheme) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GenericPremisePane.fxml"));
+    private void getGeneric( SchemeModel scheme ) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass().getResource( "/fxml/GenericPremisePane.fxml" ) );
         Parent genericPremSetterBox = loader.load();
         GenericPremisePaneController gppC = loader.<GenericPremisePaneController>getController();
-        gppC.setInitialScheme(scheme);
-        Scene scene = new Scene(genericPremSetterBox);
+        gppC.setInitialScheme( scheme );
+        Scene scene = new Scene( genericPremSetterBox );
         Stage stage = new Stage();
-        stage.initOwner(mainPane.getScene().getWindow());
-        stage.setTitle("Set Number Premises");
-        stage.setScene(scene);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        gppC.setStage(stage);
+        stage.initOwner( mainPane.getScene().getWindow() );
+        stage.setTitle( "Set Number Premises" );
+        stage.setScene( scene );
+        stage.initModality( Modality.APPLICATION_MODAL );
+        gppC.setStage( stage );
         stage.showAndWait();
-        
+
         int i = gppC.getPremiseNumber();
-        for (int j = i; j != 0; j--) {
-            scheme.addPremise("Premise");
+        for ( int j = i; j != 0; j-- )
+        {
+            scheme.addPremise( "Premise" );
         }
-        scheme.setCriticalQs(gppC.getCQs());
+        scheme.setCriticalQs( gppC.getCQs() );
     }
 
     /**
      * Creates new evidence view from an existing model from dragboard to
      * simulate movement
      *
-     * @param db Dragboard
+     * @param db    Dragboard
      * @param event DragEvent
+     *
      * @throws IOException
      */
     private void dropEvidence(
-            List<EvidenceModel> evidence, Point2D coords) throws IOException {
-        Pane evidencePane = loadNewEvidenceChunkPane(evidence);
+            List<EvidenceModel> evidence, Point2D coords ) throws IOException
+    {
+        Pane evidencePane = loadNewEvidenceChunkPane( evidence );
         Point2D localCoords
                 = LayoutUtils.getLocalCoords(
                         mainPane, coords.getX(), coords.getY()
                 );
-        evidencePane.getStyleClass().add("pane");
-        LayoutUtils.setChildLayout(evidencePane, localCoords);
-        
-        mainPane.getChildren().add(evidencePane);
-        this.pastModels.push(evidencePane);
+        evidencePane.getStyleClass().add( "pane" );
+        LayoutUtils.setChildLayout( evidencePane, localCoords );
+
+        mainPane.getChildren().add( evidencePane );
+        this.pastModels.push( evidencePane );
     }
 
     /**
      * Creates a new argument from an existing structure of argument trees to
      * simulate movement
-     * 
+     *
      * @param db
      * @param event
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     private void dropArgument(
-            Dragboard db, DragEvent event) throws IOException {
+            Dragboard db, DragEvent event ) throws IOException
+    {
         String draggedTreeID = db.getString();
         ArgumentViewTree targetTree = null;
-        for (String treeID : argumentTrees.keySet()) {
-            if (treeID.equals(draggedTreeID)) {
-                targetTree = argumentTrees.get(draggedTreeID);
+        for ( String treeID : argumentTrees.keySet() )
+        {
+            if ( treeID.equals( draggedTreeID ) )
+            {
+                targetTree = argumentTrees.get( draggedTreeID );
             }
         }
         Point2D localCoords
                 = LayoutUtils.getLocalCoords(
                         mainPane, event.getSceneX(), event.getSceneY()
                 );
-        targetTree.translateTree(localCoords.getX(), localCoords.getY());
+        targetTree.translateTree( localCoords.getX(), localCoords.getY() );
     }
 
     /**
      * Creates a new proposition box from an existing model from dragboard to
      * simulate movement
      *
-     * @param db Dragboard
+     * @param db    Dragboard
      * @param event DragEvent
+     *
      * @throws IOException
      */
     private void dropProp(
-            PropositionModel prop, Point2D coords) throws IOException {
-        Pane propBox = loadNewPropPane(prop);
+            PropositionModel prop, Point2D coords ) throws IOException
+    {
+        Pane propBox = loadNewPropPane( prop );
         Point2D localCoords
                 = LayoutUtils.getLocalCoords(
                         mainPane, coords.getX(), coords.getY()
                 );
-        LayoutUtils.setChildLayout(propBox, localCoords);
+        LayoutUtils.setChildLayout( propBox, localCoords );
 
-        mainPane.getChildren().add(propBox);
-        this.pastModels.push(propBox);
+        mainPane.getChildren().add( propBox );
+        this.pastModels.push( propBox );
     }
 
     /**
@@ -487,18 +550,21 @@ public class ConstructionAreaController implements Initializable {
      * provided
      *
      * @param evidence EvidenceModel
+     *
      * @return Pane
+     *
      * @throws IOException
      */
     private Pane loadNewEvidenceChunkPane(
-            EvidenceModel evidence) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/FloatingEvidenceChunk.fxml"));
+            EvidenceModel evidence ) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/FloatingEvidenceChunk.fxml" ) );
         Pane evidencePane = loader.load();
         EvidenceChunkController chunkControl
                 = loader.<EvidenceChunkController>getController();
-        chunkControl.setConstructionControl(this);
-        chunkControl.addEvidence(evidence);
+        chunkControl.setConstructionControl( this );
+        chunkControl.addEvidence( evidence );
 
         return evidencePane;
     }
@@ -508,19 +574,23 @@ public class ConstructionAreaController implements Initializable {
      * evidence provided
      *
      * @param evidence EvidenceModel
+     *
      * @return Pane
+     *
      * @throws IOException
      */
     private Pane loadNewEvidenceChunkPane(
-            List<EvidenceModel> evidenceList) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/FloatingEvidenceChunk.fxml"));
+            List<EvidenceModel> evidenceList ) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/FloatingEvidenceChunk.fxml" ) );
         Pane evidencePane = loader.load();
         FloatingEvidenceChunkController chunkControl
                 = loader.<FloatingEvidenceChunkController>getController();
-        chunkControl.setConstructionControl(this);
-        for (EvidenceModel evidence : evidenceList) {
-            chunkControl.addEvidence(evidence);
+        chunkControl.setConstructionControl( this );
+        for ( EvidenceModel evidence : evidenceList )
+        {
+            chunkControl.addEvidence( evidence );
         }
 
         return evidencePane;
@@ -531,71 +601,88 @@ public class ConstructionAreaController implements Initializable {
      * provided
      *
      * @param prop Proposition Model
+     *
      * @return Pane
+     *
      * @throws IOException
      */
-    private Pane loadNewPropPane(PropositionModel prop) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass()
-                .getResource("/fxml/PropositionBox.fxml"));
+    private Pane loadNewPropPane( PropositionModel prop ) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader( getClass()
+                .getResource( "/fxml/PropositionBox.fxml" ) );
         Pane propBox = loader.load();
         PropositionBoxController propControl
                 = loader.<PropositionBoxController>getController();
-        propControl.setCanHaveEvidence(true);
-        propControl.setConstructionAreaControl(this);
-        propControl.setPropModel(prop);
-        propControl.setParentContainer(mainPane);
+        propControl.setCanHaveEvidence( true );
+        propControl.setConstructionAreaControl( this );
+        propControl.setPropModel( prop );
+        propControl.setParentContainer( mainPane );
         return propBox;
     }
 
-    public void removePane(Pane pane) {
-        mainPane.getChildren().remove(pane);
+    public void removePane( Pane pane )
+    {
+        mainPane.getChildren().remove( pane );
         constructionAreaSizeCheck();
     }
 
-    public ArgumentViewTree getArgTree(String key) {
-        return argumentTrees.get(key);
+    public ArgumentViewTree getArgTree( String key )
+    {
+        return argumentTrees.get( key );
     }
 
-    public void removeArgumentTree(String key) {
-        argumentTrees.remove(key);
+    public void removeArgumentTree( String key )
+    {
+        argumentTrees.remove( key );
         constructionAreaSizeCheck();
     }
 
-    public void registerNewArgTree(ArgumentViewTree tree) {
-        String treeID = Integer.toString(tree.hashCode());
-        tree.setTreeID(treeID);
-        argumentTrees.put(treeID, tree);
+    public void registerNewArgTree( ArgumentViewTree tree )
+    {
+        String treeID = Integer.toString( tree.hashCode() );
+        tree.setTreeID( treeID );
+        argumentTrees.put( treeID, tree );
     }
 
-    public void createProp(PropositionModel prop, Point2D coords) {
-        try {
-            dropProp(prop, coords);
-        } catch (IOException ex) {
-            Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+    public void createProp( PropositionModel prop, Point2D coords )
+    {
+        try
+        {
+            dropProp( prop, coords );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
 
     public void createEvidenceChunk(
-            List<EvidenceModel> evidenceList, Point2D coords) {
-        try {
-            dropEvidence(evidenceList, coords);
-        } catch (IOException ex) {
-            Logger.getLogger(ConstructionAreaController.class.getName()).log(Level.SEVERE, null, ex);
+            List<EvidenceModel> evidenceList, Point2D coords )
+    {
+        try
+        {
+            dropEvidence( evidenceList, coords );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( ConstructionAreaController.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
 
-    public ArgumentViewTree getTargetTree(String s) {
+    public ArgumentViewTree getTargetTree( String s )
+    {
         ArgumentViewTree targetTree = null;
-        for (String treeID : argumentTrees.keySet()) {
-            if (treeID.equals(s)) {
-                targetTree = argumentTrees.get(s);
+        for ( String treeID : argumentTrees.keySet() )
+        {
+            if ( treeID.equals( s ) )
+            {
+                targetTree = argumentTrees.get( s );
             }
         }
         return targetTree;
     }
-    
-    public Stack<Object> getActions(){
+
+    public Stack<Object> getActions()
+    {
         return this.pastModels;
     }
-    
+
 }

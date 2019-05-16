@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -18,9 +18,9 @@
 package com.uncg.save.controllers;
 
 /*
-* Adds back-end function for which proposition is kept when there are two
-* confliction propositions in an argument merge
-*/
+ * Adds back-end function for which proposition is kept when there are two
+ * confliction propositions in an argument merge
+ */
 public enum ChainPropositionChoice {
     PREMISE,
     CONCLUSION,

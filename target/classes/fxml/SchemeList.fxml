@@ -24,7 +24,7 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 <?import javafx.scene.layout.*?>
 
 <ScrollPane fx:id="mainScrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1055.0" prefWidth="350.0" vbarPolicy="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.SchemeListController">
-   <content>
-      <VBox fx:id="schemeVBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="325.0" />
-   </content>
+    <content>
+        <VBox fx:id="schemeVBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="325.0" />
+    </content>
 </ScrollPane>

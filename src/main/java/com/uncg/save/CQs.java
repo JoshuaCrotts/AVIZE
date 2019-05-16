@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -20,14 +20,17 @@ package com.uncg.save;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CQs{
-    
+public class CQs {
+
     List<String> CQ = new ArrayList();
-    
-    public List<String> getCQ(){
+
+    public List<String> getCQ()
+    {
         return CQ;
     }
-    public void setCQ(List<String> cq){
+
+    public void setCQ( List<String> cq )
+    {
         this.CQ = cq;
     }
 }

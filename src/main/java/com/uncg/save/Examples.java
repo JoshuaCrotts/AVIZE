@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -20,14 +20,17 @@ package com.uncg.save;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Examples{
-    
+public class Examples {
+
     List<String> example = new ArrayList();
-    
-    public List<String> getExample(){
+
+    public List<String> getExample()
+    {
         return example;
     }
-    public void setExample(List<String> example){
+
+    public void setExample( List<String> example )
+    {
         this.example = example;
     }
 }

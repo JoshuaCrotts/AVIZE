@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -37,7 +37,7 @@ import javafx.scene.layout.VBox;
 /**
  * FXML controller for the view element that contains the individual argument
  * scheme panes
- * 
+ *
  */
 public class SchemeListController implements Initializable {
 
@@ -45,12 +45,12 @@ public class SchemeListController implements Initializable {
     private VBox schemeVBox;
     @FXML
     private ScrollPane mainScrollPane;
-    
+
     private RootPaneController rootControl;
-    
+
     private List<SchemeModel> schemeModelElements;
     private List<AnchorPane> schemeViewElements;
-    
+
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double height = screenSize.getHeight();
 
@@ -58,105 +58,125 @@ public class SchemeListController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        schemeVBox.getStyleClass().add("veritcal-box");
-        mainScrollPane.getStyleClass().add("side-pane");
-        mainScrollPane.setPrefHeight(height - 33);
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        schemeVBox.getStyleClass().add( "veritcal-box" );
+        mainScrollPane.getStyleClass().add( "side-pane" );
+        mainScrollPane.setPrefHeight( height - 33 );
         schemeViewElements = new ArrayList<>();
-    }    
-    
-    public void setRootControl(RootPaneController control) {
+    }
+
+    public void setRootControl( RootPaneController control )
+    {
         rootControl = control;
     }
-    public ScrollPane getMainScrollPane(){
+
+    public ScrollPane getMainScrollPane()
+    {
         return this.mainScrollPane;
     }
-    public List<AnchorPane> getSchemeElements(){
+
+    public List<AnchorPane> getSchemeElements()
+    {
         return schemeViewElements;
     }
-    
-    public void setSchemeModelElements(List<SchemeModel> schemeElements){
+
+    public void setSchemeModelElements( List<SchemeModel> schemeElements )
+    {
         this.schemeModelElements = schemeElements;
-        try{
+        try
+        {
             populateSchemeView();
-        } catch (IOException ex){
-            Logger.getLogger(DataListController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( DataListController.class.getName() ).log( Level.SEVERE, null, ex );
         }
-        
+
     }
-    
-    public void populateSchemeView() throws IOException{
-        for(SchemeModel scheme : schemeModelElements){
-            FXMLLoader loader = new FXMLLoader(getClass()
-                    .getResource("/fxml/SchemePane.fxml"));
-            AnchorPane schemePane = loader.load();     
-            SchemePaneController schemePaneControl 
-                    = loader.<SchemePaneController>getController();         
-            schemePaneControl.setScheme(scheme);
-            setSchemeModelViewElements(schemePaneControl, scheme);      
-            schemePaneControl.setParentController(this);
-            schemeViewElements.add(schemePane);
-            schemeVBox.getChildren().add(schemePane);
+
+    public void populateSchemeView() throws IOException
+    {
+        for ( SchemeModel scheme : schemeModelElements )
+        {
+            FXMLLoader loader = new FXMLLoader( getClass()
+                    .getResource( "/fxml/SchemePane.fxml" ) );
+            AnchorPane schemePane = loader.load();
+            SchemePaneController schemePaneControl
+                    = loader.<SchemePaneController>getController();
+            schemePaneControl.setScheme( scheme );
+            setSchemeModelViewElements( schemePaneControl, scheme );
+            schemePaneControl.setParentController( this );
+            schemeViewElements.add( schemePane );
+            schemeVBox.getChildren().add( schemePane );
         }
     }
-    
+
     public void setSchemeModelViewElements(
             SchemePaneController control,
-            SchemeModel model){
-        control.setPremisesTextArea(premiseTextDisplayBuilder(model.getPremises()));
-        control.setExampleTextArea(exampleTextDisplayBuilder(model.getExamples()));
-        control.setCriticalQuestionsTextArea(cqTextDisplayBuilder(model.getCriticalQs()));     
+            SchemeModel model )
+    {
+        control.setPremisesTextArea( premiseTextDisplayBuilder( model.getPremises() ) );
+        control.setExampleTextArea( exampleTextDisplayBuilder( model.getExamples() ) );
+        control.setCriticalQuestionsTextArea( cqTextDisplayBuilder( model.getCriticalQs() ) );
         control.setTitle();
     }
-    
-    private String premiseTextDisplayBuilder(List<String> s){
+
+    private String premiseTextDisplayBuilder( List<String> s )
+    {
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        while(i < s.size()){
+        while ( i < s.size() )
+        {
             int j = i + 1;
-            sb.append("Premise " + j + ": ");
-            sb.append("\n");
-            sb.append(s.get(i));
-            sb.append("\n");
-            sb.append("\n");
+            sb.append( "Premise " + j + ": " );
+            sb.append( "\n" );
+            sb.append( s.get( i ) );
+            sb.append( "\n" );
+            sb.append( "\n" );
             i++;
         }
         return sb.toString();
     }
-    private String exampleTextDisplayBuilder(List<String> s){
+
+    private String exampleTextDisplayBuilder( List<String> s )
+    {
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        while(i < s.size()){
-            if(i < s.size() - 1){
+        while ( i < s.size() )
+        {
+            if ( i < s.size() - 1 )
+            {
                 int j = i + 1;
-                sb.append("Premise " + j + ": ");
-                sb.append("\n");
-                sb.append(s.get(i));
-                sb.append("\n");
-                sb.append("\n");
+                sb.append( "Premise " + j + ": " );
+                sb.append( "\n" );
+                sb.append( s.get( i ) );
+                sb.append( "\n" );
+                sb.append( "\n" );
                 i++;
-            }
-            else{
+            } else
+            {
                 int j = i + 1;
-                sb.append("Conclusion: ");
-                sb.append("\n");
-                sb.append(s.get(i));
-                sb.append("\n");
-                sb.append("\n");
+                sb.append( "Conclusion: " );
+                sb.append( "\n" );
+                sb.append( s.get( i ) );
+                sb.append( "\n" );
+                sb.append( "\n" );
                 i++;
             }
         }
         return sb.toString();
     }
-    
-    private String cqTextDisplayBuilder(List<String> s){
+
+    private String cqTextDisplayBuilder( List<String> s )
+    {
         StringBuilder sb = new StringBuilder();
         int i = 0;
-        while(i < s.size()){
+        while ( i < s.size() )
+        {
             int j = i + 1;
-            sb.append(s.get(i));
-            sb.append("\n");
-            sb.append("\n");
+            sb.append( s.get( i ) );
+            sb.append( "\n" );
+            sb.append( "\n" );
             i++;
         }
         return sb.toString();

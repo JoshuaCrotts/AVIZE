@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -75,10 +75,11 @@ public class EvidencePaneController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        superPane.getStyleClass().add("evidence-grid-pane");
-        metadataTitledPane.getStyleClass().add("titled-pane");
-        textLabel.getStyleClass().add("data-label");
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        superPane.getStyleClass().add( "evidence-grid-pane" );
+        metadataTitledPane.getStyleClass().add( "titled-pane" );
+        textLabel.getStyleClass().add( "data-label" );
 
         // create context menu for adding new premises
         contextMenu = new ContextMenu();
@@ -91,87 +92,104 @@ public class EvidencePaneController implements Initializable {
      *
      * @param evidence EvidenceModel
      */
-    public void setEvidence(EvidenceModel evidence) {
+    public void setEvidence( EvidenceModel evidence )
+    {
         this.evidence = evidence;
-        textLabel.setText(evidence.getText());
-        sourceLabel.setText(evidence.getSource());
-        dateLabel.setText((evidence.getDate()));
-        genreLabel.setText(evidence.getGenre());
-        reliabilityLabel.setText(evidence.getReliability());
-        likelihoodLabel.setText(evidence.getLikelihood());
-        commentLabel.setText(evidence.getComment());
+        textLabel.setText( evidence.getText() );
+        sourceLabel.setText( evidence.getSource() );
+        dateLabel.setText( ( evidence.getDate() ) );
+        genreLabel.setText( evidence.getGenre() );
+        reliabilityLabel.setText( evidence.getReliability() );
+        likelihoodLabel.setText( evidence.getLikelihood() );
+        commentLabel.setText( evidence.getComment() );
     }
 
     /*
-    Getters and setters for view data
+     * Getters and setters for view data
      */
-    public Label getTextLabel() {
+    public Label getTextLabel()
+    {
         return textLabel;
     }
 
-    public void setTextLabel(String dataText) {
-        textLabel.setText(dataText);
+    public void setTextLabel( String dataText )
+    {
+        textLabel.setText( dataText );
     }
 
-    public Label getSourceLabel() {
+    public Label getSourceLabel()
+    {
         return sourceLabel;
     }
 
-    public void setSourceLabel(String dataSource) {
-        sourceLabel.setText(dataSource);
+    public void setSourceLabel( String dataSource )
+    {
+        sourceLabel.setText( dataSource );
     }
 
-    public Label getDateLabel() {
+    public Label getDateLabel()
+    {
         return dateLabel;
     }
 
-    public void setDateLabel(String dataDate) {
-        dateLabel.setText(dataDate);
+    public void setDateLabel( String dataDate )
+    {
+        dateLabel.setText( dataDate );
     }
 
-    public Label getGenreLabel() {
+    public Label getGenreLabel()
+    {
         return genreLabel;
     }
 
-    public void setGenreLabel(String dataGenre) {
-        genreLabel.setText(dataGenre);
+    public void setGenreLabel( String dataGenre )
+    {
+        genreLabel.setText( dataGenre );
     }
 
-    public Label getReliabilityLabel() {
+    public Label getReliabilityLabel()
+    {
         return reliabilityLabel;
     }
 
-    public void setReliabilityLabel(String dataReliability) {
-        reliabilityLabel.setText(dataReliability);
+    public void setReliabilityLabel( String dataReliability )
+    {
+        reliabilityLabel.setText( dataReliability );
     }
 
-    public Label getLikelihoodLabel() {
+    public Label getLikelihoodLabel()
+    {
         return likelihoodLabel;
     }
 
-    public void setLikelihoodLabel(String dataLikelihood) {
-        likelihoodLabel.setText(dataLikelihood);
+    public void setLikelihoodLabel( String dataLikelihood )
+    {
+        likelihoodLabel.setText( dataLikelihood );
     }
 
-    public void setLikelihoodLabel(double dataLikelihood) {
-        likelihoodLabel.setText(Double.toString(dataLikelihood));
+    public void setLikelihoodLabel( double dataLikelihood )
+    {
+        likelihoodLabel.setText( Double.toString( dataLikelihood ) );
     }
 
-    public Label getCommentLabel() {
+    public Label getCommentLabel()
+    {
         return commentLabel;
     }
 
-    public void setCommentLabel(String dataComment) {
-        commentLabel.setText(dataComment);
+    public void setCommentLabel( String dataComment )
+    {
+        commentLabel.setText( dataComment );
     }
 
     /**
      * sets the chunk controller for this pane
      *
      * @param control EvidenceChunk - subclass depends on whether it is in a
-     * proposition or floating in the construction area
+     *                proposition or floating in the construction area
      */
-    public void setChunkControl(EvidenceChunkController control) {
+    public void setChunkControl( EvidenceChunkController control )
+    {
         this.chunkControl = control;
     }
 
@@ -181,60 +199,73 @@ public class EvidencePaneController implements Initializable {
      * @param control ConstructionAreaController
      */
     public void setConstructionAreaController(
-            ConstructionAreaController control) {
+            ConstructionAreaController control )
+    {
         constControl = control;
     }
 
     /**
      * Event handler for right clicks on the main grid pane
      */
-    private void setContextMenuEventFilter() {
+    private void setContextMenuEventFilter()
+    {
         superPane.addEventFilter(
                 ContextMenuEvent.CONTEXT_MENU_REQUESTED,
-                (ContextMenuEvent event) -> {
-                    showContextMenu(event);
-                    event.consume();
-                });
+                ( ContextMenuEvent event ) ->
+        {
+            showContextMenu( event );
+            event.consume();
+        } );
 
     }
 
     /**
      * set menu items for context menu
      */
-    private void setContextMenuItems() {
-        MenuItem deleteEvidence = new MenuItem("Delete Evidence");
-        setHandlerForDelete(deleteEvidence);
-        removeEvidence = new MenuItem("Remove From Chunk");
-        setHandlerForRemove(removeEvidence);
- 
-        contextMenu.getItems().addAll(deleteEvidence,removeEvidence);
+    private void setContextMenuItems()
+    {
+        MenuItem deleteEvidence = new MenuItem( "Delete Evidence" );
+        setHandlerForDelete( deleteEvidence );
+        removeEvidence = new MenuItem( "Remove From Chunk" );
+        setHandlerForRemove( removeEvidence );
+
+        contextMenu.getItems().addAll( deleteEvidence, removeEvidence );
     }
 
-    private void setHandlerForDelete(MenuItem item) {
-        item.setOnAction(action -> {
-            chunkControl.removeEvidence(superPane, evidence);
+    private void setHandlerForDelete( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            chunkControl.removeEvidence( superPane, evidence );
             action.consume();
-        });
+        } );
     }
 
-    public void enableRemove(){
-        removeEvidence.setDisable(false);
-    }
-    public void disableRemove(){
-        removeEvidence.setDisable(true);
+    public void enableRemove()
+    {
+        removeEvidence.setDisable( false );
     }
 
-    private void setHandlerForRemove(MenuItem item) {
-        item.setOnAction(action -> {
-            try {
-                chunkControl.popEvidencePane(evidence);
-                chunkControl.removeEvidence(superPane, evidence);
+    public void disableRemove()
+    {
+        removeEvidence.setDisable( true );
+    }
+
+    private void setHandlerForRemove( MenuItem item )
+    {
+        item.setOnAction( action ->
+        {
+            try
+            {
+                chunkControl.popEvidencePane( evidence );
+                chunkControl.removeEvidence( superPane, evidence );
                 action.consume();
-            } catch (IOException ex) {
-                Logger.getLogger(EvidencePaneController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch ( IOException ex )
+            {
+                Logger.getLogger( EvidencePaneController.class.getName() ).log( Level.SEVERE, null, ex );
             }
 
-        });
+        } );
     }
 
     /**
@@ -243,10 +274,11 @@ public class EvidencePaneController implements Initializable {
      *
      * @param event MouseEvent
      */
-    private void showContextMenu(ContextMenuEvent event) {
+    private void showContextMenu( ContextMenuEvent event )
+    {
         /*
-        call to hide() ensures that bugs arent encountered if
-        multiple context menus are opened back to back
+         * call to hide() ensures that bugs arent encountered if multiple
+         * context menus are opened back to back
          */
         contextMenu.hide();
         contextMenu.show(
@@ -258,7 +290,8 @@ public class EvidencePaneController implements Initializable {
     /**
      * hides the context menu
      */
-    private void closeContextMenu(Event event) {
+    private void closeContextMenu( Event event )
+    {
         contextMenu.hide();
         event.consume();
     }
@@ -267,15 +300,19 @@ public class EvidencePaneController implements Initializable {
      * OnClick method that expands/collapses the metadata
      */
     @FXML
-    private void modifyMetaPane() {
-        if (metaCollapsed) {
+    private void modifyMetaPane()
+    {
+        if ( metaCollapsed )
+        {
             expandMetaPane();
-        } else {
+        } else
+        {
             collapseMetaPane();
         }
     }
 
-    public EvidenceModel getEvidence() {
+    public EvidenceModel getEvidence()
+    {
         return this.evidence;
     }
 
@@ -283,10 +320,11 @@ public class EvidencePaneController implements Initializable {
      * expand metadata. Grows the parent grid container to accomidate the extra
      * information
      */
-    private void expandMetaPane() {
+    private void expandMetaPane()
+    {
         // expands the TitledPane if it is clicked anywhere. Necessary for
         // reliable growing/shrinking behavior
-        metadataTitledPane.setExpanded(true);
+        metadataTitledPane.setExpanded( true );
         metaCollapsed = false;
 
         constControl.constructionAreaSizeCheck();
@@ -295,10 +333,11 @@ public class EvidencePaneController implements Initializable {
     /**
      * collapse metadata. Shrinks the parent grid container to default size
      */
-    private void collapseMetaPane() {
+    private void collapseMetaPane()
+    {
         // collapses the TitlePane if it is clicked anywhere. Necessary for
         // reliable growing/shrinking behavior
-        metadataTitledPane.setExpanded(false);
+        metadataTitledPane.setExpanded( false );
         metaCollapsed = true;
 
         constControl.constructionAreaSizeCheck();

@@ -35,31 +35,34 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
                             <children>
                                 <VBox fx:id="dataVBox" layoutX="20.0" layoutY="17.0" prefWidth="288.0" AnchorPane.leftAnchor="0.0">
                                     <children>
-                              <Label fx:id="premiseLabel" text="Label">
-                                 <padding>
-                                    <Insets left="10.0" top="10.0" />
-                                 </padding></Label>
+                                        <Label fx:id="premiseLabel" text="Label">
+                                            <padding>
+                                                <Insets left="10.0" top="10.0" />
+                                            </padding>
+                                        </Label>
                                         <TitledPane fx:id="exampleTitledPane" animated="false" onMouseReleased="#expandExample" prefWidth="288.0" text="Example Argument">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
-                                 <content>
-                                    <Label fx:id="exampleLabel" text="Label">
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding></Label>
-                                 </content>
+                                            <content>
+                                                <Label fx:id="exampleLabel" text="Label">
+                                                    <padding>
+                                                        <Insets left="10.0" top="10.0" />
+                                                    </padding>
+                                                </Label>
+                                            </content>
                                         </TitledPane>
                                         <TitledPane fx:id="criticalQuestionsTitledPane" animated="false" onMouseReleased="#expandCQs" prefWidth="288.0" text="Critical Questions">
                                             <font>
                                                 <Font size="18.0" />
                                             </font>
-                                 <content>
-                                    <Label fx:id="criticalQuestionLabel" text="Label">
-                                       <padding>
-                                          <Insets left="10.0" top="10.0" />
-                                       </padding></Label>
-                                 </content>
+                                            <content>
+                                                <Label fx:id="criticalQuestionLabel" text="Label">
+                                                    <padding>
+                                                        <Insets left="10.0" top="10.0" />
+                                                    </padding>
+                                                </Label>
+                                            </content>
                                         </TitledPane>
                                     </children>
                                 </VBox>

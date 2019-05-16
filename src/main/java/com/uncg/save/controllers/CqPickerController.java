@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -19,8 +19,8 @@ package com.uncg.save.controllers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template file, choose Tools | Templates and open the template
+ * in the editor.
  */
 import com.uncg.save.argumentviewtree.ArgumentNode;
 import com.uncg.save.argumentviewtree.ArgumentViewTree;
@@ -52,60 +52,73 @@ public class CqPickerController implements Initializable {
     private ArgumentModel argumentModel;
 
     private ArgumentViewTree avt;
-    
+
     private ArgumentNode ASL;
 
     private String testString;
 
     /*
-    * Controls pop up window that appears after selecting "Add critical question"
-    */
+     * Controls pop up window that appears after selecting "Add critical
+     * question"
+     */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize( URL url, ResourceBundle rb )
+    {
         testString = "working";
     }
 
-    public void setArgModel(ArgumentModel am) {
+    public void setArgModel( ArgumentModel am )
+    {
         this.argumentModel = am;
     }
 
-    public void setAVT(ArgumentViewTree AVT) {
+    public void setAVT( ArgumentViewTree AVT )
+    {
         this.avt = AVT;
     }
-    
-    public void setASL(ArgumentNode ASL){
+
+    public void setASL( ArgumentNode ASL )
+    {
         this.ASL = ASL;
     }
-    public String getTest() {
+
+    public String getTest()
+    {
         return this.testString;
     }
 
     /**
      * Gets the CQs of an argument and adds a button for each to the window
-     * @param item 
+     *
+     * @param item
      */
-    public void populateCQs(MenuItem item) {
-        for (int i = 0; i < argumentModel.getPatchNumCQs(); i++) {
+    public void populateCQs( MenuItem item )
+    {
+        for ( int i = 0; i < argumentModel.getPatchNumCQs(); i++ )
+        {
             int j = i;
-            Button cqBtn = new Button(argumentModel.getPatchCriticalQuestion(i));
-            cqBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            Button cqBtn = new Button( argumentModel.getPatchCriticalQuestion( i ) );
+            cqBtn.setOnMouseClicked( new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(MouseEvent event) {
-                    try {                        
-                        avt.addCriticalQuestion(argumentModel,ASL,j);
+                public void handle( MouseEvent event )
+                {
+                    try
+                    {
+                        avt.addCriticalQuestion( argumentModel, ASL, j );
                         //item.setDisable(true);
-                        Stage stage = (Stage) cqBtn.getScene().getWindow();
+                        Stage stage = ( Stage ) cqBtn.getScene().getWindow();
                         stage.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(CqPickerController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch ( IOException ex )
+                    {
+                        Logger.getLogger( CqPickerController.class.getName() ).log( Level.SEVERE, null, ex );
                     }
                 }
-            });
-            cqBtn.setFont(new Font("System Regular", 18));
-            cqBtn.setMinWidth(350);
-            cqBtn.setMaxWidth(350);          
-            cqBtn.setWrapText(true);
-            criticalQuestionsVBox.getChildren().add(cqBtn);
+            } );
+            cqBtn.setFont( new Font( "System Regular", 18 ) );
+            cqBtn.setMinWidth( 350 );
+            cqBtn.setMaxWidth( 350 );
+            cqBtn.setWrapText( true );
+            criticalQuestionsVBox.getChildren().add( cqBtn );
         }
     }
 }

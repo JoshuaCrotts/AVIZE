@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -48,20 +48,22 @@ public class DataListController implements Initializable {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double height = screenSize.getHeight();
-    
+
     /**
      * Initializes the controller class.
-     * 
+     *
      * Controls the list of evidence on the left side of the screen
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        mainScrollPane.getStyleClass().add("side-pane");
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        mainScrollPane.getStyleClass().add( "side-pane" );
         dataViewElements = new ArrayList<>();
-        mainScrollPane.setPrefHeight(height - 33);
+        mainScrollPane.setPrefHeight( height - 33 );
     }
 
-    public void setRootControl(RootPaneController control) {
+    public void setRootControl( RootPaneController control )
+    {
         rootControl = control;
     }
 
@@ -69,7 +71,8 @@ public class DataListController implements Initializable {
      *
      * @return list of data elements
      */
-    public List<Pane> getDataElements() {
+    public List<Pane> getDataElements()
+    {
         return dataViewElements;
     }
 
@@ -79,28 +82,37 @@ public class DataListController implements Initializable {
      *
      * @param dataElements
      */
-    public void setDataModelElements(List<DataModel> dataElements) {
-        if (dataModelElements != null) {
-            for (int i = 0; i < dataElements.size(); i++) {
-                this.dataModelElements.add(dataElements.get(i));
+    public void setDataModelElements( List<DataModel> dataElements )
+    {
+        if ( dataModelElements != null )
+        {
+            for ( int i = 0; i < dataElements.size(); i++ )
+            {
+                this.dataModelElements.add( dataElements.get( i ) );
             }
-        } else {
+        } else
+        {
             dataModelElements = dataElements;
         }
-        try {
-            populateDataViews(dataElements);
-        } catch (IOException ex) {
-            Logger.getLogger(DataListController.class.getName()).log(Level.SEVERE, null, ex);
+        try
+        {
+            populateDataViews( dataElements );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( DataListController.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
 
-    public void replaceDataModelElements(List<DataModel> dataElements) {
+    public void replaceDataModelElements( List<DataModel> dataElements )
+    {
         this.dataModelElements = dataElements;
-        try {
+        try
+        {
             dataVBox.getChildren().clear();
-            populateDataViews(dataElements);
-        } catch (IOException ex) {
-            Logger.getLogger(DataListController.class.getName()).log(Level.SEVERE, null, ex);
+            populateDataViews( dataElements );
+        } catch ( IOException ex )
+        {
+            Logger.getLogger( DataListController.class.getName() ).log( Level.SEVERE, null, ex );
         }
     }
 
@@ -109,17 +121,19 @@ public class DataListController implements Initializable {
      *
      * @throws IOException
      */
-    private void populateDataViews(List<DataModel> dataElements) throws IOException {
-        for (DataModel data : dataElements) {
-            FXMLLoader loader = new FXMLLoader(getClass()
-                    .getResource("/fxml/DataPane.fxml"));
+    private void populateDataViews( List<DataModel> dataElements ) throws IOException
+    {
+        for ( DataModel data : dataElements )
+        {
+            FXMLLoader loader = new FXMLLoader( getClass()
+                    .getResource( "/fxml/DataPane.fxml" ) );
             Pane dataPane = loader.load();
             DataPaneController dataPaneControl
                     = loader.<DataPaneController>getController();
-            dataPane.getStyleClass().add("grid-pane");
-            dataPaneControl.setData(data);
-            dataViewElements.add(dataPane);
-            dataVBox.getChildren().add(dataPane);
+            dataPane.getStyleClass().add( "grid-pane" );
+            dataPaneControl.setData( data );
+            dataViewElements.add( dataPane );
+            dataVBox.getChildren().add( dataPane );
         }
     }
 }

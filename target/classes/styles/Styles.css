@@ -9,9 +9,9 @@
     -fx-background-fills: #1f497d;
 }
 .internal-titled-pane {
-     -fx-background-fills: #1f497d;
-     -fx-border-width: 1;
-     -fx-border-color: black;
+    -fx-background-fills: #1f497d;
+    -fx-border-width: 1;
+    -fx-border-color: black;
 }
 .grid-pane{
     -fx-background-color: #1f497d;
@@ -70,7 +70,7 @@
     -fx-background-color: #1f497d;
 }
 .scroll-pane > .viewport {
-   -fx-background-color: transparent;
+    -fx-background-color: transparent;
 }
 .scroll-pane{
     -fx-background-color: #1f497d;
@@ -78,29 +78,29 @@
     -fx-border-color: black;
 }
 .horizontal-box{
-    
+
 }
 .premise-pane{
-        -fx-border-width: 1;
+    -fx-border-width: 1;
     -fx-border-color: red;
 }
 .conclusion-pane{
-        -fx-border-width: 1;
+    -fx-border-width: 1;
     -fx-border-color: red;
 }
 .chain-pane{
-        -fx-border-width: 1;
+    -fx-border-width: 1;
     -fx-border-color: red;
 }
 .premise-rectangle{
-   
+
 }
 .conclusion-rectangle{
     -fx-border-width: 3;
     -fx-border-color: red;
 }
 .chain-rectangle{
-    
+
 }
 .data-label{
     -fx-text-fill: white;

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -30,20 +30,22 @@ public class ArgumentModel implements Serializable {
     protected PremiseModel[] premises;
     protected HashMap<Integer, String> criticalQuestions;
     protected boolean cq;
-    
+
     protected List<ArgumentModel> cqArguments;
 
-    public ArgumentModel() {
+    public ArgumentModel()
+    {
         this.scheme = new SchemeModel();
         this.cqArguments = new ArrayList<>();
 
         this.conclusion = new PremiseModel();
-        this.conclusion.addAsConclusionForArgument(this);
+        this.conclusion.addAsConclusionForArgument( this );
 
         this.premises = new PremiseModel[1];
-        for (int i = 0; i < premises.length; i++) {
+        for ( int i = 0; i < premises.length; i++ )
+        {
             PremiseModel premise = new PremiseModel();
-            premise.addAsPremiseForArgument(this);
+            premise.addAsPremiseForArgument( this );
             premises[i] = premise;
 
         }
@@ -52,17 +54,19 @@ public class ArgumentModel implements Serializable {
         cq = false;
     }
 
-    public ArgumentModel(SchemeModel scheme) {
+    public ArgumentModel( SchemeModel scheme )
+    {
         this.scheme = scheme;
         this.cqArguments = new ArrayList<>();
 
         this.conclusion = new PremiseModel();
-        this.conclusion.addAsConclusionForArgument(this);
+        this.conclusion.addAsConclusionForArgument( this );
 
         premises = new PremiseModel[scheme.getPremises().size()];
-        for (int i = 0; i < premises.length; i++) {
+        for ( int i = 0; i < premises.length; i++ )
+        {
             PremiseModel premise = new PremiseModel();
-            premise.addAsPremiseForArgument(this);
+            premise.addAsPremiseForArgument( this );
             premises[i] = premise;
 
         }
@@ -71,7 +75,8 @@ public class ArgumentModel implements Serializable {
         cq = false;
     }
 
-    public ArgumentModel(CounterArgumentModel counterArgument) {
+    public ArgumentModel( CounterArgumentModel counterArgument )
+    {
         this.scheme = counterArgument.scheme;
         this.cqArguments = new ArrayList<>();
 
@@ -82,105 +87,129 @@ public class ArgumentModel implements Serializable {
         cq = counterArgument.cq;
     }
 
-    public boolean hasCQ() {
+    public boolean hasCQ()
+    {
         return cq;
     }
 
-    public void setCQ(boolean value) {
+    public void setCQ( boolean value )
+    {
         cq = value;
     }
 
-    public String getTitle() {
+    public String getTitle()
+    {
         return scheme.getTitle();
     }
 
-    public boolean containsPremise(int position) {
+    public boolean containsPremise( int position )
+    {
         return premises[position].getProposition() != null;
     }
 
-    public PremiseModel getPremise(int position) {
+    public PremiseModel getPremise( int position )
+    {
         return premises[position];
     }
 
-    public String getCriticalQuestion(int key) {
-        return criticalQuestions.get(key);
+    public String getCriticalQuestion( int key )
+    {
+        return criticalQuestions.get( key );
     }
 
-    public PremiseModel getConclusion() {
+    public PremiseModel getConclusion()
+    {
         return conclusion;
     }
 
-    public void setConclusion(PropositionModel conclusion) {
-        this.conclusion.setProposition(conclusion);
+    public void setConclusion( PropositionModel conclusion )
+    {
+        this.conclusion.setProposition( conclusion );
     }
 
-    public void removeConclusion() {
+    public void removeConclusion()
+    {
         conclusion.removeProposition();
     }
 
-    public void addPremise(PropositionModel prop, int position) {
-        premises[position].setProposition(prop);
+    public void addPremise( PropositionModel prop, int position )
+    {
+        premises[position].setProposition( prop );
     }
 
-    public void removePremise(int position) {
-        if (containsPremise(position)) {
+    public void removePremise( int position )
+    {
+        if ( containsPremise( position ) )
+        {
             premises[position].removeProposition();
         }
     }
 
-    public void removePremise(PropositionModel prop) {
-        for (int i = 0; i < premises.length; i++) {
-            if (premises[i] != null && premises[i].equals(prop)) {
+    public void removePremise( PropositionModel prop )
+    {
+        for ( int i = 0; i < premises.length; i++ )
+        {
+            if ( premises[i] != null && premises[i].equals( prop ) )
+            {
                 premises[i] = null;
             }
         }
     }
 
-    public int getPatchNumCQs() {
+    public int getPatchNumCQs()
+    {
         return this.scheme.getCriticalQs().size();
     }
 
-    public String getPatchCriticalQuestion(int i) {
-        return this.scheme.getCriticalQs().get(i);
+    public String getPatchCriticalQuestion( int i )
+    {
+        return this.scheme.getCriticalQs().get( i );
     }
 
-    public String getSchemeConclusion() {
+    public String getSchemeConclusion()
+    {
         return scheme.getConclusion();
     }
 
-    public String getSchemePremise(int premiseNumber) {
-        return scheme.getPremises().get(premiseNumber);
+    public String getSchemePremise( int premiseNumber )
+    {
+        return scheme.getPremises().get( premiseNumber );
     }
 
-    public int getSchemeNumPremises() {
+    public int getSchemeNumPremises()
+    {
         return scheme.getPremises().size();
     }
 
-    public String getSchemeTitle() {
+    public String getSchemeTitle()
+    {
         return scheme.getTitle();
     }
-    
-    public void addCQArgument(ArgumentModel arg){
-        cqArguments.add(arg);
+
+    public void addCQArgument( ArgumentModel arg )
+    {
+        cqArguments.add( arg );
     }
-    
-    public void removeCQArgument(ArgumentModel arg){
-        cqArguments.remove(arg);
+
+    public void removeCQArgument( ArgumentModel arg )
+    {
+        cqArguments.remove( arg );
     }
-    
+
     @Override
-    public String toString(){
+    public String toString()
+    {
         StringBuilder s = new StringBuilder();
-        
-        s.append(scheme.toString());
-        s.append(conclusion.toString());
-        
-        for(int i = 0; i < this.premises.length; i++)
+
+        s.append( scheme.toString() );
+        s.append( conclusion.toString() );
+
+        for ( int i = 0; i < this.premises.length; i++ )
         {
-            s.append(premises[i].toString());
+            s.append( premises[i].toString() );
         }
-        
+
         return s.toString();
     }
-    
+
 }

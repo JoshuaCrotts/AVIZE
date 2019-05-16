@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -19,8 +19,8 @@ package com.uncg.save.controllers;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template file, choose Tools | Templates and open the template
+ * in the editor.
  */
 import com.uncg.save.models.SchemeModel;
 import java.net.URL;
@@ -39,7 +39,7 @@ import javafx.stage.Stage;
 
 /**
  * Special FXML controller for the Generic Argument Scheme.
- * 
+ *
  */
 public class GenericPremisePaneController implements Initializable {
 
@@ -65,107 +65,130 @@ public class GenericPremisePaneController implements Initializable {
     private String toBeDeleted = "";
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        decButton.setDisable(true);
+    public void initialize( URL url, ResourceBundle rb )
+    {
+        decButton.setDisable( true );
     }
 
-    public void setInitialScheme(SchemeModel s) {
+    public void setInitialScheme( SchemeModel s )
+    {
         scheme = s;
         addCQs = s.getCriticalQs();
         updateLabel();
     }
 
     @FXML
-    public void incNumPrem() {
+    public void incNumPrem()
+    {
         premiseNumber++;
-        decButton.setDisable(false);
-        numberLabel.setText(premiseNumber.toString());
+        decButton.setDisable( false );
+        numberLabel.setText( premiseNumber.toString() );
     }
 
     @FXML
-    public void decNumPrem() {
-        if (premiseNumber > 1) {
+    public void decNumPrem()
+    {
+        if ( premiseNumber > 1 )
+        {
             premiseNumber--;
         }
-        if (premiseNumber == 1) {
-            decButton.setDisable(true);
+        if ( premiseNumber == 1 )
+        {
+            decButton.setDisable( true );
         }
-        numberLabel.setText(premiseNumber.toString());
+        numberLabel.setText( premiseNumber.toString() );
     }
 
     @FXML
-    public void enter() {
+    public void enter()
+    {
         stage.close();
     }
 
-    public void setStage(Stage s) {
+    public void setStage( Stage s )
+    {
         stage = s;
     }
 
-    public int getPremiseNumber() {
-        return (int) premiseNumber;
+    public int getPremiseNumber()
+    {
+        return ( int ) premiseNumber;
     }
 
     @FXML
-    public void addCQ() {
+    public void addCQ()
+    {
         boolean exists = false;
-        for(int i = 0;i<addCQs.size();i++){
-            if(addCQs.get((i)).equals(addCQTextArea.getText())){
+        for ( int i = 0; i < addCQs.size(); i++ )
+        {
+            if ( addCQs.get( ( i ) ).equals( addCQTextArea.getText() ) )
+            {
                 exists = true;
             }
         }
-        if (!addCQTextArea.getText().equals("") && !exists) {
-            addCQs.add(addCQTextArea.getText());
-            addCQTextArea.clear();          
+        if ( !addCQTextArea.getText().equals( "" ) && !exists )
+        {
+            addCQs.add( addCQTextArea.getText() );
+            addCQTextArea.clear();
             updateLabel();
-        }
-        else if(exists){
-            addCQTextArea.setText("That CQ already exists");
+        } else if ( exists )
+        {
+            addCQTextArea.setText( "That CQ already exists" );
         }
     }
 
     @FXML
-    public void removeCQ() {
-        for (int i = 0; i < addCQs.size(); i++) {
-            if (addCQs.get(i).equals(toBeDeleted)) {
-                addCQs.remove(i);
-                cqVBox.getChildren().remove(i);
+    public void removeCQ()
+    {
+        for ( int i = 0; i < addCQs.size(); i++ )
+        {
+            if ( addCQs.get( i ).equals( toBeDeleted ) )
+            {
+                addCQs.remove( i );
+                cqVBox.getChildren().remove( i );
             }
         }
-        addCQTextArea.setText("");
-        removeCQButton.setDisable(true);
+        addCQTextArea.setText( "" );
+        removeCQButton.setDisable( true );
     }
 
-    public List<String> getCQs() {
+    public List<String> getCQs()
+    {
         return addCQs;
     }
 
-    private void highlightCQ(String s) {
-        if (!toBeDeleted.equals(s)) {
+    private void highlightCQ( String s )
+    {
+        if ( !toBeDeleted.equals( s ) )
+        {
             toBeDeleted = s;
-            removeCQButton.setDisable(false);
-        } else {
+            removeCQButton.setDisable( false );
+        } else
+        {
             toBeDeleted = "";
-            removeCQButton.setDisable(true);
+            removeCQButton.setDisable( true );
         }
-        addCQTextArea.setText(toBeDeleted);
+        addCQTextArea.setText( toBeDeleted );
     }
 
-    private void updateLabel() {
+    private void updateLabel()
+    {
         cqVBox.getChildren().clear();
-        for (int i = 0; i < addCQs.size(); i++) {
-            Label lbl = new Label(addCQs.get(i));           
-            lbl.addEventFilter(MouseEvent.MOUSE_CLICKED,
+        for ( int i = 0; i < addCQs.size(); i++ )
+        {
+            Label lbl = new Label( addCQs.get( i ) );
+            lbl.addEventFilter( MouseEvent.MOUSE_CLICKED,
                     new EventHandler<MouseEvent>() {
                 @Override
-                public void handle(MouseEvent event) {
-                    highlightCQ(lbl.getText());
+                public void handle( MouseEvent event )
+                {
+                    highlightCQ( lbl.getText() );
                 }
-            });
-            lbl.setFont(new Font("System Regular", 18));
-            lbl.setWrapText(true);
-            
-            cqVBox.getChildren().add(lbl);
+            } );
+            lbl.setFont( new Font( "System Regular", 18 ) );
+            lbl.setWrapText( true );
+
+            cqVBox.getChildren().add( lbl );
         }
     }
 }

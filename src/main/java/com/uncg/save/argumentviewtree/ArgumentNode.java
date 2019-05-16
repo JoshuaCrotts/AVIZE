@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -26,7 +26,7 @@ import javafx.scene.Node;
  * trees. Each ArgumentNode contains a javafx Node (Rectangle, FXML defined
  * views, etc) as data, as well as a list of children to represent the tree
  * structure of an argument view.
- * 
+ *
  */
 public abstract class ArgumentNode {
 
@@ -36,45 +36,59 @@ public abstract class ArgumentNode {
 
     private ArgumentNode parent;
     public final List<ArgumentNode> children;
-    
+
     public boolean cqFlag = false;
     private int width;
 
-    public ArgumentNode() {
+    public ArgumentNode()
+    {
         this.children = new ArrayList<>();
     }
-    
-    public List<ArgumentNode> getChildren() {
+
+    public List<ArgumentNode> getChildren()
+    {
         return children;
     }
 
-    public ArgumentNode getParent() {
+    public ArgumentNode getParent()
+    {
         return parent;
     }
-    
-    public void setParent(ArgumentNode parent) {
+
+    public void setParent( ArgumentNode parent )
+    {
         this.parent = parent;
     }
-    
-    public void addAsChild(ArgumentNode node) {
-        children.add(node);
-    }
-    
-    public void removeChild(ArgumentNode node) {
-        children.remove(node);
+
+    public void addAsChild( ArgumentNode node )
+    {
+        children.add( node );
     }
 
-    public void shrinkOnDetatch(){
+    public void removeChild( ArgumentNode node )
+    {
+        children.remove( node );
     }
-    public void setWidth(int i){
+
+    public void shrinkOnDetatch()
+    {
+    }
+
+    public void setWidth( int i )
+    {
         width = i;
     }
-    public int getWidth(){
+
+    public int getWidth()
+    {
         return this.width;
     }
 
     public abstract Node getView();
-    public abstract void setArgTree(ArgumentViewTree argTree);
-    public abstract void moveComment(double x, double y);
+
+    public abstract void setArgTree( ArgumentViewTree argTree );
+
+    public abstract void moveComment( double x, double y );
+
     public abstract void deleteCommentPane();
 }

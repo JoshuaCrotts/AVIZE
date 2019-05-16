@@ -41,6 +41,7 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
             <items>
 				<MenuItem mnemonicParsing="false" onAction="#undoAction" text="Undo" />
 				<MenuItem mnemonicParsing="false" onAction="#clearDiagram" text="Clear" />
+				<MenuItem mnemonicParsing="false" onAction="#searchText" text="Search" />
 				<MenuItem mnemonicParsing="false" onAction="#feedback" text="Feedback" />
 				<MenuItem mnemonicParsing="false" onAction="#summary" text="Summary" />
             </items>

@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2017 Nancy Green
  * This file is part of AVIZE.
  *
@@ -21,23 +21,25 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PremiseModel implements Serializable{
-    
+public class PremiseModel implements Serializable {
+
     private PropositionModel proposition;
     private double argCertainty;
     private List<CounterArgumentModel> counterArguments;
     private List<ArgumentModel> conclusionForArgumentList;
     private List<ArgumentModel> premiseForArgumentList;
-    
-    public PremiseModel(){
+
+    public PremiseModel()
+    {
         proposition = null;
         this.argCertainty = 0.00;
         counterArguments = new ArrayList<>();
         conclusionForArgumentList = new ArrayList<>();
         premiseForArgumentList = new ArrayList<>();
     }
-    
-    public PremiseModel(PropositionModel prop){
+
+    public PremiseModel( PropositionModel prop )
+    {
         proposition = prop;
         this.argCertainty = 0.00;
         counterArguments = new ArrayList<>();
@@ -48,71 +50,85 @@ public class PremiseModel implements Serializable{
     /**
      * @return the proposition
      */
-    public PropositionModel getProposition() {
+    public PropositionModel getProposition()
+    {
         return proposition;
     }
 
     /**
      * @param proposition the proposition to set
      */
-    public void setProposition(PropositionModel proposition) {
+    public void setProposition( PropositionModel proposition )
+    {
         this.proposition = proposition;
     }
 
     /**
      * @return the argCertainty
      */
-    public double getArgCertainty() {
+    public double getArgCertainty()
+    {
         return argCertainty;
     }
 
     /**
      * @param argCertainty the argCertainty to set
      */
-    public void setCertainty(double argCertainty) {
+    public void setCertainty( double argCertainty )
+    {
         this.argCertainty = argCertainty;
     }
 
     /**
      * @return the counterArgument
      */
-    public boolean hasCounterArgument() {
+    public boolean hasCounterArgument()
+    {
         return !counterArguments.isEmpty();
     }
-    
-    public void addCounterArgument(CounterArgumentModel counterArg) {
-        counterArguments.add(counterArg);
+
+    public void addCounterArgument( CounterArgumentModel counterArg )
+    {
+        counterArguments.add( counterArg );
     }
-    
-    public void removeCounterArgument(CounterArgumentModel arg) {
-        counterArguments.remove(arg);
+
+    public void removeCounterArgument( CounterArgumentModel arg )
+    {
+        counterArguments.remove( arg );
     }
-    
-    public List<CounterArgumentModel> getCounterArgumentList(){
+
+    public List<CounterArgumentModel> getCounterArgumentList()
+    {
         return counterArguments;
     }
-    
-    public void removeProposition(){
+
+    public void removeProposition()
+    {
         proposition = null;
     }
-    
-    public void addAsPremiseForArgument(ArgumentModel arg){
-        premiseForArgumentList.add(arg);
+
+    public void addAsPremiseForArgument( ArgumentModel arg )
+    {
+        premiseForArgumentList.add( arg );
     }
-    
-    public void addAsConclusionForArgument(ArgumentModel arg){
-        conclusionForArgumentList.add(arg);
+
+    public void addAsConclusionForArgument( ArgumentModel arg )
+    {
+        conclusionForArgumentList.add( arg );
     }
-    
-    public void removeAsPremiseForArgument(ArgumentModel arg){
-        premiseForArgumentList.remove(arg);
+
+    public void removeAsPremiseForArgument( ArgumentModel arg )
+    {
+        premiseForArgumentList.remove( arg );
     }
-    
-    public void removeAsConclusionForArgument(ArgumentModel arg){
-        conclusionForArgumentList.remove(arg);
+
+    public void removeAsConclusionForArgument( ArgumentModel arg )
+    {
+        conclusionForArgumentList.remove( arg );
     }
-    
-    public String toString(){
+
+    public String toString()
+    {
         return this.proposition.toString() + "\t" + this.counterArguments.toString();
     }
 }
