@@ -36,6 +36,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
@@ -70,6 +71,8 @@ public class PropositionBoxController implements Initializable {
     private PropositionEvidenceChunkController evidenceChunkController;
     @FXML
     Button maximizeButton;
+    @FXML 
+    CheckBox proOrCon;
 
     private Pane parentContainer;
     private ConstructionAreaController constControl;
@@ -82,6 +85,8 @@ public class PropositionBoxController implements Initializable {
     private Line line;
     protected boolean hasComment = false;
     protected boolean visible = false;
+    protected boolean isPro = true;
+    protected String proOrConText = "PRO";
     private boolean redText = false;
     private boolean maximized = false;
     private int paneHeight = 145;
@@ -207,6 +212,15 @@ public class PropositionBoxController implements Initializable {
                 visible = true;
             }
         });
+    }
+    
+    @FXML
+    private void setProOrCon(){
+        this.isPro = !this.isPro;
+        
+        this.proOrConText = this.isPro ? "P" : "C";
+        
+        this.proOrCon.setText(this.proOrConText);
     }
 
     private Pane loadComment() throws IOException {

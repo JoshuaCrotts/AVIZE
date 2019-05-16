@@ -35,6 +35,11 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
       <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="34.0" valignment="TOP" vgrow="ALWAYS" />
   </rowConstraints>
    <children>
+	  <CheckBox fx:id="proOrCon" text="" visible="true" onAction="#setProOrCon">
+		<padding>
+			<Insets bottom="0.0" left="-5.0" right="380.0" top="0.0" />
+		</padding>
+	  </CheckBox>
       <TextArea fx:id="text" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#clearTextOnDown" onKeyReleased="#updateText" prefHeight="100.0" prefWidth="313.0" wrapText="true" GridPane.hgrow="NEVER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
