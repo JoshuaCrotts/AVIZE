@@ -34,9 +34,15 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 				<MenuItem mnemonicParsing="false" onAction="#saveArgumentScheme" text="Save" />
 				<MenuItem mnemonicParsing="false" onAction="#saveArgumentScheme" text="Save-As" />
 				<MenuItem mnemonicParsing="false" onAction="#printArgumentScheme" text="Print" />
+				<MenuItem mnemonicParsing="false" onAction="#toggleFullScreen" text="Disable Full Screen" />
 				<MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Exit" />
             </items>
           </Menu>
+		  <Menu fx:id="casesMenu" mnemonicParsing="false" text="Cases">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#openCases" text="Open" />
+			</items>
+	      </Menu>
 		  <Menu fx:id="toolsMenu" mnemonicParsing="false" text="Diagram">
             <items>
 				<MenuItem mnemonicParsing="false" onAction="#undoAction" text="Undo" />

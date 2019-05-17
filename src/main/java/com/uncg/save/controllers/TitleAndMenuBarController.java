@@ -25,14 +25,15 @@ package com.uncg.save.controllers;
 import com.uncg.save.DataList;
 import com.uncg.save.SaveArgScheme;
 import com.uncg.save.models.DataModel;
-import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
@@ -48,10 +49,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
@@ -73,6 +79,8 @@ public class TitleAndMenuBarController implements Initializable {
     @FXML
     private Menu loadMenu;
     @FXML
+    private Menu casesMenu;
+    @FXML
     private Menu toolsMenu;
     @FXML
     private Menu ethicsMenu;
@@ -80,7 +88,10 @@ public class TitleAndMenuBarController implements Initializable {
     private Menu argumentsMenu;
 
     private RootPaneController parentControl;
+
     private boolean dataLoaded = false;
+
+    private TabPane tabPane;
 
     /**
      * Initializes the controller class.
@@ -107,6 +118,15 @@ public class TitleAndMenuBarController implements Initializable {
         primaryStage.close();
     }
 
+    @FXML
+    /**
+     * @TODO
+     */
+    private void openCases() throws IOException
+    {
+
+    }
+
     /**
      * Removes the last-added object from the pane.
      *
@@ -115,7 +135,7 @@ public class TitleAndMenuBarController implements Initializable {
      * @param event
      */
     @FXML
-    public void undoAction( ActionEvent event )
+    private void undoAction( ActionEvent event )
     {
         ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
         Pane mainPane = cac.getMainPane();
@@ -131,7 +151,7 @@ public class TitleAndMenuBarController implements Initializable {
      * construction area.
      */
     @FXML
-    public void clearDiagram()
+    private void clearDiagram()
     {
         ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
         if ( cac.mainPane.getChildren().isEmpty() )
@@ -149,7 +169,7 @@ public class TitleAndMenuBarController implements Initializable {
      * other miscellaneous buttons to the search.
      */
     @FXML
-    public void searchText()
+    private void searchText()
     {
         TextInputDialog tid = new TextInputDialog();
         tid.setTitle( "Search" );
@@ -160,11 +180,29 @@ public class TitleAndMenuBarController implements Initializable {
         String search = tid.getResult();
     }
 
+    @FXML
+    /**
+     * Switches between full-screen and windowed mode.
+     */
+    private void toggleFullScreen()
+    {
+        Stage stage = ( Stage ) menuBar.getScene().getWindow();
+
+        boolean isFullB = !stage.isFullScreen();
+        
+        String isFullS = isFullB ? "Disable Full Screen" : "Enable Full Screen";
+        
+        stage.setFullScreen( isFullB );
+        
+        // The fourth item is enabling and disabling full screen.
+        loadMenu.getItems().get( 4 ).setText( isFullS );
+    }
+
     /**
      * @TODO
      */
     @FXML
-    public void feedback()
+    private void feedback()
     {
 
     }
@@ -173,7 +211,7 @@ public class TitleAndMenuBarController implements Initializable {
      * @TODO
      */
     @FXML
-    public void summary()
+    private void summary()
     {
 
     }
@@ -186,7 +224,7 @@ public class TitleAndMenuBarController implements Initializable {
      * documentation
      */
     @FXML
-    public void showTutorial()
+    private void showTutorial()
     {
         //Main VBox environment
         VBox root = new VBox();
@@ -396,29 +434,52 @@ public class TitleAndMenuBarController implements Initializable {
      * development.
      */
     @FXML
-    public void test()
+    private void test()
     {
         ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
-        Stack<Object> undos = cac.getActions();
-        System.out.println( "Stack size: " + undos.size() );
+
     }
 
     /**
      * Thus far, this only opens the ACM code of ethics pdf for the user.
      *
+     * @UPDATE (05/17/19): Added a .txt file of real ACM codes, they are read in
+     * via a file and a tab pane opens.
+     * 
      * @TODO Add actual codes from an XML file or something.
      */
     @FXML
-    public void openEthicsPDF()
+    private void openEthicsPDF() throws IOException
     {
+        this.tabPane = new TabPane();
+
+        StringBuilder ethics = new StringBuilder();
+        BufferedReader r = null;
         try
         {
-            Desktop.getDesktop().open( new File( "./target/classes/res/acm-code-of-ethics-booklet.pdf/" ).getAbsoluteFile() );
-        } catch ( IOException e )
+            r = new BufferedReader( new FileReader( new File( "./target/classes/res/ethics.txt" ).getAbsolutePath() ) );
+        } catch ( FileNotFoundException e )
         {
-            System.err.println( "Error opening ACM ethics booklet: " + e.getMessage() );
-            System.exit( 1 );
+            e.printStackTrace();
         }
+
+        String line = "";
+        while ( ( line = r.readLine() ) != null )
+        {
+            ethics.append( line ).append( "\n" );
+        }
+
+        DraggableTab ethicsTab = new DraggableTab( "Ethics" );
+
+        TextArea ethicsTextArea = new TextArea( ethics.toString() );
+        ethicsTextArea.setEditable( false );
+        ethicsTab.setContent( ethicsTextArea );
+
+        tabPane.getTabs().add( ethicsTab );
+
+        ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
+        Pane mainPane = cac.getMainPane();
+        mainPane.getChildren().add( tabPane );
     }
 
     /**
@@ -429,7 +490,7 @@ public class TitleAndMenuBarController implements Initializable {
      * @TODO
      */
     @FXML
-    public void saveArgumentScheme( ActionEvent event )
+    private void saveArgumentScheme( ActionEvent event )
     {
         FileChooser chooser = new FileChooser();
         chooser.setTitle( "Save Current Scheme" );
@@ -446,7 +507,7 @@ public class TitleAndMenuBarController implements Initializable {
      * @TODO
      */
     @FXML
-    public void openArgumentScheme()
+    private void openArgumentScheme()
     {
 
     }
@@ -459,7 +520,7 @@ public class TitleAndMenuBarController implements Initializable {
      * @TODO Make it better lol
      */
     @FXML
-    public void printArgumentScheme( ActionEvent event )
+    private void printArgumentScheme( ActionEvent event )
     {
 
         //If either of the two panes are currently active, we need to 
@@ -520,7 +581,7 @@ public class TitleAndMenuBarController implements Initializable {
      * @TODO
      */
     @FXML
-    public void openArgumentSchemePanel()
+    private void openArgumentSchemePanel()
     {
 
     }
