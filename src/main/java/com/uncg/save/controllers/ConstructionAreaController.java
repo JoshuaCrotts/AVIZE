@@ -35,6 +35,7 @@ import com.uncg.save.models.EvidenceModel;
 import com.uncg.save.models.PropositionModel;
 import com.uncg.save.models.SchemeModel;
 import com.uncg.save.util.LayoutUtils;
+import com.uncg.save.util.Vec2D;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -441,7 +442,7 @@ public class ConstructionAreaController implements Initializable {
         argumentTrees.put( treeID, argTree );
         argTree.addRootArgument( argument, event.getSceneX(), event.getSceneY() );
 
-        npc.add( treeID, argTree, new Point2D( event.getSceneX(), event.getSceneY() ) );
+        npc.add( treeID, argTree, new Vec2D( event.getSceneX(), event.getSceneY() ) );
     }
 
     //Loads the generic scheme maker and writes the specified scheme to the area
@@ -517,7 +518,7 @@ public class ConstructionAreaController implements Initializable {
                         mainPane, event.getSceneX(), event.getSceneY()
                 );
 
-        npc.add( draggedTreeID, targetTree, new Point2D( localCoords.getX(), localCoords.getY() ) );
+        npc.add( draggedTreeID, targetTree, new Vec2D( localCoords.getX(), localCoords.getY() ) );
         targetTree.translateTree( localCoords.getX(), localCoords.getY() );
     }
 

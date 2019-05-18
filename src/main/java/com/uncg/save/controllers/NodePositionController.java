@@ -18,7 +18,9 @@
 package com.uncg.save.controllers;
 
 import com.uncg.save.argumentviewtree.ArgumentViewTree;
+import com.uncg.save.util.Vec2D;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,13 +42,11 @@ import javafx.geometry.Point2D;
  */
 public class NodePositionController {
 
-    private HashMap<HashMap<Object, Object>, Point2D> positions;
-    private HashMap<Object, Object> keyTypePair;
+    private HashMap<KeyObjectPair, Vec2D> positions;
 
     public NodePositionController()
     {
-        this.positions = new HashMap<HashMap<Object, Object>, Point2D>();
-        this.keyTypePair = new HashMap<Object, Object>();
+        this.positions = new HashMap<KeyObjectPair, Vec2D>();
     }
 
     /**
@@ -57,18 +57,18 @@ public class NodePositionController {
      * @param node
      * @param pos
      */
-    public void add( Object key, Object type, Point2D pos )
+    public void add( Object key, Object type, Vec2D pos )
     {
+        //If we are adding a string and a tree, w
         if ( key instanceof String && type instanceof ArgumentViewTree )
         {
-            this.keyTypePair.put( ( String ) key, ( ArgumentViewTree ) type );
-            this.positions.put( this.keyTypePair, pos );
+            this.positions.put( new KeyObjectPair( ( String ) key, ( ArgumentViewTree ) type ), pos );
         }
     }
 
     public Point2D getPosition( Object key )
     {
-        return this.positions.get( key );
+        return ( Point2D ) this.positions.get( key );
     }
 
     public int getSize()
@@ -85,24 +85,44 @@ public class NodePositionController {
      * Essentially what I'm trying to do is serialize the objects so they can be
      * written to the file. Unfortunately, Pane cannot be serialized since it's
      * native JavaFX so I'm not really sure what to do about that.
+     * 
+     * Update 05/17/19: I think what I'm gonna try to do first is serialize everything
+     * that I can, and transient everything else that doesn't necessarily NEED to be 
+     * serialized. Maybe this will work? Honestly, I have no idea. 
      *
      * @param filePath
      */
-    private void writeObject( String filePath )
+    private final void writeObject( String filePath )
     {
-        Iterator it = this.keyTypePair.entrySet().iterator();
+        ObjectOutputStream oos = null;
+
+        try
+        {
+            oos = new ObjectOutputStream( new FileOutputStream( filePath ) );
+        } catch ( IOException e )
+        {
+            e.printStackTrace();
+        }
+
+        Iterator it = this.positions.entrySet().iterator();
+
         while ( it.hasNext() )
         {
+            
+            //Grabs the KeyObjectPair and Vec2D object pair
             Map.Entry pair = ( Map.Entry ) it.next();
-            Object o = pair.getKey();
+            
+            //The key in the hashmap is the KeyObjectPair object
+            KeyObjectPair o = ( KeyObjectPair ) pair.getKey();
 
-            try ( ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream( "target/classes/res/temp.sch" ) ) )
+            try
             {
-
                 //If it's a key, then we know the respective value is an ArgViewTree
-                if ( o instanceof String )
+                if ( o.key instanceof String )
                 {
-                    oos.writeObject( ( ArgumentViewTree ) this.keyTypePair.get( ( String ) o ) );
+                    //The key should be a KeyObjectPair 
+                    oos.writeObject( ( ArgumentViewTree ) o.obj );
+                    oos.writeObject( ( Point2D ) pair.getValue() );
                 }
                 System.out.println( "Done" );
 
@@ -110,6 +130,34 @@ public class NodePositionController {
             {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * A very basic class to represent a key/value pairing for 
+     * objects and their respective ID's. This is primarily used for 
+     * ArgumentViewTrees since they have treeIDs and then the AVT themselves,
+     * but I'm sure I can implement it in the other objects.
+     */
+    private final class KeyObjectPair {
+
+        private final Object key;
+        private final Object obj;
+
+        public KeyObjectPair( Object k, Object o )
+        {
+            this.key = k;
+            this.obj = o;
+        }
+
+        public Object getKey()
+        {
+            return this.key;
+        }
+
+        public Object getObject()
+        {
+            return this.obj;
         }
     }
 }

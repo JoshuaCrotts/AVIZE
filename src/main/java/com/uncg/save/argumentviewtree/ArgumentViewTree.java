@@ -82,15 +82,15 @@ public class ArgumentViewTree implements Serializable {
     // getHash() method of this tree object
     private String treeID;
 
-    private ConclusionNode root;
+    private transient ConclusionNode root;
 
     // collison matrices used to detect collision between view elements
-    List<List<ArgumentNode>> paneMatrix;
-    List<List<ArgumentNode>> nexusMatrix;
+    protected transient List<List<ArgumentNode>> paneMatrix;
+    protected transient List<List<ArgumentNode>> nexusMatrix;
 
     // Pane that represents the constructionArea that this tree will be drawn on
-    private final Pane canvas;
-    private final ConstructionAreaController canvasControl;
+    private transient final Pane canvas;
+    private transient final ConstructionAreaController canvasControl;
 
     /**
      * Constructs new ArgumentViewTree and associates it with a specific pane
