@@ -24,27 +24,59 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" styleClass="menu-bar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.TitleAndMenuBarController">
-    <children>
-        <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="960.0">
-            <menus>
-                <Menu fx:id="loadMenu" mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#loadXMLAppend" text="Add Data" />
-                        <MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Close" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-        <Label prefWidth="960.0" text="AVIZE">
-            <font>
-                <Font size="18.0" />
-            </font>
-        </Label>
-    </children>
+<HBox alignment="TOP_LEFT" styleClass="menu-bar" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.uncg.save.controllers.TitleAndMenuBarController">
+   <children>
+      <MenuBar fx:id="menuBar" prefHeight="25.0" prefWidth="960.0">
+        <menus>
+          <Menu fx:id="loadMenu" mnemonicParsing="false" text="File">
+            <items>
+				<MenuItem mnemonicParsing="false" onAction="#openArgumentScheme" text="Open" />
+				<MenuItem mnemonicParsing="false" onAction="#saveArgumentScheme" text="Save" />
+				<MenuItem mnemonicParsing="false" onAction="#saveArgumentScheme" text="Save-As" />
+				<MenuItem mnemonicParsing="false" onAction="#printArgumentScheme" text="Print" />
+				<MenuItem mnemonicParsing="false" onAction="#toggleFullScreen" text="Disable Full Screen" />
+				<MenuItem mnemonicParsing="false" onAction="#closeProgram" text="Exit" />
+            </items>
+          </Menu>
+		  <Menu fx:id="casesMenu" mnemonicParsing="false" text="Cases">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#openCases" text="Open" />
+			</items>
+	      </Menu>
+		  <Menu fx:id="toolsMenu" mnemonicParsing="false" text="Diagram">
+            <items>
+				<MenuItem mnemonicParsing="false" onAction="#undoAction" text="Undo" />
+				<MenuItem mnemonicParsing="false" onAction="#clearDiagram" text="Clear" />
+				<MenuItem mnemonicParsing="false" onAction="#searchText" text="Search" />
+				<MenuItem mnemonicParsing="false" onAction="#feedback" text="Feedback" />
+				<MenuItem mnemonicParsing="false" onAction="#summary" text="Summary" />
+            </items>
+          </Menu>
+		  <Menu fx:id="argumentsMenu" mnemonicParsing="false" text="Arguments">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#loadXMLAppend" text="Load Scheme" />
+			</items>
+		  </Menu>
+		  <Menu fx:id="ethicsMenu" mnemonicParsing="false" text="Ethics">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#openEthics" text="View ACM Ethics" />
+			</items>
+		  </Menu>
+		  <Menu fx:id="tutorialMenu" mnemonicParsing="false" text="Tutorial">
+			<items>
+				<MenuItem mnemonicParsing="false" onAction="#showTutorial" text="View Tutorial" />
+			</items>
+		  </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Label prefWidth="960.0" text="AIED - AI Ethics Debater">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+   </children>
 </HBox>

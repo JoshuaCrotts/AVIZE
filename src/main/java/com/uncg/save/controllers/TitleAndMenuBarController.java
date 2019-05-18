@@ -23,7 +23,6 @@ package com.uncg.save.controllers;
  * in the editor.
  */
 import com.uncg.save.DataList;
-import com.uncg.save.SaveArgScheme;
 import com.uncg.save.models.DataModel;
 import java.io.BufferedReader;
 import java.io.File;
@@ -49,18 +48,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -441,26 +438,37 @@ public class TitleAndMenuBarController implements Initializable {
     }
 
     /**
-     * Thus far, this only opens the ACM code of ethics pdf for the user.
-     *
      * @UPDATE (05/17/19): Added a .txt file of real ACM codes, they are read in
      * via a file and a tab pane opens.
      *
      * @TODO Add actual codes from an XML file or something.
      */
     @FXML
-    private void openEthicsPDF() throws IOException
+    private void openEthics() throws IOException
     {
         this.tabPane = new TabPane();
 
         StringBuilder ethics = new StringBuilder();
         BufferedReader r = null;
+        
+        //If we're running the .JAR file, we need this directory.
         try
         {
-            r = new BufferedReader( new FileReader( new File( "./target/classes/res/ethics.txt" ).getAbsolutePath() ) );
+            r = new BufferedReader( new FileReader( new File( "./classes/res/ethics.txt" ).getAbsolutePath() ) );
         } catch ( FileNotFoundException e )
         {
-            e.printStackTrace();
+            //If we're just running the program in Netbeans, we need this path.
+            try
+            {
+                r = new BufferedReader( new FileReader( new File( "./target/classes/res/ethics.txt" ).getAbsolutePath() ) );
+            } catch ( FileNotFoundException ex )
+            {
+                Alert alert = new Alert( Alert.AlertType.ERROR );
+                alert.setTitle( "Error" );
+                alert.setHeaderText( "Could not load ethics.txt! " + ex.getMessage() );
+                alert.showAndWait();
+                ex.printStackTrace();
+            }
         }
 
         String line = "";
@@ -485,9 +493,9 @@ public class TitleAndMenuBarController implements Initializable {
     /**
      * Saves the current argument scheme to a .sch file. Should use serialized
      * objects so if we load in a new scheme, we know where to place them upon
-     * load-in.
+     * load-in. NOT WORKING
      *
-     * @TODO
+     * @TODO FIX IT
      */
     @FXML
     private void saveArgumentScheme( ActionEvent event )

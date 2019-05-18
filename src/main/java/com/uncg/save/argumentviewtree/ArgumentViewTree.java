@@ -19,6 +19,7 @@ package com.uncg.save.argumentviewtree;
 
 import static com.uncg.save.argumentviewtree.ArgumentNode.PADDING;
 import static com.uncg.save.argumentviewtree.ArgumentNode.PREMISE_HEIGHT;
+import static com.uncg.save.argumentviewtree.ArgumentNode.PREMISE_WIDTH;
 import com.uncg.save.controllers.ArgumentCertaintyPaneController;
 import com.uncg.save.controllers.CQPaneController;
 import com.uncg.save.controllers.ChainPaneController;
@@ -30,6 +31,10 @@ import com.uncg.save.controllers.MultiArgChainPaneController;
 import com.uncg.save.controllers.MultiArgConclusionPaneController;
 import com.uncg.save.controllers.MultiArgSubConclusionPaneController;
 import com.uncg.save.controllers.ConstructionAreaController;
+import com.uncg.save.controllers.CQArgumentPaneController;
+import com.uncg.save.controllers.CounterPropositionPaneController;
+import com.uncg.save.models.CounterArgumentModel;
+import com.uncg.save.models.PremiseModel;
 import com.uncg.save.controllers.PremisePaneController;
 import com.uncg.save.models.ArgumentModel;
 import com.uncg.save.util.LayoutUtils;
@@ -53,12 +58,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import static com.uncg.save.argumentviewtree.ArgumentNode.PREMISE_WIDTH;
-import com.uncg.save.controllers.CQArgumentPaneController;
-import com.uncg.save.controllers.CounterPropositionPaneController;
-import com.uncg.save.models.CounterArgumentModel;
-import com.uncg.save.models.PremiseModel;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
 import java.util.Queue;
@@ -69,8 +68,13 @@ import java.util.Set;
  * root. It also defines methods used in the construction, deletion, and
  * alteration of argument view trees.
  *
+ * Edit 05/17/19: I made this class Serializable in an attempt to write it
+ * to a file. Needless to say, it didn't work too well.
+ * 
  * TODO: this class needs major refactoring to remove repeated code and make the
  * class more focused
+ * 
+ * 
  */
 public class ArgumentViewTree implements Serializable {
 
@@ -143,7 +147,6 @@ public class ArgumentViewTree implements Serializable {
      */
     public void addRootArgument( ArgumentModel argument, double x, double y )
     {
-        System.out.println( "ROOT" );
         try
         {
             Point2D localCoords = LayoutUtils.getLocalCoords( canvas, x, y );

@@ -1,3 +1,20 @@
+/*
+ * Copyright 2019 Nancy Green
+ * This file is part of AVIZE.
+ *
+ * AVIZE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * AVIZE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.uncg.save.controllers;
 
 import com.uncg.save.argumentviewtree.ArgumentViewTree;
@@ -14,7 +31,12 @@ import javafx.geometry.Point2D;
  * common reference point... (I.e. I don't know how to update a node's position
  * because the references change when I add them to this hashmap???)
  *
- * @author Joshua
+ * Edit 05/17/19: The main problem is that JavaFX files are NOT serializable.
+ * Therefore, I can't write them to a file and load them back up into the
+ * project. I don't have that aforesaid common reference point to save them
+ * from. What do I do?
+ *
+ * @author Joshua Crotts
  */
 public class NodePositionController {
 
@@ -60,11 +82,11 @@ public class NodePositionController {
     }
 
     /**
-     * Essentially what I'm trying to do is serialize the 
-     * objects so they can be written to the file. Unfortunately,
-     * Pane cannot be serialized since it's native JavaFX so
-     * I'm not really sure what to do about that.
-     * @param filePath 
+     * Essentially what I'm trying to do is serialize the objects so they can be
+     * written to the file. Unfortunately, Pane cannot be serialized since it's
+     * native JavaFX so I'm not really sure what to do about that.
+     *
+     * @param filePath
      */
     private void writeObject( String filePath )
     {
