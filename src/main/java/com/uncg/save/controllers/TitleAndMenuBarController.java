@@ -189,11 +189,11 @@ public class TitleAndMenuBarController implements Initializable {
         Stage stage = ( Stage ) menuBar.getScene().getWindow();
 
         boolean isFullB = !stage.isFullScreen();
-        
+
         String isFullS = isFullB ? "Disable Full Screen" : "Enable Full Screen";
-        
+
         stage.setFullScreen( isFullB );
-        
+
         // The fourth item is enabling and disabling full screen.
         loadMenu.getItems().get( 4 ).setText( isFullS );
     }
@@ -445,7 +445,7 @@ public class TitleAndMenuBarController implements Initializable {
      *
      * @UPDATE (05/17/19): Added a .txt file of real ACM codes, they are read in
      * via a file and a tab pane opens.
-     * 
+     *
      * @TODO Add actual codes from an XML file or something.
      */
     @FXML
@@ -494,12 +494,27 @@ public class TitleAndMenuBarController implements Initializable {
     {
         FileChooser chooser = new FileChooser();
         chooser.setTitle( "Save Current Scheme" );
-        this.configureFileChooser( chooser );
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter( "SCH", "*.sch" )
+        );
 
-        File file = chooser.showSaveDialog( menuBar.getScene().getWindow() );
-        if ( file != null )
+        ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
+        //Attempts to write the data as a .sch
+        try
         {
-            SaveArgScheme save = new SaveArgScheme( file.getPath() );
+            chooser.setInitialDirectory( new File( System.getProperty( "user.dir" ) ) );
+
+            //User-selected path
+            File filePath = chooser.showSaveDialog( menuBar.getScene().getWindow() );
+            if ( filePath != null )
+            {
+                NodePositionController npc = cac.getNodePosController();
+                npc.writeObjects( filePath.getAbsolutePath() );
+            }
+
+        } catch ( Exception e )
+        {
+            System.err.println( "Did you really not expect an error? " + e.getMessage() );
         }
     }
 
@@ -629,7 +644,8 @@ public class TitleAndMenuBarController implements Initializable {
             Schema schema
                     = sf.newSchema( getClass().getResource( "/xml/data.xsd" ) );
 
-            JAXBContext jaxbContext = JAXBContext.newInstance( DataList.class );
+            JAXBContext jaxbContext = JAXBContext.newInstance( DataList.class
+            );
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             jaxbUnmarshaller.setSchema( schema );
 
@@ -644,9 +660,11 @@ public class TitleAndMenuBarController implements Initializable {
                 parentControl.toggleData();
             }
             dataLoaded = true;
+
         } catch ( SAXException | JAXBException ex )
         {
-            Logger.getLogger( TitleAndMenuBarController.class.getName() ).log( Level.SEVERE, null, ex );
+            Logger.getLogger( TitleAndMenuBarController.class
+                    .getName() ).log( Level.SEVERE, null, ex );
         }
 
         parentControl.setDataModelList( dataModelList );
@@ -676,15 +694,18 @@ public class TitleAndMenuBarController implements Initializable {
             Schema schema
                     = sf.newSchema( getClass().getResource( "/xml/data.xsd" ) );
 
-            JAXBContext jaxbContext = JAXBContext.newInstance( DataList.class );
+            JAXBContext jaxbContext = JAXBContext.newInstance( DataList.class
+            );
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             jaxbUnmarshaller.setSchema( schema );
 
             dl = ( DataList ) jaxbUnmarshaller.unmarshal( file );
             dataModelList = dl.getModels();
+
         } catch ( SAXException | JAXBException ex )
         {
-            Logger.getLogger( TitleAndMenuBarController.class.getName() ).log( Level.SEVERE, null, ex );
+            Logger.getLogger( TitleAndMenuBarController.class
+                    .getName() ).log( Level.SEVERE, null, ex );
         }
 
         parentControl.replaceDataModelList( dataModelList );

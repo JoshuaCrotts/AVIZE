@@ -1,8 +1,12 @@
 package com.uncg.save.controllers;
 
+import com.uncg.save.argumentviewtree.ArgumentViewTree;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import javafx.geometry.Point2D;
-import javafx.scene.input.DragEvent;
 
 /**
  * I intend to use this class to encompass the references and positions of all
@@ -14,30 +18,29 @@ import javafx.scene.input.DragEvent;
  */
 public class NodePositionController {
 
-    private HashMap<Object, Point2D> positions;
+    private HashMap<HashMap<Object, Object>, Point2D> positions;
+    private HashMap<Object, Object> keyTypePair;
 
     public NodePositionController()
     {
-        this.positions = new HashMap<Object, Point2D>();
+        this.positions = new HashMap<HashMap<Object, Object>, Point2D>();
+        this.keyTypePair = new HashMap<Object, Object>();
     }
 
-    public void addNode( Object node, Point2D pos )
+    /**
+     * Adds the node object with the respective position to the hashmap. If it
+     * currently exists in the map, its value (pos) is updated to the new
+     * position.
+     *
+     * @param node
+     * @param pos
+     */
+    public void add( Object key, Object type, Point2D pos )
     {
-        if ( !this.positions.containsKey( node ) )
+        if ( key instanceof String && type instanceof ArgumentViewTree )
         {
-            this.positions.put( node, pos );
-        }
-    }
-
-    public void updatePosition( Object oldKey, Point2D newPos )
-    {
-        System.err.println( positions.containsKey( oldKey ) );
-        if ( !positions.containsKey( oldKey ) )
-        {
-            throw new IllegalArgumentException( "Error: Cannot update position; key is not in hashmap. " );
-        } else
-        {
-            this.positions.put( oldKey, newPos );
+            this.keyTypePair.put( ( String ) key, ( ArgumentViewTree ) type );
+            this.positions.put( this.keyTypePair, pos );
         }
     }
 
@@ -49,5 +52,42 @@ public class NodePositionController {
     public int getSize()
     {
         return this.positions.size();
+    }
+
+    public void writeObjects( String filePath )
+    {
+        this.writeObject( filePath );
+    }
+
+    /**
+     * Essentially what I'm trying to do is serialize the 
+     * objects so they can be written to the file. Unfortunately,
+     * Pane cannot be serialized since it's native JavaFX so
+     * I'm not really sure what to do about that.
+     * @param filePath 
+     */
+    private void writeObject( String filePath )
+    {
+        Iterator it = this.keyTypePair.entrySet().iterator();
+        while ( it.hasNext() )
+        {
+            Map.Entry pair = ( Map.Entry ) it.next();
+            Object o = pair.getKey();
+
+            try ( ObjectOutputStream oos = new ObjectOutputStream( new FileOutputStream( "target/classes/res/temp.sch" ) ) )
+            {
+
+                //If it's a key, then we know the respective value is an ArgViewTree
+                if ( o instanceof String )
+                {
+                    oos.writeObject( ( ArgumentViewTree ) this.keyTypePair.get( ( String ) o ) );
+                }
+                System.out.println( "Done" );
+
+            } catch ( Exception ex )
+            {
+                ex.printStackTrace();
+            }
+        }
     }
 }

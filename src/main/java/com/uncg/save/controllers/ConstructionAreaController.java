@@ -40,7 +40,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -73,7 +72,7 @@ public class ConstructionAreaController implements Initializable {
 
     private RootPaneController rpc;
 
-    private Stack<Object> pastModels;
+    private NodePositionController npc;
 
     /**
      * Initializes the controller class.
@@ -84,7 +83,7 @@ public class ConstructionAreaController implements Initializable {
         // initialize lists
         argumentTrees = new HashMap<>();
 
-        pastModels = new Stack<>();
+        this.npc = new NodePositionController();
 
         mainPane.getStyleClass().add( "pane" );
 
@@ -149,7 +148,6 @@ public class ConstructionAreaController implements Initializable {
 
         LayoutUtils.setChildLayout( propBox, targetPropBoxCoords );
         mainPane.getChildren().add( propBox );
-        pastModels.push( propBox );
 
     }
 
@@ -423,7 +421,6 @@ public class ConstructionAreaController implements Initializable {
 
         System.out.println( "added evidence" );
         mainPane.getChildren().add( evidenceChunk );
-        pastModels.push( evidenceChunk );
         event.consume();
     }
 
@@ -443,7 +440,8 @@ public class ConstructionAreaController implements Initializable {
         argTree.setTreeID( treeID );
         argumentTrees.put( treeID, argTree );
         argTree.addRootArgument( argument, event.getSceneX(), event.getSceneY() );
-        pastModels.push( treeID );
+
+        npc.add( treeID, argTree, new Point2D( event.getSceneX(), event.getSceneY() ) );
     }
 
     //Loads the generic scheme maker and writes the specified scheme to the area
@@ -491,7 +489,6 @@ public class ConstructionAreaController implements Initializable {
         LayoutUtils.setChildLayout( evidencePane, localCoords );
 
         mainPane.getChildren().add( evidencePane );
-        this.pastModels.push( evidencePane );
     }
 
     /**
@@ -519,6 +516,8 @@ public class ConstructionAreaController implements Initializable {
                 = LayoutUtils.getLocalCoords(
                         mainPane, event.getSceneX(), event.getSceneY()
                 );
+
+        npc.add( draggedTreeID, targetTree, new Point2D( localCoords.getX(), localCoords.getY() ) );
         targetTree.translateTree( localCoords.getX(), localCoords.getY() );
     }
 
@@ -542,7 +541,6 @@ public class ConstructionAreaController implements Initializable {
         LayoutUtils.setChildLayout( propBox, localCoords );
 
         mainPane.getChildren().add( propBox );
-        this.pastModels.push( propBox );
     }
 
     /**
@@ -679,10 +677,10 @@ public class ConstructionAreaController implements Initializable {
         }
         return targetTree;
     }
-
-    public Stack<Object> getActions()
+    
+    public NodePositionController getNodePosController()
     {
-        return this.pastModels;
+        return this.npc;
     }
 
 }
