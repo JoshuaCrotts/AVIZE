@@ -23,6 +23,7 @@ package com.uncg.save.controllers;
  * in the editor.
  */
 import com.uncg.save.DataList;
+import com.uncg.save.EthicsText;
 import com.uncg.save.models.DataModel;
 import java.io.BufferedReader;
 import java.io.File;
@@ -448,38 +449,9 @@ public class TitleAndMenuBarController implements Initializable {
     {
         this.tabPane = new TabPane();
 
-        StringBuilder ethics = new StringBuilder();
-        BufferedReader r = null;
-        
-        //If we're running the .JAR file, we need this directory.
-        try
-        {
-            r = new BufferedReader( new FileReader( new File( "./classes/res/ethics.txt" ).getAbsolutePath() ) );
-        } catch ( FileNotFoundException e )
-        {
-            //If we're just running the program in Netbeans, we need this path.
-            try
-            {
-                r = new BufferedReader( new FileReader( new File( "./target/classes/res/ethics.txt" ).getAbsolutePath() ) );
-            } catch ( FileNotFoundException ex )
-            {
-                Alert alert = new Alert( Alert.AlertType.ERROR );
-                alert.setTitle( "Error" );
-                alert.setHeaderText( "Could not load ethics.txt! " + ex.getMessage() );
-                alert.showAndWait();
-                ex.printStackTrace();
-            }
-        }
-
-        String line = "";
-        while ( ( line = r.readLine() ) != null )
-        {
-            ethics.append( line ).append( "\n" );
-        }
-
         DraggableTab ethicsTab = new DraggableTab( "Ethics" );
 
-        TextArea ethicsTextArea = new TextArea( ethics.toString() );
+        TextArea ethicsTextArea = new TextArea( EthicsText.ethicsText );
         ethicsTextArea.setEditable( false );
         ethicsTab.setContent( ethicsTextArea );
 
