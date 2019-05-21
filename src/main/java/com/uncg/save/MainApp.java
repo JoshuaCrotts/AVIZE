@@ -58,7 +58,6 @@ public class MainApp extends Application {
             = new DataFormat( "commentFormat" );
     public SchemeList sl;
 
-    //public static Stack<Integer> pastActionCount;
     @Override
     public void start( Stage stage ) throws Exception
     {
