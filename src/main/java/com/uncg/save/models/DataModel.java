@@ -18,6 +18,7 @@
 package com.uncg.save.models;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class DataModel implements Serializable {
 
@@ -95,6 +96,25 @@ public class DataModel implements Serializable {
     public String getDataLikelihood()
     {
         return dataLikelihood;
+    }
+
+    public String[] toArray()
+    {
+        LinkedList<String> strings = new LinkedList<>();
+
+        strings.add( dataID );
+        strings.add( dataText );
+        strings.add( dataSource );
+        strings.add( dataDate );
+        strings.add( dataGenre );
+        strings.add( dataReliability );
+        strings.add( dataLikelihood );
+        strings.add( dataComment );
+
+        String[] stringArrayToReturn = new String[strings.size()];
+        strings.toArray( stringArrayToReturn );
+
+        return stringArrayToReturn;
     }
 
 }

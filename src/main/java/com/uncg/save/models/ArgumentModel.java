@@ -20,6 +20,7 @@ package com.uncg.save.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ArgumentModel implements Serializable {
@@ -194,6 +195,11 @@ public class ArgumentModel implements Serializable {
     public void removeCQArgument( ArgumentModel arg )
     {
         cqArguments.remove( arg );
+    }
+    
+    public String[] toArray()
+    {
+        return null;
     }
 
     @Override

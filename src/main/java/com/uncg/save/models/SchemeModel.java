@@ -19,22 +19,23 @@ package com.uncg.save.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SchemeModel implements Serializable {
-
+    
     private List<String> premises = new ArrayList();
     private List<String> criticalQs = new ArrayList();
     private List<String> examples = new ArrayList();
     private final String conclusion;
     private final String title;
-
+    
     public SchemeModel()
     {
         this.conclusion = "to be set";
         this.title = "to be set";
     }
-
+    
     public SchemeModel(
             List<String> premises,
             List<String> criticalQs,
@@ -48,52 +49,76 @@ public class SchemeModel implements Serializable {
         this.conclusion = conclusion;
         this.title = title;
     }
-
+    
     public List<String> getPremises()
     {
         return this.premises;
     }
-
+    
     public List<String> getCriticalQs()
     {
         return this.criticalQs;
     }
-
+    
     public void setCriticalQs( List<String> cq )
     {
         this.criticalQs = cq;
     }
-
+    
     public List<String> getExamples()
     {
         return this.examples;
     }
-
+    
     public String getConclusion()
     {
         return conclusion;
     }
-
+    
     public String getTitle()
     {
         return title;
     }
-
+    
     public void clearPremise()
     {
         premises.clear();
     }
-
+    
     public void addPremise( String s )
     {
         premises.add( s );
     }
-
+    
+    /**
+     * Method to convert the strings into an array so we can search them later.
+     * 
+     * HOPEFULLY this saves the ADDRESS (it should due to reference objects)
+     * 
+     * @return String[] representation of SchemeModel
+     */
+    public String[] toArray()
+    {
+        LinkedList<String> strings = new LinkedList<>();
+        this.criticalQs.forEach( strings :: add );
+        this.premises.forEach( strings :: add );
+        this.examples.forEach( strings :: add );
+        strings.add( this.title );
+        strings.add( this.conclusion );
+        
+        String[] stringArrayToReturn = new String[strings.size()];
+        strings.toArray( stringArrayToReturn );
+        
+        System.out.println( strings );
+        
+        return stringArrayToReturn;
+    }
+    
     @Override
     public String toString()
     {
         StringBuilder output = new StringBuilder();
-
+        
         output.append( "Title: " ).append( this.title ).append( "\n" );
         output.append( "Conclusion: " ).append( this.conclusion ).append( "\n" );
 
@@ -117,7 +142,7 @@ public class SchemeModel implements Serializable {
             output.append( example ).append( " " );
         } );
         output.append( "\n" );
-
+        
         return output.toString();
     }
 }

@@ -213,4 +213,14 @@ public class RootPaneController implements Initializable {
     {
         return this.dataUp;
     }
+    
+    public List<SchemeModel> getSchemeModels()
+    {
+        return this.schemeModelList;
+    }
+    
+    public List<DataModel> getDataModels()
+    {
+        return this.dataModelList;
+    }
 }

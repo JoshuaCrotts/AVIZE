@@ -25,11 +25,11 @@ package com.uncg.save.controllers;
 import com.uncg.save.DataList;
 import com.uncg.save.EthicsText;
 import com.uncg.save.models.DataModel;
-import java.io.BufferedReader;
+import com.uncg.save.models.SchemeModel;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +58,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -173,9 +172,56 @@ public class TitleAndMenuBarController implements Initializable {
         tid.setTitle( "Search" );
         tid.setHeaderText( "Search Construction Workspace:" );
         tid.showAndWait();
+        boolean found = false;
 
         //This IS correct
         String search = tid.getResult();
+
+        List<SchemeModel> rootSchemeModel = this.parentControl.getSchemeModels();
+        List<DataModel> rootDataModel = this.parentControl.getDataModels();
+        
+        //Search scheme models
+        for ( int i = 0; i < rootSchemeModel.size() &&  ! found; i ++ )
+        {
+            String[] stringArray = rootSchemeModel.get( i ).toArray();
+
+            for ( int j = 0; j < stringArray.length &&  ! found; j ++ )
+            {
+                if ( stringArray[j].indexOf( search ) > 0 )
+                {
+
+                    Alert alert = new Alert( Alert.AlertType.INFORMATION, "FOUND" );
+                    alert.showAndWait();
+                    System.out.println( stringArray[j] );
+                    found = true;
+                }
+            }
+        }
+        
+        //Search data models
+        for ( int i = 0; i < rootDataModel.size() &&  ! found; i ++ )
+        {
+            String[] stringArray = rootDataModel.get( i ).toArray();
+
+            for ( int j = 0; j < stringArray.length &&  ! found; j ++ )
+            {
+                if ( stringArray[j].indexOf( search ) > 0 )
+                {
+
+                    Alert alert = new Alert( Alert.AlertType.INFORMATION, "FOUND" );
+                    alert.showAndWait();
+                    System.out.println( stringArray[j] );
+                    found = true;
+                }
+            }
+        }
+        
+        
+        if (  ! found )
+        {
+            Alert alert = new Alert( Alert.AlertType.INFORMATION, "NOT FOUND" );
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -186,7 +232,7 @@ public class TitleAndMenuBarController implements Initializable {
     {
         Stage stage = ( Stage ) menuBar.getScene().getWindow();
 
-        boolean isFullB = !stage.isFullScreen();
+        boolean isFullB =  ! stage.isFullScreen();
 
         String isFullS = isFullB ? "Disable Full Screen" : "Enable Full Screen";
 
@@ -467,6 +513,10 @@ public class TitleAndMenuBarController implements Initializable {
      * objects so if we load in a new scheme, we know where to place them upon
      * load-in. NOT WORKING
      *
+     * Honestly, I'm not sure what is even being SAVED due to the serialized
+     * nature of the objects; it's all obfuscated bytecode (which makes sense,
+     * but still).
+     *
      * @TODO FIX IT
      */
     @FXML
@@ -494,16 +544,53 @@ public class TitleAndMenuBarController implements Initializable {
 
         } catch ( Exception e )
         {
-            System.err.println( "Did you really not expect an error? " + e.getMessage() );
+            System.err.println( " Error saving argument scheme " + e.getMessage() );
         }
     }
 
     /**
-     * @TODO
+     *
+     * After the user has saved a .sch file (which should encapsulate the data
+     * from the Models), they can open a .sch to load in their saved data at the
+     * respective positions they were before.
+     *
+     * @TODO NOT WORKING
      */
     @FXML
-    private void openArgumentScheme()
+    private void openArgumentScheme( ActionEvent event )
     {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle( "Open Argument Scheme" );
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter( "SCH", ".sch" ) );
+
+        ConstructionAreaController cac = this.parentControl.getConstructionAreaController();
+
+        try
+        {
+            chooser.setInitialDirectory( new File( System.getProperty( "user.dir" ) ) );
+
+            File filePath = chooser.showOpenDialog( menuBar.getScene().getWindow() );
+
+            if ( filePath != null )
+            {
+
+                NodePositionController npc = cac.getNodePosController();
+
+                FileInputStream fi = new FileInputStream( new File( filePath.getAbsolutePath() ) );
+                ObjectInputStream oi = new ObjectInputStream( fi );
+                Object ob = null;
+
+                while ( ( ob = oi.readObject() ) != null )
+                {
+                    throw new UnsupportedOperationException( "Loading Schemes is Unsupported" );
+                }
+
+            }
+        } catch ( Exception ex )
+        {
+            ex.printStackTrace();
+        }
 
     }
 
@@ -566,19 +653,8 @@ public class TitleAndMenuBarController implements Initializable {
 
         } catch ( Exception e )
         {
-            System.err.println( "Did you really not expect an error? " + e.getMessage() );
+            System.err.println( "Error creating snapshot/printing: " + e.getMessage() );
         }
-    }
-
-    /**
-     * Opens an already-existing argument scheme from a .sch file.
-     *
-     * @TODO
-     */
-    @FXML
-    private void openArgumentSchemePanel()
-    {
-
     }
 
     @FXML
@@ -631,7 +707,7 @@ public class TitleAndMenuBarController implements Initializable {
 
             dl = ( DataList ) jaxbUnmarshaller.unmarshal( file );
             dataModelList = dl.getModels();
-            if ( !dataLoaded )
+            if (  ! dataLoaded )
             {
                 MenuItem replaceXML = new MenuItem( "Replace Data" );
                 setHandlerForReplaceData( replaceXML );

@@ -19,6 +19,8 @@ package com.uncg.save.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PropositionModel implements Serializable {
@@ -81,5 +83,26 @@ public class PropositionModel implements Serializable {
     public String toString()
     {
         return "Support: " + this.support + "\tProposition: " + this.proposition + "\tComment: " + this.comment;
+    }
+    
+    public String[] toArray()
+    {
+        LinkedList<String> strings = new LinkedList<>();
+        LinkedList<String[]> stringArrays = new LinkedList<>();
+        
+        this.support.forEach( ( em ) ->
+        {
+            stringArrays.add( em.toArray() );
+        } );
+        
+        for( int i = 0; i < stringArrays.size(); i++ )
+        {
+            strings.addAll( Arrays.asList( stringArrays.get( i ) ) );
+        }
+        
+        String[] stringArrayToReturn = new String[strings.size()];
+        strings.toArray( stringArrayToReturn );
+        
+        return stringArrayToReturn;
     }
 }

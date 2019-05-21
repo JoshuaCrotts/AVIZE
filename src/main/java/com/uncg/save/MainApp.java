@@ -39,9 +39,9 @@ import javax.xml.validation.SchemaFactory;
 import org.xml.sax.SAXException;
 
 public class MainApp extends Application {
-    
+
     static final ClassLoader LOADER = MainApp.class.getClassLoader();
-    
+
     public static DataFormat dataModelDataFormat
             = new DataFormat( "dataModelFormat" );
     public static DataFormat evidenceModelDataFormat
@@ -60,7 +60,6 @@ public class MainApp extends Application {
 
     //Comment
     //Stuff added
-    
     @Override
     public void start( Stage stage ) throws Exception
     {
@@ -83,16 +82,15 @@ public class MainApp extends Application {
         //pastActionCount = new Stack<>();
         Scene scene = new Scene( root );
         scene.getStylesheets().add( "/styles/Styles.css" );
-        
+
         stage.setTitle( "AIED" );
-        //stage.setFullScreen(true);
         stage.setResizable( true );
         stage.setFullScreen( true );
         stage.setFullScreenExitHint( "" );
         stage.setScene( scene );
         stage.show();
     }
-    
+
     private List<SchemeModel> generateSchemeList() throws JAXBException
     {
         List<SchemeModel> schemeList = new ArrayList<>();
@@ -104,12 +102,12 @@ public class MainApp extends Application {
             Schema schema
                     = sf.newSchema( getClass().getResource( "/xml/scheme.xsd" ) );
             InputStream xmlStream = getClass().getResourceAsStream( ( "/xml/schemeList.xml" ) );
-            
+
             JAXBContext jaxbContext = JAXBContext.newInstance( SchemeList.class );
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             jaxbUnmarshaller.setSchema( schema );
             sl = ( SchemeList ) jaxbUnmarshaller.unmarshal( xmlStream );
-            
+
             schemeList = sl.getModels();
             return schemeList;
         } catch ( SAXException ex )

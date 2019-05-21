@@ -18,6 +18,7 @@
 package com.uncg.save.models;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class EvidenceModel implements Serializable {
 
@@ -140,5 +141,23 @@ public class EvidenceModel implements Serializable {
     public void setComment( String comment )
     {
         this.comment = comment;
+    }
+
+    public String[] toArray()
+    {
+        LinkedList<String> strings = new LinkedList<>();
+        strings.add( this.id );
+        strings.add( this.text );
+        strings.add( this.source );
+        strings.add( this.genre );
+        strings.add( this.reliability );
+        strings.add( this.likelihood );
+        strings.add( this.comment );
+        strings.add( this.date );
+
+        String[] stringArray = new String[strings.size()];
+        strings.toArray( stringArray );
+
+        return stringArray;
     }
 }

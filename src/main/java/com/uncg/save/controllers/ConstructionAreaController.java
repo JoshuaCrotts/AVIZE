@@ -287,6 +287,7 @@ public class ConstructionAreaController implements Initializable {
             }
         } else if ( db.hasContent( propositionModelDataFormat ) )
         {
+            System.out.println( "dropped prop" );
             try
             {
                 /*

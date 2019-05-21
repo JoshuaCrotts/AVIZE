@@ -85,10 +85,11 @@ public class NodePositionController {
      * Essentially what I'm trying to do is serialize the objects so they can be
      * written to the file. Unfortunately, Pane cannot be serialized since it's
      * native JavaFX so I'm not really sure what to do about that.
-     * 
-     * Update 05/17/19: I think what I'm gonna try to do first is serialize everything
-     * that I can, and transient everything else that doesn't necessarily NEED to be 
-     * serialized. Maybe this will work? Honestly, I have no idea. 
+     *
+     * Update 05/17/19: I think what I'm gonna try to do first is serialize
+     * everything that I can, and transient everything else that doesn't
+     * necessarily NEED to be serialized. Maybe this will work? Honestly, I have
+     * no idea.
      *
      * @param filePath
      */
@@ -108,10 +109,10 @@ public class NodePositionController {
 
         while ( it.hasNext() )
         {
-            
+
             //Grabs the KeyObjectPair and Vec2D object pair
             Map.Entry pair = ( Map.Entry ) it.next();
-            
+
             //The key in the hashmap is the KeyObjectPair object
             KeyObjectPair o = ( KeyObjectPair ) pair.getKey();
 
@@ -133,11 +134,25 @@ public class NodePositionController {
         }
     }
 
+    public final Object readObject( Object ob )
+    {
+        if ( ob instanceof KeyObjectPair )
+        {
+            return ( KeyObjectPair ) ob;
+        } else if ( ob instanceof Point2D )
+        {
+            return ( Point2D ) ob;
+        }
+
+        return null;
+    }
+
     /**
-     * A very basic class to represent a key/value pairing for 
-     * objects and their respective ID's. This is primarily used for 
-     * ArgumentViewTrees since they have treeIDs and then the AVT themselves,
-     * but I'm sure I can implement it in the other objects.
+     *
+     * A very basic class to represent a key/value pairing for objects and their
+     * respective ID's. This is primarily used for ArgumentViewTrees since they
+     * have treeIDs and then the AVT themselves, but I'm sure I can implement it
+     * in the other objects.
      */
     private final class KeyObjectPair {
 
