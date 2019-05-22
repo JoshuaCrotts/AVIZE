@@ -24,11 +24,14 @@ package com.uncg.save.controllers;
  */
 import com.uncg.save.DataList;
 import com.uncg.save.EthicsText;
+import com.uncg.save.MainApp;
+import com.uncg.save.SchemeList;
 import com.uncg.save.models.DataModel;
 import com.uncg.save.models.SchemeModel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -89,6 +92,8 @@ public class TitleAndMenuBarController implements Initializable {
     private boolean dataLoaded = false;
 
     private TabPane tabPane;
+
+    public SchemeList sl;
 
     /**
      * Initializes the controller class.
@@ -179,7 +184,7 @@ public class TitleAndMenuBarController implements Initializable {
 
         List<SchemeModel> rootSchemeModel = this.parentControl.getSchemeModels();
         List<DataModel> rootDataModel = this.parentControl.getDataModels();
-        
+
         //Search scheme models
         for ( int i = 0; i < rootSchemeModel.size() &&  ! found; i ++ )
         {
@@ -197,7 +202,7 @@ public class TitleAndMenuBarController implements Initializable {
                 }
             }
         }
-        
+
         //Search data models
         for ( int i = 0; i < rootDataModel.size() &&  ! found; i ++ )
         {
@@ -215,8 +220,7 @@ public class TitleAndMenuBarController implements Initializable {
                 }
             }
         }
-        
-        
+
         if (  ! found )
         {
             Alert alert = new Alert( Alert.AlertType.INFORMATION, "NOT FOUND" );
@@ -663,14 +667,29 @@ public class TitleAndMenuBarController implements Initializable {
         FileChooser chooser = new FileChooser();
         configureFileChooser( chooser );
         File loadedXML = chooser.showOpenDialog( menuBar.getScene().getWindow() );
+        List<SchemeModel> schemesList = null;
         if ( loadedXML != null )
         {
-            loadData( loadedXML );
+            try
+            {
+                schemesList = generateSchemeList( loadedXML );
+                parentControl.setSchemeModelList( schemesList );
+                
+            } catch ( JAXBException ex )
+            {
+                Logger.getLogger( TitleAndMenuBarController.class.getName() ).log( Level.SEVERE, null, ex );
+            }
+            
+            
         }
 
+        
         event.consume();
     }
 
+    /**
+     * @deprecated for development of AIED
+     */
     private void setHandlerForReplaceData( MenuItem item )
     {
         item.setOnAction( action ->
@@ -688,6 +707,9 @@ public class TitleAndMenuBarController implements Initializable {
         chooser.setInitialDirectory( new File( System.getProperty( "user.dir" ) ) );
     }
 
+    /**
+     * @deprecated for development of AIED
+     */
     private void loadData( File file )
     {
         List<DataModel> dataModelList = new ArrayList<>();
@@ -726,6 +748,9 @@ public class TitleAndMenuBarController implements Initializable {
         parentControl.setDataModelList( dataModelList );
     }
 
+    /**
+     * @deprecated for development of AIED
+     */
     private void loadXMLReplace( ActionEvent event )
     {
         FileChooser chooser = new FileChooser();
@@ -738,6 +763,9 @@ public class TitleAndMenuBarController implements Initializable {
         event.consume();
     }
 
+    /**
+     * @deprecated for development of AIED
+     */
     private void replaceData( File file )
     {
         List<DataModel> dataModelList = new ArrayList<>();
@@ -765,5 +793,32 @@ public class TitleAndMenuBarController implements Initializable {
         }
 
         parentControl.replaceDataModelList( dataModelList );
+    }
+
+    public List<SchemeModel> generateSchemeList( File fileName ) throws JAXBException
+    {
+        List<SchemeModel> schemeList = new ArrayList<>();
+        try
+        {
+            SchemaFactory sf
+                    = SchemaFactory
+                            .newInstance( "http://www.w3.org/2001/XMLSchema" );
+            Schema schema
+                    = sf.newSchema( getClass().getResource( "/xml/scheme.xsd" ) );
+            System.err.println( fileName );
+            InputStream xmlStream = getClass().getResourceAsStream( ( "/xml/" + fileName.getName() ) );
+
+            JAXBContext jaxbContext = JAXBContext.newInstance( SchemeList.class );
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            jaxbUnmarshaller.setSchema( schema );
+            sl = ( SchemeList ) jaxbUnmarshaller.unmarshal( xmlStream );
+
+            schemeList = sl.getModels();
+            return schemeList;
+        } catch ( SAXException ex )
+        {
+            Logger.getLogger( MainApp.class.getName() ).log( Level.SEVERE, null, ex );
+        }
+        return schemeList;
     }
 }

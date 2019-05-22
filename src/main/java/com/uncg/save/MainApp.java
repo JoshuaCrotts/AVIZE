@@ -56,7 +56,6 @@ public class MainApp extends Application {
             = new DataFormat( "evidenceChunkFormat" );
     public static DataFormat commentDataFormat
             = new DataFormat( "commentFormat" );
-    public SchemeList sl;
 
     //Comment
     //Stuff added
@@ -72,12 +71,12 @@ public class MainApp extends Application {
         /*
          * Generate scheme structure
          */
-        List<SchemeModel> schemeModelList = generateSchemeList();
+        //List<SchemeModel> schemeModelList = generateSchemeList();
 
         /*
          * Pass scheme list to root controller
          */
-        rootControl.setSchemeModelList( schemeModelList );
+       // rootControl.setSchemeModelList( schemeModelList );
 
         //pastActionCount = new Stack<>();
         Scene scene = new Scene( root );
@@ -90,32 +89,32 @@ public class MainApp extends Application {
         stage.setScene( scene );
         stage.show();
     }
-
-    private List<SchemeModel> generateSchemeList() throws JAXBException
-    {
-        List<SchemeModel> schemeList = new ArrayList<>();
-        try
-        {
-            SchemaFactory sf
-                    = SchemaFactory
-                            .newInstance( "http://www.w3.org/2001/XMLSchema" );
-            Schema schema
-                    = sf.newSchema( getClass().getResource( "/xml/scheme.xsd" ) );
-            InputStream xmlStream = getClass().getResourceAsStream( ( "/xml/schemeList.xml" ) );
-
-            JAXBContext jaxbContext = JAXBContext.newInstance( SchemeList.class );
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            jaxbUnmarshaller.setSchema( schema );
-            sl = ( SchemeList ) jaxbUnmarshaller.unmarshal( xmlStream );
-
-            schemeList = sl.getModels();
-            return schemeList;
-        } catch ( SAXException ex )
-        {
-            Logger.getLogger( MainApp.class.getName() ).log( Level.SEVERE, null, ex );
-        }
-        return schemeList;
-    }
+//
+//    public List<SchemeModel> generateSchemeList() throws JAXBException
+//    {
+//        List<SchemeModel> schemeList = new ArrayList<>();
+//        try
+//        {
+//            SchemaFactory sf
+//                    = SchemaFactory
+//                            .newInstance( "http://www.w3.org/2001/XMLSchema" );
+//            Schema schema
+//                    = sf.newSchema( getClass().getResource( "/xml/scheme.xsd" ) );
+//            InputStream xmlStream = getClass().getResourceAsStream( ( "/xml/schemeList.xml" ) );
+//
+//            JAXBContext jaxbContext = JAXBContext.newInstance( SchemeList.class );
+//            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+//            jaxbUnmarshaller.setSchema( schema );
+//            sl = ( SchemeList ) jaxbUnmarshaller.unmarshal( xmlStream );
+//
+//            schemeList = sl.getModels();
+//            return schemeList;
+//        } catch ( SAXException ex )
+//        {
+//            Logger.getLogger( MainApp.class.getName() ).log( Level.SEVERE, null, ex );
+//        }
+//        return schemeList;
+//    }
 
     /**
      * The main() method is ignored in correctly deployed JavaFX application.
