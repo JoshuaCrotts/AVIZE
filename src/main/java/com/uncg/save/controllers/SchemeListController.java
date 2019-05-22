@@ -181,4 +181,9 @@ public class SchemeListController implements Initializable {
         }
         return sb.toString();
     }
+    
+    public VBox getVBox()
+    {
+        return this.schemeVBox;
+    }
 }

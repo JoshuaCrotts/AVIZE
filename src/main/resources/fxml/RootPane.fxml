@@ -28,7 +28,7 @@ along with AVIZE.  If not, see <http://www.gnu.org/licenses/>.
         <fx:include fx:id="titleAndMenuBar" source="TitleAndMenuBar.fxml" />
         <HBox prefHeight="1065.0" prefWidth="1920.0">
             <children>
-                <AnchorPane fx:id="dataAnchorPane" maxWidth="350.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="350.0">
+                <AnchorPane fx:id="dataAnchorPane" maxWidth="500.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="500.0">
                     <children>
                         <fx:include fx:id="dataList" source="DataList.fxml" />
                     </children>

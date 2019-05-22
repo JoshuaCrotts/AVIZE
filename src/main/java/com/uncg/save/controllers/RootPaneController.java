@@ -23,11 +23,13 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 
@@ -44,7 +46,7 @@ public class RootPaneController implements Initializable {
     @FXML
     private DataListController dataListController;
     @FXML
-    private SchemeListController schemeListController;
+    protected SchemeListController schemeListController;
     @FXML
     private ConstructionAreaController constructionAreaController;
     @FXML
@@ -65,8 +67,12 @@ public class RootPaneController implements Initializable {
     private boolean dataButtonHidden = true;
     private boolean dataUp = false;
     private boolean schemesUp = true;
-    private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     private double screenWidth;
+    
+    private final int INIT_SCHEME_PANE_WIDTH = 350;
+    private final int INIT_DATA_PANE_WIDTH = 350;
+    private int prevSchemeWidth = INIT_SCHEME_PANE_WIDTH;
 
     @Override
     public void initialize( URL url, ResourceBundle rb )
@@ -79,7 +85,7 @@ public class RootPaneController implements Initializable {
 
         dataAnchorPane.setPrefWidth( 0 );
 
-        schemesAnchorPane.setPrefWidth( 350 );
+        schemesAnchorPane.setPrefWidth( INIT_SCHEME_PANE_WIDTH );
         hideDataButton.setMaxWidth( 0 );
         hideDataButton.setMinWidth( 0 );
         hideSchemesButton.setMaxWidth( 25 );
@@ -117,6 +123,7 @@ public class RootPaneController implements Initializable {
         hideDataButton.setDisable( false );
         dataButtonHidden = false;
     }
+    
 
     @FXML
     public void toggleData()
@@ -125,15 +132,17 @@ public class RootPaneController implements Initializable {
         {
             enableDataButton();
         }
-        int width = 350;
-        if ( !dataUp )
+        
+        int width = INIT_DATA_PANE_WIDTH;
+        
+        if (  ! dataUp )
         {
             showData( width );
-            dataUp = !dataUp;
+            dataUp =  ! dataUp;
         } else
         {
             hideData( width );
-            dataUp = !dataUp;
+            dataUp =  ! dataUp;
         }
     }
 
@@ -161,30 +170,42 @@ public class RootPaneController implements Initializable {
         constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() + width );
     }
 
+    /**
+     * Attempting to experiment with dynamic window resizing. According to
+     * various online sources, AnchorPanes are NOT the way to go; SplitPanes
+     * may be necessary.
+     */
     @FXML
     public void toggleSchemes()
     {
-        int width = 350;
-        if ( !schemesUp )
+        if (  ! schemesUp )
         {
-            showSchemes( width );
-            schemesUp = !schemesUp;
+            //int width = this.getSchemeSize();
+            //this.schemeListController.getMainScrollPane().setPrefWidth( width );
+            //this.prevSchemeWidth = width;
+            //showSchemes( width );
+            showSchemes( this.prevSchemeWidth );
+            
+            schemesUp =  ! schemesUp;
         } else
         {
-            hideSchemes( width );
-            schemesUp = !schemesUp;
+            hideSchemes( this.prevSchemeWidth );
+            schemesUp =  ! schemesUp;
         }
     }
 
     private void showSchemes( int width )
     {
+        
         schemesAnchorPane.setMinWidth( width );
         schemesAnchorPane.setMaxWidth( width );
         mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() - width );
         mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() - width );
+        constructionAreaController.constructionAreaSizeCheck();
         hideSchemesButton.setText( "→→→→→→→→→→" );
         constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMinWidth() );
-        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() - width );
+        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() + width );
+        
 
     }
 
@@ -194,9 +215,40 @@ public class RootPaneController implements Initializable {
         schemesAnchorPane.setMaxWidth( 0 );
         mainScrollPane.setMaxWidth( mainScrollPane.getMaxWidth() + width );
         mainScrollPane.setMinWidth( mainScrollPane.getMinWidth() + width );
+        constructionAreaController.constructionAreaSizeCheck();
         hideSchemesButton.setText( "←←←←←←←←←←" );
         constructionAreaController.getMainPane().setMinWidth( mainScrollPane.getMinWidth() );
-        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() + width );
+        constructionAreaController.getMainPane().setPrefWidth( constructionAreaController.getMainPane().getWidth() - width );
+        
+    }
+
+    private int getSchemeSize()
+    {
+        TextInputDialog dialog = new TextInputDialog( "Scheme Window Size" );
+        dialog.setTitle( "Scheme Width" );
+        dialog.setHeaderText( "Input Scheme Width, or Blank For Default (350):" );
+
+        Optional<String> pixelSize = dialog.showAndWait();
+
+        int width = -1;
+
+        if ( pixelSize.isPresent() )
+        {
+            try
+            {
+                width = Integer.parseInt( pixelSize.get() );
+
+            } catch ( NumberFormatException ex )
+            {
+                System.err.println( "Cannot cast " + pixelSize + "to Integer." );
+                System.exit( 1 );
+            }
+        } else
+        {
+            return ( width = 350 );
+        }
+
+        return width;
     }
 
     public ConstructionAreaController getConstructionAreaController()
@@ -213,12 +265,12 @@ public class RootPaneController implements Initializable {
     {
         return this.dataUp;
     }
-    
+
     public List<SchemeModel> getSchemeModels()
     {
         return this.schemeModelList;
     }
-    
+
     public List<DataModel> getDataModels()
     {
         return this.dataModelList;

@@ -325,9 +325,17 @@ public class ConstructionAreaController implements Initializable {
         event.consume();
     }
 
+    
+    /**
+     * Right-side collision doesn't FULLY work, and is
+     * temporarily disabled when the EvidencePane is loaded in
+     * for some reason...
+     */
     public void constructionAreaSizeCheck()
     {
+        System.out.println( "Check!" );
         int edgeBuffer = 75;
+        int rightEdgeBuffer = 325;
 
         // check if nodes need to be shifted because they're falling off the 
         // left side
@@ -336,14 +344,25 @@ public class ConstructionAreaController implements Initializable {
         if ( moveBuffer < 0 )
         {
             shiftAllChildren( moveBuffer );
+            // grow construction area if nodes do not fit
+            mainPane.layout();
+            mainPane.setPrefSize(
+                    furthestNodeMaxX() + edgeBuffer,
+                    furthestNodeMaxY() + edgeBuffer );
         }
-
-        // grow construction area if nodes do not fit
-        mainPane.layout();
-        mainPane.setPrefSize(
-                furthestNodeMaxX() + edgeBuffer,
-                furthestNodeMaxY() + edgeBuffer
-        );
+        // Check if nodes need to be shifted because they're falling off the 
+        // right side
+        moveBuffer = furthestNodeMaxX();
+        System.out.println( "Farthest x: "+moveBuffer );
+        System.out.println( "Width: " + this.mainPane.getPrefWidth() );
+        if ( moveBuffer > this.mainPane.getPrefWidth() )
+        {
+            shiftAllChildren( rightEdgeBuffer );
+            mainPane.layout();
+            mainPane.setPrefSize(
+                    furthestNodeMaxX() - edgeBuffer,
+                    furthestNodeMaxY() - edgeBuffer );
+        }
     }
 
     private void shiftAllChildren( double move )
@@ -369,6 +388,19 @@ public class ConstructionAreaController implements Initializable {
             }
         }
         return minX;
+    }
+    //Finds the bottom most node on the area
+    private double furthestNodeMinY()
+    {
+        double minY = Double.MAX_VALUE;
+        for ( Node node : mainPane.getChildren() )
+        {
+            if ( node.getBoundsInParent().getMinY() > minY )
+            {
+                minY = node.getBoundsInParent().getMinY();
+            }
+        }
+        return minY;
     }
 
     //Finds the rightmost node on the area
@@ -402,7 +434,7 @@ public class ConstructionAreaController implements Initializable {
     /**
      * Creates a new evidence model and view using data from dragboard
      *
-     * @param db    Dragboard
+     * @param db Dragboard
      * @param event DragEvent
      *
      * @throws IOException
@@ -463,7 +495,7 @@ public class ConstructionAreaController implements Initializable {
         stage.showAndWait();
 
         int i = gppC.getPremiseNumber();
-        for ( int j = i; j != 0; j-- )
+        for ( int j = i; j != 0; j -- )
         {
             scheme.addPremise( "Premise" );
         }
@@ -474,7 +506,7 @@ public class ConstructionAreaController implements Initializable {
      * Creates new evidence view from an existing model from dragboard to
      * simulate movement
      *
-     * @param db    Dragboard
+     * @param db Dragboard
      * @param event DragEvent
      *
      * @throws IOException
@@ -527,7 +559,7 @@ public class ConstructionAreaController implements Initializable {
      * Creates a new proposition box from an existing model from dragboard to
      * simulate movement
      *
-     * @param db    Dragboard
+     * @param db Dragboard
      * @param event DragEvent
      *
      * @throws IOException
@@ -679,7 +711,7 @@ public class ConstructionAreaController implements Initializable {
         }
         return targetTree;
     }
-    
+
     public NodePositionController getNodePosController()
     {
         return this.npc;
