@@ -73,7 +73,7 @@ public class SchemePaneController implements Initializable {
     private Label criticalQuestionLabel;
 
     private SchemeListController slc;
-    public static SchemeModel scheme = new SchemeModel();
+    private SchemeModel scheme = new SchemeModel();
     private int exampleHeight;
     private int cqHeight;
     private boolean heightsCalc = false;
